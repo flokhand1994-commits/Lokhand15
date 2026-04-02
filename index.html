@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="Dutch verbs"/>
+  <title>Dutch flashcards</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 1.25rem;
+      max-width: 28rem;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      line-height: 1.45;
+      color: #1a2b3c;
+      background: #f4f7fb;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; color: #2c6aa0; }
+    p.lead { color: #5a6b7c; font-size: 0.95rem; margin: 0 0 1rem; }
+    .qr-wrap { margin: 1rem 0; }
+    .qr-wrap img { width: 220px; height: 220px; border-radius: 12px; background: #fff; padding: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+    .qr-hint { font-size: 0.8rem; color: #5a6b7c; margin-top: 0.5rem; }
+    a.card-link {
+      display: block;
+      margin: 0.6rem 0;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      background: #2c6aa0;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      touch-action: manipulation;
+    }
+    a.card-link.secondary { background: #fff; color: #2c6aa0; border: 2px solid #2c6aa0; }
+    .url-box {
+      font-size: 0.78rem;
+      word-break: break-all;
+      color: #5a6b7c;
+      margin-top: 1rem;
+      padding: 0.6rem;
+      background: rgba(255,255,255,.8);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dutch verb flashcards</h1>
+  <p class="lead">Same Wi‑Fi as your Mac · Twemoji needs internet</p>
+
+  <div class="qr-wrap">
+    <img id="qr" alt="QR code to this page" width="220" height="220"/>
+    <p class="qr-hint">Scan with iPhone Camera — opens this page in Safari</p>
+  </div>
+
+  <a class="card-link" href="dutch_verbs_flashcards_study.html">Study (one card)</a>
+  <a class="card-link secondary" href="dutch_verbs_flashcards.html">All cards (grid)</a>
+
+  <p class="url-box" id="urlbox"></p>
+
+  <script>
+(function () {
+  var pageUrl = location.href.split("#")[0];
+  document.getElementById("urlbox").textContent = pageUrl;
+  document.getElementById("qr").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+    encodeURIComponent(pageUrl);
+})();
+  </script>
+</body>
+</html>
