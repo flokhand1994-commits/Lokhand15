@@ -17,7 +17,7 @@ VTT_MANUAL = {
         "Elles ont eu beaucoup de questions.",
     ),
     "worden": (
-        "Ik ben winkelbediende geworden.",
+        "Ik ben een winkelbediende geworden.",
         "I have become a shop assistant.",
         "Je suis devenu vendeur.",
         "Wij zijn goede vrienden geworden.",
@@ -129,9 +129,9 @@ VTT_MANUAL = {
         "Elles ont déjà vu le film.",
     ),
     "weten": (
-        "Hij heeft het antwoord geweten.",
-        "He has known the answer.",
-        "Il a su la réponse.",
+        "Ik heb het altijd geweten.",
+        "I have always known it.",
+        "Je l'ai toujours su.",
         "Wij hebben niet geweten waar we moesten zijn.",
         "We have not known where we had to be.",
         "Nous n'avons pas su où aller.",
@@ -265,7 +265,7 @@ VTT_MANUAL = {
         "Nous avons beaucoup appris.",
     ),
     "studeren": (
-        "Ik heb medicijnen gestudeerd.",
+        "Ik heb geneeskunde gestudeerd.",
         "I have studied medicine.",
         "J'ai étudié la médecine.",
         "Zij hebben in Leiden gestudeerd.",
