@@ -1,0 +1,6 @@
+# Serve the one-card study page at the site root (overrides index.html).
+[[redirects]]
+  from = "/"
+  to = "/dutch_verbs_flashcards_study.html"
+  status = 200
+  force = true
