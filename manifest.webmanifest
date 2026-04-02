@@ -1,0 +1,19 @@
+{
+  "name": "Dutch verb flashcards",
+  "short_name": "NL verbs",
+  "description": "100 common Dutch verbs — flashcards with EN/FR glosses",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f7fb",
+  "theme_color": "#2c6aa0",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

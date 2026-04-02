@@ -1,62 +1,96 @@
-# Dutch verb flashcards (shareable)
+# Dutch verb flashcards
 
-Static HTML flashcards: **Study** (one card) or **grid** (all cards). Twemoji illustrations load from the internet.
+Practice **100 Dutch verbs** in your browser. Works on **iPhone, Android, and computers**.  
+Pictures (Twemoji) load from the internet — you need Wi‑Fi or mobile data.
 
-## Push to GitHub (this folder is a git repo)
+---
 
-If you have not added a remote yet:
+## The easy way: one link for everyone’s phone
 
-1. Create an **empty** repository at [github.com/new](https://github.com/new) (no README/license—avoid merge conflicts).
+**On a Mac:** double‑click **`Share_on_phones.command`**. A small window explains the steps and opens what you need.
+
+**In short:**
+
+1. You use a free website called **Netlify** ([open it here](https://app.netlify.com/drop)).
+2. You drag **this whole project folder** onto the page — not a single file inside it, the **folder itself**.
+3. Netlify gives you a **link** (it looks like `https://something.netlify.app`).
+4. You send that link by text, WhatsApp, or email. Anyone can open it on **Safari** (iPhone) or **Chrome** (Android).
+
+The first time, Netlify may ask you to **sign in** (email or Google is fine).  
+You do **not** need to understand “hosting” or “HTTPS” — dragging the folder is enough.
+
+---
+
+## Email a zip instead of a link
+
+**On a Mac:** double‑click **`Make_zip_to_share.command`**. It creates **`dutch_verbs_for_sharing.zip`** in this folder.
+
+Send that zip like any file. The person who gets it should **unzip** it, then use **the same Netlify steps** as above (drag the folder to Netlify) so the flashcards work on phones.
+
+---
+
+## If you don’t use a Mac
+
+1. Open **[app.netlify.com/drop](https://app.netlify.com/drop)** in Chrome or Edge.
+2. Sign in if asked.
+3. Drag **this entire folder** from File Explorer onto the page.
+4. Copy and share the link Netlify shows you.
+
+---
+
+## Optional: add to your home screen (app icon)
+
+After you open the link on your phone:
+
+- **iPhone:** tap **Share** → **Add to Home Screen**.  
+- **Android:** tap the **menu (⋮)** → **Install app** or **Add to Home screen** (wording varies).
+
+---
+
+## Practice at home (iPhone on the same Wi‑Fi as your Mac)
+
+Double‑click **`Open_on_iPhone.command`**. It starts a small local server and shows a QR code so you can open the flashcards on your phone on the same network.
+
+---
+
+## Advanced: put the project on GitHub (optional)
+
+Only if you already use Git/GitHub:
+
+1. Create an empty repo at [github.com/new](https://github.com/new).
 2. In Terminal:
 
 ```bash
-cd /path/to/dutch_verbs
+cd /path/to/this/folder
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git branch -M main
 git push -u origin main
 ```
 
-Use **SSH** if you prefer: `git@github.com:YOUR_USERNAME/YOUR_REPO.git`
+**GitHub Pages** (optional): Repo → **Settings → Pages → Branch: `main`**, folder **`/` (root)**.  
+Your site address will look like `https://YOUR_USERNAME.github.io/YOUR_REPO/`.
 
-3. **GitHub Pages** (optional): Repo → **Settings → Pages → Build and deployment → Branch: `main`**, folder **`/ (root)`**.  
-   Your site will be at `https://YOUR_USERNAME.github.io/YOUR_REPO/` (or the URL shown on the Pages settings page).
+---
 
-To use your real email on commits: `git config user.email "you@example.com"` in this folder (or set globally).
+## What’s inside
 
-## Share with a public link (recommended)
+- **`index.html`** — simple landing page with links to the flashcards.  
+- **`dutch_verbs_flashcards_study.html`** — one card at a time (good for study).  
+- **`dutch_verbs_flashcards.html`** — all cards in a grid.  
+- **`manifest.webmanifest`** and **`icons/`** — help phones show a nice icon when you “add to home screen” (keep them next to the HTML when you deploy).
 
-### Netlify (about 1 minute)
+---
 
-1. Go to [https://app.netlify.com/drop](https://app.netlify.com/drop) and sign in (free).
-2. Drag this entire **`dutch_verbs`** folder onto the page.
-3. You get a URL like `https://something.netlify.app` — share that with anyone.
-4. Optional: **Site settings → Domain** to rename the site.
+## Regenerating flashcards after you edit the data
 
-Visitors open `/` for the landing page (QR + links) or go directly to `/dutch_verbs_flashcards_study.html`.
+If you change the spreadsheet or scripts:
 
-### GitHub Pages
+```bash
+python3 dutch_verbs_flashcards_generate.py
+```
 
-1. Create a new GitHub repository.
-2. Upload **all contents** of this folder to the repo root (or use Git).
-3. **Settings → Pages → Build and deployment → Branch: `main`**, folder **`/ (root)`**.
-4. After a few minutes, the site is at `https://<username>.github.io/<repo>/`.
+---
 
-If you put files in a subfolder, set Pages to that folder or move `index.html` to the published root.
+## Plain-text help
 
-## Share as a file
-
-- Run **`./package_for_sharing.sh`** in this folder (see script header). It creates **`dutch_verbs_for_sharing.zip`**.
-- Send the zip by email, AirDrop, Google Drive, etc.
-- Recipients unzip and either:
-  - Upload the **unzipped folder** to Netlify Drop (same as above), or
-  - Open `index.html` in a browser (Twemoji still needs internet; some browsers restrict `file://`).
-
-## What to include
-
-**For viewing only:** all `*.html` files in this folder (including `index.html`).
-
-**To regenerate PDFs/CSV from data:** also include `dutch_verbs_flashcards.tsv`, `dutch_verbs_flashcards_generate.py`, and `dutch_verbs_french_data.py`.
-
-## iPhone on the same Wi‑Fi as a Mac
-
-Double‑click **`Open_on_iPhone.command`** (macOS) to start a local server and open the QR landing page.
+See **`START_HERE.txt`** for a short copy‑paste friendly version of the same steps.

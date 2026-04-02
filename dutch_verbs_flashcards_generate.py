@@ -245,6 +245,17 @@ def card_back_html(r: dict) -> str:
     )
 
 
+# Mobile: Android Chrome + iPhone Safari — theme bar, installability, home-screen icon
+HEAD_MOBILE_EXTRAS = """  <meta name="theme-color" content="#2c6aa0"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="Dutch verbs"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <link rel="manifest" href="manifest.webmanifest"/>
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="icons/icon.svg"/>
+"""
+
 # Shared CSS for Twemoji images + tense layout (injected into both HTML outputs)
 CSS_ENHANCEMENTS = """
     .clipart {
@@ -389,7 +400,7 @@ def write_html(rows):
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <meta name="color-scheme" content="light"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+{HEAD_MOBILE_EXTRAS}  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
   <title>100 Dutch verbs — flashcards</title>
   <style>
     :root {{
@@ -504,7 +515,7 @@ def write_html_study(rows):
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <meta name="color-scheme" content="light"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+{HEAD_MOBILE_EXTRAS}  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
   <title>100 Dutch verbs — study (one card)</title>
   <style>
     :root {{
