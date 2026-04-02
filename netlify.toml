@@ -1,6 +1,5 @@
-# Serve the one-card study page at the site root (overrides index.html).
-[[redirects]]
-  from = "/"
-  to = "/dutch_verbs_flashcards_study.html"
-  status = 200
-  force = true
+# Static HTML only — no build. Publish the repo root.
+# If deploys fail with "Build image no longer supported":
+# Netlify → Site configuration → Build & deploy → Build image → pick the current default (e.g. Ubuntu 24.04).
+[build]
+  publish = "."
