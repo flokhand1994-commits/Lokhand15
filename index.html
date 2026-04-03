@@ -205,8 +205,8 @@
     }
     .tense-box {
       border-radius: 8px;
-      padding: 0.45rem 0.55rem;
-      border: 1px solid #9ec5e0;
+      padding: 0.9rem 1.05rem;
+      border: 2px solid #9ec5e0;
       background: linear-gradient(145deg, #e8f4fc 0%, #f9fcfe 100%);
     }
     .tense-box.ovt {
@@ -218,23 +218,24 @@
       justify-content: space-between;
       align-items: baseline;
       gap: 0.35rem;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.35rem;
     }
     .tense-name {
-      font-weight: 700;
-      font-size: 0.68rem;
+      font-weight: 400;
+      font-size: 0.92rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--ink);
     }
     .tense-abbr {
-      font-size: 0.65rem;
-      font-weight: 700;
+      font-size: 0.88rem;
+      font-weight: 800;
       color: var(--muted);
     }
     .tense-value {
       margin: 0;
-      font-size: 0.86rem;
+      font-size: 1.18rem;
+      font-weight: 700;
       line-height: 1.35;
       word-break: break-word;
     }
@@ -288,6 +289,64 @@
     .sent-trans { margin: 0; padding-left: 0.35rem; border-left: 2px solid #dde8f2; }
     .sent-en { margin: 0; font-size: 0.78rem; color: var(--muted); }
     .sent-fr { margin: 0.2rem 0 0 0; font-size: 0.78rem; color: #4a5f6e; }
+    .goto-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin: 0.4rem auto 0.6rem;
+    }
+    #goto-input {
+      width: 5.5rem;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #b0c4d8;
+      border-radius: 6px;
+      text-align: center;
+    }
+    #search-input {
+      width: 9rem;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #b0c4d8;
+      border-radius: 6px;
+      text-align: center;
+    }
+    #goto-btn, #search-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #b0c4d8;
+      background: #e8f4fc;
+      cursor: pointer;
+    }
+    #goto-btn:hover, #search-btn:hover { background: #d0e8f7; }
+
+    @media (max-width: 480px) {
+      /* Prevent iOS auto-zoom on input focus (requires font-size >= 16px) */
+      #goto-input, #search-input { font-size: 16px; width: 100%; }
+      #goto-btn, #search-btn { font-size: 16px; min-height: 44px; }
+      .goto-bar { width: 100%; max-width: 340px; }
+
+      /* Reduce card height for small screens */
+      .inner { min-height: 580px; }
+
+      /* Stack tense boxes vertically on small screens */
+      .tense-grid { grid-template-columns: 1fr; gap: 0.35rem; }
+
+      /* Shrink tense box padding and text */
+      .tense-box { padding: 0.55rem 0.7rem; }
+      .tense-name { font-size: 0.78rem; }
+      .tense-abbr { font-size: 0.74rem; }
+      .tense-value { font-size: 0.98rem; }
+
+      /* Slightly smaller gloss text on front */
+      .face.front .gloss-line { font-size: 1.05rem; }
+
+      /* Sentence text already stacks at 480px, just fine-tune sizes */
+      .sent-nl { font-size: 0.82rem; }
+      .sent-en, .sent-fr { font-size: 0.74rem; }
+    }
 
   </style>
 </head>
@@ -298,6 +357,15 @@
     <button type="button" id="prev" aria-label="Vorige kaart">← Vorige</button>
     <span id="counter">1 / …</span>
     <button type="button" id="next" aria-label="Volgende kaart">Volgende →</button>
+  </div>
+  <div class="goto-bar">
+    <input type="number" id="goto-input" min="1" max="100" placeholder="# No." aria-label="Ga naar kaartnummer" />
+    <button type="button" id="goto-btn">Ga →</button>
+  </div>
+  <div class="goto-bar">
+    <input type="text" id="search-input" list="search-list" placeholder="zoek werkwoord…" aria-label="Zoek op werkwoord" autocomplete="off" />
+    <datalist id="search-list"></datalist>
+    <button type="button" id="search-btn">Zoek →</button>
   </div>
   <div class="viewer" id="viewer">
 <div class="slide" data-index="0"><div class="card"><div class="inner" onclick="this.classList.toggle('flipped')"><div class="face front"><div class="num">1/100</div><div class="clipart" aria-hidden="true"><img class="clipart-img" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" alt="" width="96" height="96" decoding="async" loading="lazy" onerror="this.style.display='none';var f=this.nextElementSibling;if(f)f.style.display='block'"/><span class="clipart-fallback" style="display:none">✨</span></div><div class="lemma" lang="nl">zijn</div><div class="glosses"><p class="gloss-line" lang="en"><span class="lang">EN</span> to be</p><p class="gloss-line" lang="fr"><span class="lang">FR</span> être</p></div></div><div class="face back"><div class="tense-grid"><div class="tense-box vtt"><div class="tense-head"><span class="tense-name">Perfectum</span><span class="tense-abbr">VTT</span></div><p class="tense-value">is/zijn geweest</p></div><div class="tense-box ovt"><div class="tense-head"><span class="tense-name">Imperfectum</span><span class="tense-abbr">OVT</span></div><p class="tense-value">was · waren</p></div></div><div class="sentences sent-two-col"><div class="sent-col sent-col-vtt"><div class="sent-col-head">Perfectum (VTT)</div><div class="sent-box"><div class="sent-label">Enkelvoud</div><p class="sent-nl" lang="nl">Ik ben blij geweest.</p><div class="sent-trans"><p class="sent-en" lang="en">I have been happy.</p><p class="sent-fr" lang="fr">J&#x27;ai été content.</p></div></div><div class="sent-box"><div class="sent-label">Meervoud</div><p class="sent-nl" lang="nl">Wij zijn er samen geweest.</p><div class="sent-trans"><p class="sent-en" lang="en">We have been there together.</p><p class="sent-fr" lang="fr">Nous y avons été ensemble.</p></div></div></div><div class="sent-col sent-col-ovt"><div class="sent-col-head">Imperfectum (OVT)</div><div class="sent-box"><div class="sent-label">Enkelvoud</div><p class="sent-nl" lang="nl">Ik was gisteren moe.</p><div class="sent-trans"><p class="sent-en" lang="en">I was tired yesterday.</p><p class="sent-fr" lang="fr">J&#x27;étais fatigué hier.</p></div></div><div class="sent-box"><div class="sent-label">Meervoud</div><p class="sent-nl" lang="nl">Wij waren samen op school.</p><div class="sent-trans"><p class="sent-en" lang="en">We were at school together.</p><p class="sent-fr" lang="fr">Nous étions à l&#x27;école ensemble.</p></div></div></div></div></div></div></div></div>
@@ -425,18 +493,33 @@
 
   function show(at) {
     const next = ((at % total) + total) % total;
-    slides.forEach((el, i) => {
-      const on = i === next;
-      el.hidden = !on;
-      el.setAttribute("aria-hidden", on ? "false" : "true");
-      if (!on) resetFlip(el);
+    // Hide and reset all first (while hidden, transitions don't play)
+    slides.forEach((el) => {
+      el.hidden = true;
+      el.setAttribute("aria-hidden", "true");
+      resetFlip(el);
     });
+    // Then reveal the target card (already showing front)
+    slides[next].hidden = false;
+    slides[next].setAttribute("aria-hidden", "false");
     idx = next;
     counter.textContent = (idx + 1) + " / " + total;
   }
 
   document.getElementById("prev").addEventListener("click", () => show(idx - 1));
   document.getElementById("next").addEventListener("click", () => show(idx + 1));
+
+  function goToCard() {
+    const val = parseInt(document.getElementById("goto-input").value, 10);
+    if (!isNaN(val) && val >= 1 && val <= total) {
+      show(val - 1);
+      document.getElementById("goto-input").value = "";
+    }
+  }
+  document.getElementById("goto-btn").addEventListener("click", goToCard);
+  document.getElementById("goto-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); goToCard(); }
+  });
 
   let touchStartX = null;
   const viewer = document.getElementById("viewer");
@@ -450,7 +533,33 @@
     touchStartX = null;
   }, { passive: true });
 
+  // Build lemma → index map and populate datalist
+  const lemmaMap = {};
+  slides.forEach((el, i) => {
+    const lemmaEl = el.querySelector(".lemma");
+    if (lemmaEl) lemmaMap[lemmaEl.textContent.trim().toLowerCase()] = i;
+  });
+  const searchList = document.getElementById("search-list");
+  Object.keys(lemmaMap).sort().forEach(verb => {
+    const opt = document.createElement("option");
+    opt.value = verb;
+    searchList.appendChild(opt);
+  });
+
+  function searchCard() {
+    const val = document.getElementById("search-input").value.trim().toLowerCase();
+    if (val in lemmaMap) {
+      show(lemmaMap[val]);
+      document.getElementById("search-input").value = "";
+    }
+  }
+  document.getElementById("search-btn").addEventListener("click", searchCard);
+  document.getElementById("search-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); searchCard(); }
+  });
+
   document.addEventListener("keydown", (e) => {
+    if (e.target === document.getElementById("goto-input") || e.target === document.getElementById("search-input")) return;
     if (e.key === "ArrowLeft") { e.preventDefault(); show(idx - 1); }
     if (e.key === "ArrowRight") { e.preventDefault(); show(idx + 1); }
     if (e.key === " " || e.key === "Enter") {
