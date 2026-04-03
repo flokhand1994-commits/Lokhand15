@@ -763,7 +763,14 @@
   viewer.addEventListener("touchend", (e) => {
     if (touchStartX === null) return;
     const dx = e.changedTouches[0].screenX - touchStartX;
-    if (Math.abs(dx) > 56) { if (dx < 0) show(idx + 1); else show(idx - 1); }
+    if (Math.abs(dx) > 56 && filteredIndices.length) {
+      if (dx < 0) {
+        filteredPos = (filteredPos + 1) % filteredIndices.length;
+      } else {
+        filteredPos = (filteredPos - 1 + filteredIndices.length) % filteredIndices.length;
+      }
+      show(filteredIndices[filteredPos]);
+    }
     touchStartX = null;
   }, { passive: true });
 
