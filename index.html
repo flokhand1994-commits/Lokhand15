@@ -321,6 +321,27 @@
       cursor: pointer;
     }
     #goto-btn:hover, #search-btn:hover { background: #d0e8f7; }
+    .filter-bar {
+      display: flex;
+      gap: 0.4rem;
+      justify-content: center;
+      margin: 0 auto 0.8rem;
+    }
+    .filter-btn {
+      padding: 0.35rem 0.85rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 20px;
+      border: 1.5px solid #b0c4d8;
+      background: #f4f7fb;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .filter-btn.active[data-filter="all"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .filter-btn.active[data-filter="regelmatig"] { background: #3a8a3a; color: #fff; border-color: #3a8a3a; }
+    .filter-btn.active[data-filter="onregelmatig"] { background: #b04020; color: #fff; border-color: #b04020; }
+    .filter-btn:not(.active):hover { background: #e8f0f8; }
 
     @media (max-width: 480px) {
       /* Prevent iOS auto-zoom on input focus (requires font-size >= 16px) */
@@ -328,14 +349,16 @@
       #goto-btn, #search-btn { font-size: 16px; min-height: 44px; }
       .goto-bar { width: 100%; max-width: 340px; }
 
-      /* Reduce card height for small screens */
-      .inner { min-height: 580px; }
+      /* Card height: tight enough to avoid scroll */
+      .inner { min-height: 430px; }
 
-      /* Stack tense boxes vertically on small screens */
-      .tense-grid { grid-template-columns: 1fr; gap: 0.35rem; }
+      /* Reduce face padding */
+      .face { padding: 0.55rem 0.65rem; }
 
-      /* Shrink tense box padding and text */
-      .tense-box { padding: 0.55rem 0.7rem; }
+      /* Stack tense boxes, tighten spacing */
+      .tense-grid { grid-template-columns: 1fr; gap: 0.2rem; margin-bottom: 0.3rem; }
+      .tense-box { padding: 0.3rem 0.5rem; }
+      .tense-head { margin-bottom: 0.12rem; }
       .tense-name { font-size: 0.78rem; }
       .tense-abbr { font-size: 0.74rem; }
       .tense-value { font-size: 0.98rem; }
@@ -343,9 +366,16 @@
       /* Slightly smaller gloss text on front */
       .face.front .gloss-line { font-size: 1.05rem; }
 
-      /* Sentence text already stacks at 480px, just fine-tune sizes */
-      .sent-nl { font-size: 0.82rem; }
-      .sent-en, .sent-fr { font-size: 0.74rem; }
+      /* Tighten sentence layout */
+      .sent-two-col { gap: 0.3rem; }
+      .sent-col { gap: 0.15rem; }
+      .sent-col-head { padding-bottom: 0.12rem; margin-bottom: 0.08rem; }
+      .sent-box { padding: 0.18rem 0.3rem; }
+      .sent-label { margin-bottom: 0.05rem; }
+      .sent-nl { margin-bottom: 0.1rem; font-size: 0.82rem; }
+      .sent-fr { margin-top: 0.08rem; font-size: 0.74rem; }
+      .sent-en { font-size: 0.74rem; }
+      .sent-trans { padding-left: 0.25rem; }
     }
 
   </style>
@@ -366,6 +396,11 @@
     <input type="text" id="search-input" list="search-list" placeholder="zoek werkwoord…" aria-label="Zoek op werkwoord" autocomplete="off" />
     <datalist id="search-list"></datalist>
     <button type="button" id="search-btn">Zoek →</button>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Alle</button>
+    <button class="filter-btn" data-filter="regelmatig">Regelmatig</button>
+    <button class="filter-btn" data-filter="onregelmatig">Onregelmatig</button>
   </div>
   <div class="viewer" id="viewer">
 <div class="slide" data-index="0"><div class="card"><div class="inner" onclick="this.classList.toggle('flipped')"><div class="face front"><div class="num">1/100</div><div class="clipart" aria-hidden="true"><img class="clipart-img" src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/2728.svg" alt="" width="96" height="96" decoding="async" loading="lazy" onerror="this.style.display='none';var f=this.nextElementSibling;if(f)f.style.display='block'"/><span class="clipart-fallback" style="display:none">✨</span></div><div class="lemma" lang="nl">zijn</div><div class="glosses"><p class="gloss-line" lang="en"><span class="lang">EN</span> to be</p><p class="gloss-line" lang="fr"><span class="lang">FR</span> être</p></div></div><div class="face back"><div class="tense-grid"><div class="tense-box vtt"><div class="tense-head"><span class="tense-name">Perfectum</span><span class="tense-abbr">VTT</span></div><p class="tense-value">is/zijn geweest</p></div><div class="tense-box ovt"><div class="tense-head"><span class="tense-name">Imperfectum</span><span class="tense-abbr">OVT</span></div><p class="tense-value">was · waren</p></div></div><div class="sentences sent-two-col"><div class="sent-col sent-col-vtt"><div class="sent-col-head">Perfectum (VTT)</div><div class="sent-box"><div class="sent-label">Enkelvoud</div><p class="sent-nl" lang="nl">Ik ben blij geweest.</p><div class="sent-trans"><p class="sent-en" lang="en">I have been happy.</p><p class="sent-fr" lang="fr">J&#x27;ai été content.</p></div></div><div class="sent-box"><div class="sent-label">Meervoud</div><p class="sent-nl" lang="nl">Wij zijn er samen geweest.</p><div class="sent-trans"><p class="sent-en" lang="en">We have been there together.</p><p class="sent-fr" lang="fr">Nous y avons été ensemble.</p></div></div></div><div class="sent-col sent-col-ovt"><div class="sent-col-head">Imperfectum (OVT)</div><div class="sent-box"><div class="sent-label">Enkelvoud</div><p class="sent-nl" lang="nl">Ik was gisteren moe.</p><div class="sent-trans"><p class="sent-en" lang="en">I was tired yesterday.</p><p class="sent-fr" lang="fr">J&#x27;étais fatigué hier.</p></div></div><div class="sent-box"><div class="sent-label">Meervoud</div><p class="sent-nl" lang="nl">Wij waren samen op school.</p><div class="sent-trans"><p class="sent-en" lang="en">We were at school together.</p><p class="sent-fr" lang="fr">Nous étions à l&#x27;école ensemble.</p></div></div></div></div></div></div></div></div>
@@ -475,6 +510,8 @@
   const total = slides.length;
   const counter = document.getElementById("counter");
   let idx = 0;
+  let filteredIndices = [];
+  let filteredPos = 0;
 
   function syncNums() {
     slides.forEach(function (el, i) {
@@ -491,23 +528,29 @@
     if (inner) inner.classList.remove("flipped");
   }
 
-  function show(at) {
-    const next = ((at % total) + total) % total;
-    // Hide and reset all first (while hidden, transitions don't play)
+  function show(globalIdx) {
     slides.forEach((el) => {
       el.hidden = true;
       el.setAttribute("aria-hidden", "true");
       resetFlip(el);
     });
-    // Then reveal the target card (already showing front)
-    slides[next].hidden = false;
-    slides[next].setAttribute("aria-hidden", "false");
-    idx = next;
-    counter.textContent = (idx + 1) + " / " + total;
+    slides[globalIdx].hidden = false;
+    slides[globalIdx].setAttribute("aria-hidden", "false");
+    idx = globalIdx;
+    filteredPos = filteredIndices.indexOf(globalIdx);
+    counter.textContent = (filteredPos + 1) + " / " + filteredIndices.length;
   }
 
-  document.getElementById("prev").addEventListener("click", () => show(idx - 1));
-  document.getElementById("next").addEventListener("click", () => show(idx + 1));
+  document.getElementById("prev").addEventListener("click", () => {
+    if (!filteredIndices.length) return;
+    filteredPos = (filteredPos - 1 + filteredIndices.length) % filteredIndices.length;
+    show(filteredIndices[filteredPos]);
+  });
+  document.getElementById("next").addEventListener("click", () => {
+    if (!filteredIndices.length) return;
+    filteredPos = (filteredPos + 1) % filteredIndices.length;
+    show(filteredIndices[filteredPos]);
+  });
 
   function goToCard() {
     const val = parseInt(document.getElementById("goto-input").value, 10);
@@ -560,8 +603,8 @@
 
   document.addEventListener("keydown", (e) => {
     if (e.target === document.getElementById("goto-input") || e.target === document.getElementById("search-input")) return;
-    if (e.key === "ArrowLeft") { e.preventDefault(); show(idx - 1); }
-    if (e.key === "ArrowRight") { e.preventDefault(); show(idx + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); if (filteredIndices.length) { filteredPos = (filteredPos - 1 + filteredIndices.length) % filteredIndices.length; show(filteredIndices[filteredPos]); } }
+    if (e.key === "ArrowRight") { e.preventDefault(); if (filteredIndices.length) { filteredPos = (filteredPos + 1) % filteredIndices.length; show(filteredIndices[filteredPos]); } }
     if (e.key === " " || e.key === "Enter") {
       const vis = slides[idx];
       const inner = vis && vis.querySelector(".inner");
@@ -572,8 +615,33 @@
     }
   });
 
+  // Classify each card: regelmatig = OVT singular ends in 'te' or 'de'
+  slides.forEach((el) => {
+    const ovtEl = el.querySelector(".tense-box.ovt .tense-value");
+    if (ovtEl) {
+      const singular = ovtEl.textContent.split("·")[0].trim();
+      el.dataset.type = (singular.endsWith("de") || singular.endsWith("te")) ? "regelmatig" : "onregelmatig";
+    }
+  });
+
+  function applyFilter(filter) {
+    filteredIndices = slides.reduce((acc, el, i) => {
+      if (filter === "all" || el.dataset.type === filter) acc.push(i);
+      return acc;
+    }, []);
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.filter === filter);
+    });
+    filteredPos = 0;
+    if (filteredIndices.length) show(filteredIndices[0]);
+  }
+
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => applyFilter(btn.dataset.filter));
+  });
+
   syncNums();
-  show(0);
+  applyFilter("all");
 })();
   </script>
   <p class="footer-note">Illustraties: <a href="https://twemoji.twitter.com/" rel="noopener noreferrer">Twemoji</a> (CC-BY 4.0), geladen via jsDelivr.</p>
