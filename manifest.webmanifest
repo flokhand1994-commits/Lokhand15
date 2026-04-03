@@ -1,7 +1,7 @@
 {
   "name": "Dutch verb flashcards",
   "short_name": "NL verbs",
-  "description": "100 common Dutch verbs — flashcards with EN/FR glosses",
+  "description": "200 common Dutch verbs — flashcards with EN/FR glosses",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
