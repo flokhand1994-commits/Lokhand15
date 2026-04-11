@@ -471,8 +471,10 @@
   </style>
 </head>
 <body>
-  <h1>200 veelvoorkomende werkwoorden</h1>
-  <p class="hint">Eén kaart per keer — EN &amp; FR op de voorkant; achterkant twee kolommen met voorbeeldzinnen: Perfectum (VTT) en Imperfectum (OVT), elk met enkelvoud/meervoud en vertalingen. Twemoji (internet). Grote knoppen voor mobiel. Pijltjes of knoppen; tik op de kaart om te draaien.</p>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;width:min(480px,100%)">
+    <button type="button" onclick="window.location='dutch_nouns_flashcards.html'" style="padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent">← Home</button>
+    <h1 style="margin:0">200 veelvoorkomende werkwoorden</h1>
+  </div>
   <div class="toolbar">
     <button type="button" id="prev" aria-label="Vorige kaart">← Vorige</button>
     <span id="counter">1 / …</span>
