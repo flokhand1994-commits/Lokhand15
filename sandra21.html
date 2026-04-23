@@ -111,6 +111,25 @@
     .back { transform: rotateY(180deg); font-size: 0.9rem; }
     .num { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.35rem; }
     .lemma { font-size: 1.55rem; font-weight: 700; color: var(--accent); }
+    .clipart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 0 0.35rem 0;
+      min-height: 100px;
+      user-select: none;
+    }
+    .clipart-img {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.14));
+    }
+    .clipart-fallback {
+      font-size: 3.5rem;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.1));
+    }
     .face.front {
       display: flex;
       flex-direction: column;
@@ -243,6 +262,9 @@
       .face.front { justify-content: flex-start; }
       .face.back { justify-content: flex-start; font-size: 0.88rem; line-height: 1.28; }
       .face.back .tense-grid { flex-shrink: 0; }
+      .clipart { min-height: 64px; margin-bottom: 0.25rem; }
+      .clipart-img { width: 64px; height: 64px; }
+      .clipart-fallback { font-size: 2.75rem; }
       .lemma { font-size: 1.42rem; }
       .num { font-size: 0.75rem; margin-bottom: 0.2rem; }
       .tense-grid { grid-template-columns: 1fr; gap: 0.15rem; margin-bottom: 0.22rem; flex-shrink: 0; }
@@ -304,7 +326,7 @@
 <script>
 const VERBS = [
   {
-    nl:"aandoen", en:"to put on", fr:"mettre",
+    nl:"aandoen", en:"to put on", fr:"mettre", emoji:"🧥", ec:"1f9e5",
     vtt:"heeft/hebben aangedaan", ovt:"deed aan · deden aan",
     s:{
       vtt:{
@@ -318,7 +340,7 @@ const VERBS = [
     }
   },
   {
-    nl:"aankomen", en:"to arrive", fr:"arriver",
+    nl:"aankomen", en:"to arrive", fr:"arriver", emoji:"🚉", ec:"1f689",
     vtt:"is/zijn aangekomen", ovt:"kwam aan · kwamen aan",
     s:{
       vtt:{
@@ -332,7 +354,7 @@ const VERBS = [
     }
   },
   {
-    nl:"afwassen", en:"to wash up", fr:"faire la vaisselle",
+    nl:"afwassen", en:"to wash up", fr:"faire la vaisselle", emoji:"🧼", ec:"1f9fc",
     vtt:"heeft/hebben afgewassen", ovt:"waste af · wasten af",
     s:{
       vtt:{
@@ -346,7 +368,7 @@ const VERBS = [
     }
   },
   {
-    nl:"bakken", en:"to bake / fry", fr:"faire cuire",
+    nl:"bakken", en:"to bake / fry", fr:"faire cuire", emoji:"🍰", ec:"1f370",
     vtt:"heeft/hebben gebakken", ovt:"bakte · bakten",
     s:{
       vtt:{
@@ -360,7 +382,7 @@ const VERBS = [
     }
   },
   {
-    nl:"beginnen", en:"to begin", fr:"commencer",
+    nl:"beginnen", en:"to begin", fr:"commencer", emoji:"🚀", ec:"1f680",
     vtt:"is/zijn begonnen", ovt:"begon · begonnen",
     s:{
       vtt:{
@@ -374,7 +396,7 @@ const VERBS = [
     }
   },
   {
-    nl:"begrijpen", en:"to understand", fr:"comprendre",
+    nl:"begrijpen", en:"to understand", fr:"comprendre", emoji:"💡", ec:"1f4a1",
     vtt:"heeft/hebben begrepen", ovt:"begreep · begrepen",
     s:{
       vtt:{
@@ -388,7 +410,7 @@ const VERBS = [
     }
   },
   {
-    nl:"bezoeken", en:"to visit", fr:"visiter",
+    nl:"bezoeken", en:"to visit", fr:"visiter", emoji:"🏛️", ec:"1f3db-fe0f",
     vtt:"heeft/hebben bezocht", ovt:"bezocht · bezochten",
     s:{
       vtt:{
@@ -402,7 +424,7 @@ const VERBS = [
     }
   },
   {
-    nl:"blijven", en:"to stay", fr:"rester",
+    nl:"blijven", en:"to stay", fr:"rester", emoji:"🏠", ec:"1f3e0",
     vtt:"is/zijn gebleven", ovt:"bleef · bleven",
     s:{
       vtt:{
@@ -416,7 +438,7 @@ const VERBS = [
     }
   },
   {
-    nl:"brengen", en:"to bring", fr:"apporter",
+    nl:"brengen", en:"to bring", fr:"apporter", emoji:"🎁", ec:"1f381",
     vtt:"heeft/hebben gebracht", ovt:"bracht · brachten",
     s:{
       vtt:{
@@ -430,7 +452,7 @@ const VERBS = [
     }
   },
   {
-    nl:"denken", en:"to think", fr:"penser",
+    nl:"denken", en:"to think", fr:"penser", emoji:"🤔", ec:"1f914",
     vtt:"heeft/hebben gedacht", ovt:"dacht · dachten",
     s:{
       vtt:{
@@ -444,7 +466,7 @@ const VERBS = [
     }
   },
   {
-    nl:"doen", en:"to do", fr:"faire",
+    nl:"doen", en:"to do", fr:"faire", emoji:"✅", ec:"2705",
     vtt:"heeft/hebben gedaan", ovt:"deed · deden",
     s:{
       vtt:{
@@ -458,7 +480,7 @@ const VERBS = [
     }
   },
   {
-    nl:"dragen", en:"to carry / wear", fr:"porter",
+    nl:"dragen", en:"to carry / wear", fr:"porter", emoji:"👗", ec:"1f457",
     vtt:"heeft/hebben gedragen", ovt:"droeg · droegen",
     s:{
       vtt:{
@@ -472,7 +494,7 @@ const VERBS = [
     }
   },
   {
-    nl:"drinken", en:"to drink", fr:"boire",
+    nl:"drinken", en:"to drink", fr:"boire", emoji:"☕", ec:"2615",
     vtt:"heeft/hebben gedronken", ovt:"dronk · dronken",
     s:{
       vtt:{
@@ -486,7 +508,7 @@ const VERBS = [
     }
   },
   {
-    nl:"eten", en:"to eat", fr:"manger",
+    nl:"eten", en:"to eat", fr:"manger", emoji:"🍴", ec:"1f374",
     vtt:"heeft/hebben gegeten", ovt:"at · aten",
     s:{
       vtt:{
@@ -500,7 +522,7 @@ const VERBS = [
     }
   },
   {
-    nl:"gaan", en:"to go", fr:"aller",
+    nl:"gaan", en:"to go", fr:"aller", emoji:"🚶", ec:"1f6b6",
     vtt:"is/zijn gegaan", ovt:"ging · gingen",
     s:{
       vtt:{
@@ -514,7 +536,7 @@ const VERBS = [
     }
   },
   {
-    nl:"geven", en:"to give", fr:"donner",
+    nl:"geven", en:"to give", fr:"donner", emoji:"🤲", ec:"1f932",
     vtt:"heeft/hebben gegeven", ovt:"gaf · gaven",
     s:{
       vtt:{
@@ -528,7 +550,7 @@ const VERBS = [
     }
   },
   {
-    nl:"hebben", en:"to have", fr:"avoir",
+    nl:"hebben", en:"to have", fr:"avoir", emoji:"💰", ec:"1f4b0",
     vtt:"heeft/hebben gehad", ovt:"had · hadden",
     s:{
       vtt:{
@@ -542,7 +564,7 @@ const VERBS = [
     }
   },
   {
-    nl:"helpen", en:"to help", fr:"aider",
+    nl:"helpen", en:"to help", fr:"aider", emoji:"🤝", ec:"1f91d",
     vtt:"heeft/hebben geholpen", ovt:"hielp · hielpen",
     s:{
       vtt:{
@@ -556,7 +578,7 @@ const VERBS = [
     }
   },
   {
-    nl:"kiezen", en:"to choose", fr:"choisir",
+    nl:"kiezen", en:"to choose", fr:"choisir", emoji:"🎯", ec:"1f3af",
     vtt:"heeft/hebben gekozen", ovt:"koos · kozen",
     s:{
       vtt:{
@@ -570,7 +592,7 @@ const VERBS = [
     }
   },
   {
-    nl:"kijken (naar)", en:"to look (at)", fr:"regarder",
+    nl:"kijken (naar)", en:"to look (at)", fr:"regarder", emoji:"👀", ec:"1f440",
     vtt:"heeft/hebben gekeken", ovt:"keek · keken",
     s:{
       vtt:{
@@ -584,7 +606,7 @@ const VERBS = [
     }
   },
   {
-    nl:"komen", en:"to come", fr:"venir",
+    nl:"komen", en:"to come", fr:"venir", emoji:"👋", ec:"1f44b",
     vtt:"is/zijn gekomen", ovt:"kwam · kwamen",
     s:{
       vtt:{
@@ -598,7 +620,7 @@ const VERBS = [
     }
   },
   {
-    nl:"kopen", en:"to buy", fr:"acheter",
+    nl:"kopen", en:"to buy", fr:"acheter", emoji:"🛒", ec:"1f6d2",
     vtt:"heeft/hebben gekocht", ovt:"kocht · kochten",
     s:{
       vtt:{
@@ -612,7 +634,7 @@ const VERBS = [
     }
   },
   {
-    nl:"krijgen", en:"to receive / get", fr:"recevoir",
+    nl:"krijgen", en:"to receive / get", fr:"recevoir", emoji:"📦", ec:"1f4e6",
     vtt:"heeft/hebben gekregen", ovt:"kreeg · kregen",
     s:{
       vtt:{
@@ -626,7 +648,7 @@ const VERBS = [
     }
   },
   {
-    nl:"lezen", en:"to read", fr:"lire",
+    nl:"lezen", en:"to read", fr:"lire", emoji:"📖", ec:"1f4d6",
     vtt:"heeft/hebben gelezen", ovt:"las · lazen",
     s:{
       vtt:{
@@ -640,7 +662,7 @@ const VERBS = [
     }
   },
   {
-    nl:"liggen", en:"to lie", fr:"être allongé(e)",
+    nl:"liggen", en:"to lie", fr:"être allongé(e)", emoji:"😴", ec:"1f634",
     vtt:"heeft/hebben gelegen", ovt:"lag · lagen",
     s:{
       vtt:{
@@ -654,7 +676,7 @@ const VERBS = [
     }
   },
   {
-    nl:"lopen", en:"to walk / run", fr:"marcher / courir",
+    nl:"lopen", en:"to walk / run", fr:"marcher / courir", emoji:"👟", ec:"1f45f",
     vtt:"heeft/hebben gelopen", ovt:"liep · liepen",
     note:"(zijn) gelopen naar … (bestemming)",
     s:{
@@ -669,7 +691,7 @@ const VERBS = [
     }
   },
   {
-    nl:"nemen", en:"to take", fr:"prendre",
+    nl:"nemen", en:"to take", fr:"prendre", emoji:"🚌", ec:"1f68c",
     vtt:"heeft/hebben genomen", ovt:"nam · namen",
     s:{
       vtt:{
@@ -683,7 +705,7 @@ const VERBS = [
     }
   },
   {
-    nl:"ontbijten", en:"to have breakfast", fr:"prendre le petit-déjeuner",
+    nl:"ontbijten", en:"to have breakfast", fr:"prendre le petit-déjeuner", emoji:"🍳", ec:"1f373",
     vtt:"heeft/hebben ontbeten", ovt:"ontbeet · ontbeten",
     s:{
       vtt:{
@@ -697,7 +719,7 @@ const VERBS = [
     }
   },
   {
-    nl:"opstaan", en:"to get up", fr:"se lever",
+    nl:"opstaan", en:"to get up", fr:"se lever", emoji:"⏰", ec:"23f0",
     vtt:"is/zijn opgestaan", ovt:"stond op · stonden op",
     s:{
       vtt:{
@@ -711,7 +733,7 @@ const VERBS = [
     }
   },
   {
-    nl:"rijden", en:"to drive / ride", fr:"conduire / rouler",
+    nl:"rijden", en:"to drive / ride", fr:"conduire / rouler", emoji:"🚗", ec:"1f697",
     vtt:"heeft/hebben gereden", ovt:"reed · reden",
     note:"(zijn) gereden naar … (bestemming)",
     s:{
@@ -726,7 +748,7 @@ const VERBS = [
     }
   },
   {
-    nl:"roepen", en:"to call / shout", fr:"appeler / crier",
+    nl:"roepen", en:"to call / shout", fr:"appeler / crier", emoji:"📢", ec:"1f4e2",
     vtt:"heeft/hebben geroepen", ovt:"riep · riepen",
     s:{
       vtt:{
@@ -740,7 +762,7 @@ const VERBS = [
     }
   },
   {
-    nl:"scheiden", en:"to separate / divorce", fr:"se séparer",
+    nl:"scheiden", en:"to separate / divorce", fr:"se séparer", emoji:"💔", ec:"1f494",
     vtt:"is/zijn gescheiden", ovt:"scheidde · scheidden",
     s:{
       vtt:{
@@ -754,7 +776,7 @@ const VERBS = [
     }
   },
   {
-    nl:"schrijven", en:"to write", fr:"écrire",
+    nl:"schrijven", en:"to write", fr:"écrire", emoji:"✏️", ec:"270f-fe0f",
     vtt:"heeft/hebben geschreven", ovt:"schreef · schreven",
     s:{
       vtt:{
@@ -768,7 +790,7 @@ const VERBS = [
     }
   },
   {
-    nl:"slapen", en:"to sleep", fr:"dormir",
+    nl:"slapen", en:"to sleep", fr:"dormir", emoji:"🌙", ec:"1f319",
     vtt:"heeft/hebben geslapen", ovt:"sliep · sliepen",
     s:{
       vtt:{
@@ -782,7 +804,7 @@ const VERBS = [
     }
   },
   {
-    nl:"sluiten", en:"to close", fr:"fermer",
+    nl:"sluiten", en:"to close", fr:"fermer", emoji:"🔒", ec:"1f512",
     vtt:"heeft/hebben gesloten", ovt:"sloot · sloten",
     s:{
       vtt:{
@@ -796,7 +818,7 @@ const VERBS = [
     }
   },
   {
-    nl:"snijden", en:"to cut", fr:"couper",
+    nl:"snijden", en:"to cut", fr:"couper", emoji:"🔪", ec:"1f52a",
     vtt:"heeft/hebben gesneden", ovt:"sneed · sneden",
     s:{
       vtt:{
@@ -810,7 +832,7 @@ const VERBS = [
     }
   },
   {
-    nl:"spreken", en:"to speak", fr:"parler",
+    nl:"spreken", en:"to speak", fr:"parler", emoji:"💬", ec:"1f4ac",
     vtt:"heeft/hebben gesproken", ovt:"sprak · spraken",
     s:{
       vtt:{
@@ -824,7 +846,7 @@ const VERBS = [
     }
   },
   {
-    nl:"strijken", en:"to iron", fr:"repasser",
+    nl:"strijken", en:"to iron", fr:"repasser", emoji:"👔", ec:"1f454",
     vtt:"heeft/hebben gestreken", ovt:"streek · streken",
     s:{
       vtt:{
@@ -838,7 +860,7 @@ const VERBS = [
     }
   },
   {
-    nl:"uitdoen", en:"to take off (clothing)", fr:"enlever",
+    nl:"uitdoen", en:"to take off (clothing)", fr:"enlever", emoji:"🧣", ec:"1f9e3",
     vtt:"heeft/hebben uitgedaan", ovt:"deed uit · deden uit",
     s:{
       vtt:{
@@ -852,7 +874,7 @@ const VERBS = [
     }
   },
   {
-    nl:"vallen", en:"to fall", fr:"tomber",
+    nl:"vallen", en:"to fall", fr:"tomber", emoji:"🍂", ec:"1f342",
     vtt:"is/zijn gevallen", ovt:"viel · vielen",
     s:{
       vtt:{
@@ -866,7 +888,7 @@ const VERBS = [
     }
   },
   {
-    nl:"vergeten", en:"to forget", fr:"oublier",
+    nl:"vergeten", en:"to forget", fr:"oublier", emoji:"🧠", ec:"1f9e0",
     vtt:"heeft/hebben vergeten", ovt:"vergat · vergaten",
     note:"(zijn) vergeten — persoon / idee",
     s:{
@@ -881,7 +903,7 @@ const VERBS = [
     }
   },
   {
-    nl:"verkopen", en:"to sell", fr:"vendre",
+    nl:"verkopen", en:"to sell", fr:"vendre", emoji:"🏷️", ec:"1f3f7-fe0f",
     vtt:"heeft/hebben verkocht", ovt:"verkocht · verkochten",
     s:{
       vtt:{
@@ -895,7 +917,7 @@ const VERBS = [
     }
   },
   {
-    nl:"verliezen", en:"to lose", fr:"perdre",
+    nl:"verliezen", en:"to lose", fr:"perdre", emoji:"😢", ec:"1f622",
     vtt:"heeft/hebben verloren", ovt:"verloor · verloren",
     s:{
       vtt:{
@@ -909,7 +931,7 @@ const VERBS = [
     }
   },
   {
-    nl:"vertrekken", en:"to leave / depart", fr:"partir",
+    nl:"vertrekken", en:"to leave / depart", fr:"partir", emoji:"✈️", ec:"2708-fe0f",
     vtt:"is/zijn vertrokken", ovt:"vertrok · vertrokken",
     s:{
       vtt:{
@@ -923,7 +945,7 @@ const VERBS = [
     }
   },
   {
-    nl:"vinden", en:"to find", fr:"trouver",
+    nl:"vinden", en:"to find", fr:"trouver", emoji:"🔍", ec:"1f50d",
     vtt:"heeft/hebben gevonden", ovt:"vond · vonden",
     s:{
       vtt:{
@@ -937,7 +959,7 @@ const VERBS = [
     }
   },
   {
-    nl:"wassen", en:"to wash", fr:"laver",
+    nl:"wassen", en:"to wash", fr:"laver", emoji:"🧴", ec:"1f9f4",
     vtt:"heeft/hebben gewassen", ovt:"waste · wasten",
     s:{
       vtt:{
@@ -951,7 +973,7 @@ const VERBS = [
     }
   },
   {
-    nl:"weten", en:"to know", fr:"savoir",
+    nl:"weten", en:"to know", fr:"savoir", emoji:"📚", ec:"1f4da",
     vtt:"heeft/hebben geweten", ovt:"wist · wisten",
     s:{
       vtt:{
@@ -965,7 +987,7 @@ const VERBS = [
     }
   },
   {
-    nl:"winnen", en:"to win", fr:"gagner",
+    nl:"winnen", en:"to win", fr:"gagner", emoji:"🏆", ec:"1f3c6",
     vtt:"heeft/hebben gewonnen", ovt:"won · wonnen",
     s:{
       vtt:{
@@ -979,7 +1001,7 @@ const VERBS = [
     }
   },
   {
-    nl:"worden", en:"to become", fr:"devenir",
+    nl:"worden", en:"to become", fr:"devenir", emoji:"🦋", ec:"1f98b",
     vtt:"is/zijn geworden", ovt:"werd · werden",
     s:{
       vtt:{
@@ -993,7 +1015,7 @@ const VERBS = [
     }
   },
   {
-    nl:"zien", en:"to see", fr:"voir",
+    nl:"zien", en:"to see", fr:"voir", emoji:"👁️", ec:"1f441-fe0f",
     vtt:"heeft/hebben gezien", ovt:"zag · zagen",
     s:{
       vtt:{
@@ -1007,7 +1029,7 @@ const VERBS = [
     }
   },
   {
-    nl:"zijn", en:"to be", fr:"être",
+    nl:"zijn", en:"to be", fr:"être", emoji:"⭐", ec:"2b50",
     vtt:"is/zijn geweest", ovt:"was · waren",
     s:{
       vtt:{
@@ -1021,7 +1043,7 @@ const VERBS = [
     }
   },
   {
-    nl:"zingen", en:"to sing", fr:"chanter",
+    nl:"zingen", en:"to sing", fr:"chanter", emoji:"🎵", ec:"1f3b5",
     vtt:"heeft/hebben gezongen", ovt:"zong · zongen",
     s:{
       vtt:{
@@ -1035,7 +1057,7 @@ const VERBS = [
     }
   },
   {
-    nl:"zitten", en:"to sit", fr:"être assis(e)",
+    nl:"zitten", en:"to sit", fr:"être assis(e)", emoji:"🪑", ec:"1fa91",
     vtt:"heeft/hebben gezeten", ovt:"zat · zaten",
     s:{
       vtt:{
@@ -1049,7 +1071,7 @@ const VERBS = [
     }
   },
   {
-    nl:"zoeken", en:"to look for", fr:"chercher",
+    nl:"zoeken", en:"to look for", fr:"chercher", emoji:"🔎", ec:"1f50e",
     vtt:"heeft/hebben gezocht", ovt:"zocht · zochten",
     s:{
       vtt:{
@@ -1063,7 +1085,7 @@ const VERBS = [
     }
   },
   {
-    nl:"zwemmen", en:"to swim", fr:"nager",
+    nl:"zwemmen", en:"to swim", fr:"nager", emoji:"🏊", ec:"1f3ca",
     vtt:"heeft/hebben gezwommen", ovt:"zwom · zwommen",
     s:{
       vtt:{
@@ -1078,6 +1100,7 @@ const VERBS = [
   }
 ];
 
+const CDN = "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/";
 let cur = 0;
 
 function escHtml(s) {
@@ -1096,9 +1119,15 @@ function sentBox(label, arr) {
 }
 
 function buildCard(v, i) {
+  const imgUrl = CDN + v.ec + '.svg';
   const front = `
     <div class="face front">
       <div class="num">${i+1} / ${VERBS.length}</div>
+      <div class="clipart" aria-hidden="true">
+        <img class="clipart-img" src="${imgUrl}" alt="" width="96" height="96" decoding="async" loading="lazy"
+          onerror="this.style.display='none';var f=this.nextElementSibling;if(f)f.style.display='block'"/>
+        <span class="clipart-fallback" style="display:none">${v.emoji}</span>
+      </div>
       <div class="lemma" lang="nl">${escHtml(v.nl)}</div>
       <div class="glosses">
         <p class="gloss-line" lang="en"><span class="lang">EN</span> ${escHtml(v.en)}</p>
@@ -1142,15 +1171,14 @@ function buildCard(v, i) {
   </div>`;
 }
 
-// Render all slides
 const viewer = document.getElementById('viewer');
 viewer.innerHTML = VERBS.map((v, i) => buildCard(v, i)).join('');
 
 const slides = viewer.querySelectorAll('.slide');
 
-function goTo(idx, keepFlip) {
+function goTo(idx) {
   slides[cur].hidden = true;
-  if (!keepFlip) slides[cur].querySelector('.inner').classList.remove('flipped');
+  slides[cur].querySelector('.inner').classList.remove('flipped');
   cur = (idx + VERBS.length) % VERBS.length;
   slides[cur].hidden = false;
   document.getElementById('counter').textContent = `${cur+1} / ${VERBS.length}`;
@@ -1174,7 +1202,6 @@ document.addEventListener('keydown', e => {
   else if (e.key === ' ') { e.preventDefault(); slides[cur].querySelector('.inner').classList.toggle('flipped'); }
 });
 
-// swipe
 let tx = 0;
 viewer.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
 viewer.addEventListener('touchend', e => {
