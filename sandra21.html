@@ -1,185 +1,1186 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sandra 2.1 – Irreguliere Verba</title>
-<style>
-:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--green:#2a7a6a}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px;-webkit-tap-highlight-color:transparent}
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="color-scheme" content="light"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#2c6aa0"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="Sandra 2.1"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <title>Sandra 2.1 – Irreguliere Verba</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --ink: #1a2b3c;
+      --muted: #5a6b7c;
+      --accent: #2c6aa0;
+      --card: #fff;
+      --border: #c8d8e8;
+    }
+    html { -webkit-text-size-adjust: 100%; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      margin: 0;
+      padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
+      line-height: 1.45;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0 0 0.35rem 0;
+      color: var(--accent);
+    }
+    .hint { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; text-align: center; max-width: 36rem; }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .toolbar button {
+      font: inherit;
+      font-size: 1rem;
+      padding: 0.65rem 1.15rem;
+      min-height: 48px;
+      min-width: 48px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .toolbar button:hover:not(:disabled) { background: #e8f0f8; }
+    #counter {
+      min-width: 5rem;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .footer-note { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 1rem; max-width: 36rem; }
+    .viewer {
+      width: 100%;
+      max-width: min(480px, 100vw - 2rem);
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .slide { width: 100%; }
+    .slide[hidden] { display: none !important; }
+    .card { perspective: 900px; min-height: 0; }
+    .inner {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      transition: transform 0.55s ease;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .inner.flipped { transform: rotateY(180deg); }
+    .face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 1.1rem 1.15rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .back { transform: rotateY(180deg); font-size: 0.9rem; }
+    .num { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .lemma { font-size: 1.55rem; font-weight: 700; color: var(--accent); }
+    .face.front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+    }
+    .face.front .num { width: 100%; text-align: center; }
+    .face.front .lemma { width: 100%; text-align: center; }
+    .face.front .glosses { margin-top: 0.3rem; width: 100%; text-align: center; }
+    .face.front .gloss-line {
+      margin: 0.4rem 0 0 0;
+      font-size: 1.2rem;
+      line-height: 1.45;
+      text-align: center;
+    }
+    .face.front .gloss-line .lang {
+      display: inline-block;
+      min-width: 1.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      vertical-align: baseline;
+    }
+    .tense-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+    }
+    @media (max-width: 360px) { .tense-grid { grid-template-columns: 1fr; } }
+    .tense-box {
+      border-radius: 8px;
+      padding: 0.9rem 1.05rem;
+      border: 2px solid #9ec5e0;
+      background: linear-gradient(145deg, #e8f4fc 0%, #f9fcfe 100%);
+    }
+    .tense-box.ovt {
+      border-color: #b5c9a3;
+      background: linear-gradient(145deg, #eef4e6 0%, #fafcf7 100%);
+    }
+    .tense-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.35rem;
+      margin-bottom: 0.35rem;
+    }
+    .tense-name { font-weight: 400; font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); }
+    .tense-abbr { font-size: 0.88rem; font-weight: 800; color: var(--muted); }
+    .tense-value { margin: 0; font-size: 1.18rem; font-weight: 700; line-height: 1.35; word-break: break-word; }
+    .sentences { display: grid; gap: 0.4rem; }
+    .sent-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      align-items: start;
+    }
+    @media (max-width: 480px) { .sent-two-col { grid-template-columns: 1fr; } }
+    .sent-col { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+    .sent-col-head {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin: 0 0 0.1rem 0;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid #9ec5e0;
+    }
+    .sent-col-ovt .sent-col-head { border-bottom-color: #8ab06a; }
+    .sent-col-vtt .sent-box { border-left-color: #3d7ab0; }
+    .sent-col-ovt .sent-box { border-left-color: #6a9c4a; }
+    .sent-box {
+      padding: 0.4rem 0.5rem;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      background: rgba(255,255,255,0.55);
+    }
+    .sent-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.15rem; }
+    .sent-nl { margin: 0 0 0.25rem 0; font-size: 0.86rem; font-weight: 500; }
+    .sent-trans { margin: 0; padding-left: 0.35rem; border-left: 2px solid #dde8f2; }
+    .sent-en { margin: 0; font-size: 0.78rem; color: var(--muted); }
+    .sent-fr { margin: 0.2rem 0 0 0; font-size: 0.78rem; color: #4a5f6e; }
+    .goto-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin: 0.4rem auto 0.6rem;
+    }
+    #goto-input {
+      width: 5.5rem;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #b0c4d8;
+      border-radius: 6px;
+      text-align: center;
+    }
+    #goto-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #b0c4d8;
+      background: #e8f4fc;
+      cursor: pointer;
+    }
+    #goto-btn:hover { background: #d0e8f7; }
 
-/* App header */
-.app-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;width:min(460px,96vw)}
-#home-btn{padding:5px 14px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;touch-action:manipulation}
-#home-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-.app-title{font-size:1rem;color:var(--accent);font-weight:700}
+    @media (max-width: 480px) {
+      body { padding-top: max(0.5rem, env(safe-area-inset-top, 0px)); padding-left: 0.65rem; padding-right: 0.65rem; }
+      h1 { font-size: 1.15rem; margin-bottom: 0.2rem; }
+      .hint { font-size: 0.8rem; line-height: 1.3; margin-bottom: 0.45rem; max-width: 100%; }
+      .toolbar { margin-bottom: 0.45rem; gap: 0.45rem; }
+      .toolbar button { font-size: 0.95rem; padding: 0.5rem 0.85rem; min-height: 44px; }
+      .goto-bar { margin: 0.25rem auto 0.35rem; }
+      #goto-input { font-size: 16px; width: 100%; }
+      #goto-btn { font-size: 16px; min-height: 44px; }
+      .goto-bar { width: 100%; max-width: 340px; }
+      .viewer { align-items: stretch; min-height: 0; flex: 1 1 auto; }
+      .card { min-height: 0; }
+      .inner {
+        width: 100%;
+        min-height: 0;
+        box-sizing: border-box;
+        height: min(62dvh, calc(100dvh - 9.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+        max-height: min(62dvh, calc(100dvh - 9.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+      }
+      .face { padding: 0.45rem 0.55rem; overflow: hidden; display: flex; flex-direction: column; }
+      .face.front { justify-content: flex-start; }
+      .face.back { justify-content: flex-start; font-size: 0.88rem; line-height: 1.28; }
+      .face.back .tense-grid { flex-shrink: 0; }
+      .lemma { font-size: 1.42rem; }
+      .num { font-size: 0.75rem; margin-bottom: 0.2rem; }
+      .tense-grid { grid-template-columns: 1fr; gap: 0.15rem; margin-bottom: 0.22rem; flex-shrink: 0; }
+      .tense-box { padding: 0.28rem 0.45rem; }
+      .tense-head { margin-bottom: 0.1rem; gap: 0.22rem; }
+      .tense-name { font-size: 0.76rem; letter-spacing: 0.03em; }
+      .tense-abbr { font-size: 0.72rem; }
+      .tense-value { font-size: 0.95rem; line-height: 1.28; }
+      .face.front .gloss-line { font-size: 1.08rem; line-height: 1.38; margin-top: 0.25rem; }
+      .sentences { gap: 0.15rem; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+      .sent-two-col { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 1fr; gap: 0.2rem; }
+      .sent-col { gap: 0.1rem; }
+      .sent-col-head { font-size: 0.58rem; padding-bottom: 0.1rem; margin-bottom: 0.05rem; }
+      .sent-box { padding: 0.16rem 0.3rem; border-left-width: 2px; }
+      .sent-label { font-size: 0.56rem; margin-bottom: 0.04rem; }
+      .sent-nl { margin-bottom: 0.08rem; font-size: 0.78rem; line-height: 1.28; }
+      .sent-trans { padding-left: 0.22rem; border-left-width: 1px; }
+      .sent-en { font-size: 0.72rem; line-height: 1.28; }
+      .sent-fr { margin-top: 0.06rem; font-size: 0.7rem; line-height: 1.28; }
+      .footer-note { font-size: 0.72rem; margin-top: 0.45rem; }
+    }
 
-/* Card scene */
-#scene{width:min(460px,96vw);height:280px;perspective:1000px;cursor:pointer;touch-action:pan-y;margin-bottom:14px}
-.inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s ease}
-.inner.flipped{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;background:var(--card);border:1.5px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.09);padding:24px 26px;display:flex;flex-direction:column;justify-content:center;user-select:none;-webkit-user-select:none}
-.back-face{transform:rotateY(180deg)}
-
-/* Front face */
-.card-num{font-size:.72rem;color:var(--muted);margin-bottom:8px}
-.verb-lemma{font-size:2.6rem;font-weight:800;color:var(--accent);margin-bottom:10px;line-height:1.1}
-.verb-gloss{font-size:.92rem;color:var(--muted);line-height:1.6}
-.flip-hint{margin-top:12px;font-size:.7rem;color:#aab;text-align:center}
-
-/* Back face */
-.perfectum-label{font-size:.72rem;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
-.perfectum-value{font-size:2rem;font-weight:800;color:var(--green);line-height:1.2;margin-bottom:8px}
-.perfectum-note{font-size:.8rem;color:var(--muted);font-style:italic;margin-top:4px}
-
-/* Toolbar */
-#toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;width:min(460px,96vw)}
-.nav-btn{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:.9rem;cursor:pointer;font-weight:700;touch-action:manipulation;min-height:44px}
-.nav-btn:hover{background:var(--accent);color:#fff}
-#counter{font-size:.88rem;color:var(--muted);min-width:60px;text-align:center}
-#goto-input{width:52px;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:.85rem;text-align:center}
-.go-btn{padding:6px 12px;border:1.5px solid var(--accent);border-radius:6px;background:var(--accent);color:#fff;font-size:.82rem;cursor:pointer}
-
-.byline{position:fixed;bottom:10px;right:14px;font-size:.65rem;color:var(--muted);opacity:.55;pointer-events:none}
-</style>
+    @media (max-width: 480px) and (max-height: 560px) {
+      .hint { display: none; }
+      h1 { font-size: 1.05rem; }
+      .toolbar { margin-bottom: 0.3rem; }
+      .goto-bar { margin: 0.15rem auto 0.25rem; }
+      .inner {
+        height: min(78dvh, calc(100dvh - 4.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+        max-height: min(78dvh, calc(100dvh - 4.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
+      }
+      .tense-value { font-size: 0.9rem; }
+      .sent-nl { font-size: 0.74rem; }
+      .sent-en, .sent-fr { font-size: 0.68rem; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="app-header">
+<h1>📝 Sandra 2.1 – Irreguliere Verba</h1>
+<p class="hint">Tik op de kaart om te draaien · tap to flip · ← → to navigate · Space to flip</p>
+
+<div class="toolbar">
   <button id="home-btn" onclick="window.location='index.html'">← Home</button>
-  <span class="app-title">📝 Sandra 2.1 – Irreguliere Verba</span>
-</div>
-
-<div id="toolbar">
-  <button class="nav-btn" id="prev-btn">&#9664;</button>
+  <button id="prev-btn">&#9664;</button>
   <span id="counter">1 / 55</span>
-  <button class="nav-btn" id="next-btn">&#9654;</button>
-  <input id="goto-input" type="number" min="1" max="55" placeholder="#">
-  <button class="go-btn" id="goto-btn">Go</button>
+  <button id="next-btn">&#9654;</button>
 </div>
 
-<div id="scene">
-  <div class="inner" id="inner">
-    <div class="face front-face" id="front"></div>
-    <div class="face back-face"  id="back"></div>
-  </div>
+<div class="goto-bar">
+  <input id="goto-input" type="number" min="1" max="55" placeholder="# (1–55)"/>
+  <button id="goto-btn">Go →</button>
 </div>
 
-<p class="byline">by Fatima Lokhandwala</p>
+<div class="viewer" id="viewer"></div>
+
+<p class="footer-note">by Fatima Lokhandwala</p>
 
 <script>
 const VERBS = [
-  // [infinitive, EN gloss, FR gloss, perfectum display, note]
-  ["aandoen",      "to put on",                  "mettre",                       "heeft/hebben aangedaan",   ""],
-  ["aankomen",     "to arrive",                  "arriver",                      "is/zijn aangekomen",       ""],
-  ["afwassen",     "to wash up",                 "faire la vaisselle",           "heeft/hebben afgewassen",  ""],
-  ["bakken",       "to bake / fry",              "faire cuire",                  "heeft/hebben gebakken",    ""],
-  ["beginnen",     "to begin",                   "commencer",                    "is/zijn begonnen",         ""],
-  ["begrijpen",    "to understand",              "comprendre",                   "heeft/hebben begrepen",    ""],
-  ["bezoeken",     "to visit",                   "visiter",                      "heeft/hebben bezocht",     ""],
-  ["blijven",      "to stay",                    "rester",                       "is/zijn gebleven",         ""],
-  ["brengen",      "to bring",                   "apporter",                     "heeft/hebben gebracht",    ""],
-  ["denken",       "to think",                   "penser",                       "heeft/hebben gedacht",     ""],
-  ["doen",         "to do",                      "faire",                        "heeft/hebben gedaan",      ""],
-  ["dragen",       "to carry / wear",            "porter",                       "heeft/hebben gedragen",    ""],
-  ["drinken",      "to drink",                   "boire",                        "heeft/hebben gedronken",   ""],
-  ["eten",         "to eat",                     "manger",                       "heeft/hebben gegeten",     ""],
-  ["gaan",         "to go",                      "aller",                        "is/zijn gegaan",           ""],
-  ["geven",        "to give",                    "donner",                       "heeft/hebben gegeven",     ""],
-  ["hebben",       "to have",                    "avoir",                        "heeft/hebben gehad",       ""],
-  ["helpen",       "to help",                    "aider",                        "heeft/hebben geholpen",    ""],
-  ["kiezen",       "to choose",                  "choisir",                      "heeft/hebben gekozen",     ""],
-  ["kijken (naar)","to look (at)",               "regarder",                     "heeft/hebben gekeken",     ""],
-  ["komen",        "to come",                    "venir",                        "is/zijn gekomen",          ""],
-  ["kopen",        "to buy",                     "acheter",                      "heeft/hebben gekocht",     ""],
-  ["krijgen",      "to receive / get",           "recevoir",                     "heeft/hebben gekregen",    ""],
-  ["lezen",        "to read",                    "lire",                         "heeft/hebben gelezen",     ""],
-  ["liggen",       "to lie",                     "être allongé(e)",              "heeft/hebben gelegen",     ""],
-  ["lopen",        "to walk / run",              "marcher / courir",             "heeft/hebben gelopen",     "(zijn) gelopen naar … (bestemming)"],
-  ["nemen",        "to take",                    "prendre",                      "heeft/hebben genomen",     ""],
-  ["ontbijten",    "to have breakfast",          "prendre le petit-déjeuner",   "heeft/hebben ontbeten",    ""],
-  ["opstaan",      "to get up",                  "se lever",                     "is/zijn opgestaan",        ""],
-  ["rijden",       "to drive / ride",            "conduire / rouler",            "heeft/hebben gereden",     "(zijn) gereden naar … (bestemming)"],
-  ["roepen",       "to call / shout",            "appeler / crier",              "heeft/hebben geroepen",    ""],
-  ["scheiden",     "to separate / divorce",      "se séparer",                   "is/zijn gescheiden",       ""],
-  ["schrijven",    "to write",                   "écrire",                       "heeft/hebben geschreven",  ""],
-  ["slapen",       "to sleep",                   "dormir",                       "heeft/hebben geslapen",    ""],
-  ["sluiten",      "to close",                   "fermer",                       "heeft/hebben gesloten",    ""],
-  ["snijden",      "to cut",                     "couper",                       "heeft/hebben gesneden",    ""],
-  ["spreken",      "to speak",                   "parler",                       "heeft/hebben gesproken",   ""],
-  ["strijken",     "to iron",                    "repasser",                     "heeft/hebben gestreken",   ""],
-  ["uitdoen",      "to take off (clothing)",     "enlever",                      "heeft/hebben uitgedaan",   ""],
-  ["vallen",       "to fall",                    "tomber",                       "is/zijn gevallen",         ""],
-  ["vergeten",     "to forget",                  "oublier",                      "heeft/hebben vergeten",    "(zijn) vergeten — persoon / idee"],
-  ["verkopen",     "to sell",                    "vendre",                       "heeft/hebben verkocht",    ""],
-  ["verliezen",    "to lose",                    "perdre",                       "heeft/hebben verloren",    ""],
-  ["vertrekken",   "to leave / depart",          "partir",                       "is/zijn vertrokken",       ""],
-  ["vinden",       "to find",                    "trouver",                      "heeft/hebben gevonden",    ""],
-  ["wassen",       "to wash",                    "laver",                        "heeft/hebben gewassen",    ""],
-  ["weten",        "to know",                    "savoir",                       "heeft/hebben geweten",     ""],
-  ["winnen",       "to win",                     "gagner",                       "heeft/hebben gewonnen",    ""],
-  ["worden",       "to become",                  "devenir",                      "is/zijn geworden",         ""],
-  ["zien",         "to see",                     "voir",                         "heeft/hebben gezien",      ""],
-  ["zijn",         "to be",                      "être",                         "is/zijn geweest",          ""],
-  ["zingen",       "to sing",                    "chanter",                      "heeft/hebben gezongen",    ""],
-  ["zitten",       "to sit",                     "être assis(e)",                "heeft/hebben gezeten",     ""],
-  ["zoeken",       "to look for",                "chercher",                     "heeft/hebben gezocht",     ""],
-  ["zwemmen",      "to swim",                    "nager",                        "heeft/hebben gezwommen",   ""],
+  {
+    nl:"aandoen", en:"to put on", fr:"mettre",
+    vtt:"heeft/hebben aangedaan", ovt:"deed aan · deden aan",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn jas aangedaan.","I put my coat on.","J'ai mis mon manteau."],
+        pl:["Wij hebben onze jassen aangedaan.","We put our coats on.","Nous avons mis nos manteaux."]
+      },
+      ovt:{
+        sg:["Ik deed mijn jas aan.","I put my coat on.","Je mettais mon manteau."],
+        pl:["Wij deden onze jassen aan.","We put our coats on.","Nous mettions nos manteaux."]
+      }
+    }
+  },
+  {
+    nl:"aankomen", en:"to arrive", fr:"arriver",
+    vtt:"is/zijn aangekomen", ovt:"kwam aan · kwamen aan",
+    s:{
+      vtt:{
+        sg:["De trein is om negen uur aangekomen.","The train arrived at nine.","Le train est arrivé à neuf heures."],
+        pl:["Zij zijn laat aangekomen.","They arrived late.","Ils sont arrivés en retard."]
+      },
+      ovt:{
+        sg:["De trein kwam om negen uur aan.","The train arrived at nine.","Le train arrivait à neuf heures."],
+        pl:["Zij kwamen laat aan.","They arrived late.","Ils arrivaient en retard."]
+      }
+    }
+  },
+  {
+    nl:"afwassen", en:"to wash up", fr:"faire la vaisselle",
+    vtt:"heeft/hebben afgewassen", ovt:"waste af · wasten af",
+    s:{
+      vtt:{
+        sg:["Ik heb de borden afgewassen.","I washed the dishes.","J'ai fait la vaisselle."],
+        pl:["Wij hebben samen afgewassen.","We washed up together.","Nous avons fait la vaisselle ensemble."]
+      },
+      ovt:{
+        sg:["Ik waste de borden af.","I washed the dishes.","Je faisais la vaisselle."],
+        pl:["Wij wasten samen af.","We washed up together.","Nous faisions la vaisselle ensemble."]
+      }
+    }
+  },
+  {
+    nl:"bakken", en:"to bake / fry", fr:"faire cuire",
+    vtt:"heeft/hebben gebakken", ovt:"bakte · bakten",
+    s:{
+      vtt:{
+        sg:["Ik heb een taart gebakken.","I baked a cake.","J'ai fait un gâteau."],
+        pl:["Zij hebben eieren gebakken.","They fried eggs.","Ils ont fait des œufs."]
+      },
+      ovt:{
+        sg:["Ik bakte een taart.","I baked a cake.","Je faisais un gâteau."],
+        pl:["Zij bakten eieren.","They fried eggs.","Ils faisaient des œufs."]
+      }
+    }
+  },
+  {
+    nl:"beginnen", en:"to begin", fr:"commencer",
+    vtt:"is/zijn begonnen", ovt:"begon · begonnen",
+    s:{
+      vtt:{
+        sg:["De les is om tien uur begonnen.","The class began at ten.","Le cours a commencé à dix heures."],
+        pl:["Zij zijn laat begonnen.","They started late.","Ils ont commencé en retard."]
+      },
+      ovt:{
+        sg:["De les begon om tien uur.","The class began at ten.","Le cours commençait à dix heures."],
+        pl:["Zij begonnen laat.","They started late.","Ils commençaient en retard."]
+      }
+    }
+  },
+  {
+    nl:"begrijpen", en:"to understand", fr:"comprendre",
+    vtt:"heeft/hebben begrepen", ovt:"begreep · begrepen",
+    s:{
+      vtt:{
+        sg:["Ik heb de vraag begrepen.","I understood the question.","J'ai compris la question."],
+        pl:["Wij hebben alles begrepen.","We understood everything.","Nous avons tout compris."]
+      },
+      ovt:{
+        sg:["Ik begreep de vraag.","I understood the question.","Je comprenais la question."],
+        pl:["Wij begrepen alles.","We understood everything.","Nous comprenions tout."]
+      }
+    }
+  },
+  {
+    nl:"bezoeken", en:"to visit", fr:"visiter",
+    vtt:"heeft/hebben bezocht", ovt:"bezocht · bezochten",
+    s:{
+      vtt:{
+        sg:["Ik heb het museum bezocht.","I visited the museum.","J'ai visité le musée."],
+        pl:["Zij hebben hun familie bezocht.","They visited their family.","Ils ont rendu visite à leur famille."]
+      },
+      ovt:{
+        sg:["Ik bezocht het museum.","I visited the museum.","Je visitais le musée."],
+        pl:["Zij bezochten hun familie.","They visited their family.","Ils rendaient visite à leur famille."]
+      }
+    }
+  },
+  {
+    nl:"blijven", en:"to stay", fr:"rester",
+    vtt:"is/zijn gebleven", ovt:"bleef · bleven",
+    s:{
+      vtt:{
+        sg:["Ik ben thuis gebleven.","I stayed home.","Je suis resté(e) à la maison."],
+        pl:["Zij zijn lang gebleven.","They stayed long.","Ils sont restés longtemps."]
+      },
+      ovt:{
+        sg:["Ik bleef thuis.","I stayed home.","Je restais à la maison."],
+        pl:["Zij bleven lang.","They stayed long.","Ils restaient longtemps."]
+      }
+    }
+  },
+  {
+    nl:"brengen", en:"to bring", fr:"apporter",
+    vtt:"heeft/hebben gebracht", ovt:"bracht · brachten",
+    s:{
+      vtt:{
+        sg:["Ik heb een cadeau gebracht.","I brought a gift.","J'ai apporté un cadeau."],
+        pl:["Wij hebben eten gebracht.","We brought food.","Nous avons apporté de la nourriture."]
+      },
+      ovt:{
+        sg:["Ik bracht een cadeau.","I brought a gift.","J'apportais un cadeau."],
+        pl:["Wij brachten eten.","We brought food.","Nous apportions de la nourriture."]
+      }
+    }
+  },
+  {
+    nl:"denken", en:"to think", fr:"penser",
+    vtt:"heeft/hebben gedacht", ovt:"dacht · dachten",
+    s:{
+      vtt:{
+        sg:["Ik heb er goed over gedacht.","I thought about it carefully.","J'y ai bien réfléchi."],
+        pl:["Zij hebben hetzelfde gedacht.","They thought the same thing.","Ils ont pensé la même chose."]
+      },
+      ovt:{
+        sg:["Ik dacht er goed over na.","I thought about it carefully.","Je réfléchissais bien."],
+        pl:["Zij dachten hetzelfde.","They thought the same thing.","Ils pensaient la même chose."]
+      }
+    }
+  },
+  {
+    nl:"doen", en:"to do", fr:"faire",
+    vtt:"heeft/hebben gedaan", ovt:"deed · deden",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn best gedaan.","I did my best.","J'ai fait de mon mieux."],
+        pl:["Wij hebben ons huiswerk gedaan.","We did our homework.","Nous avons fait nos devoirs."]
+      },
+      ovt:{
+        sg:["Ik deed mijn best.","I did my best.","Je faisais de mon mieux."],
+        pl:["Wij deden ons huiswerk.","We did our homework.","Nous faisions nos devoirs."]
+      }
+    }
+  },
+  {
+    nl:"dragen", en:"to carry / wear", fr:"porter",
+    vtt:"heeft/hebben gedragen", ovt:"droeg · droegen",
+    s:{
+      vtt:{
+        sg:["Ik heb een blauwe jurk gedragen.","I wore a blue dress.","J'ai porté une robe bleue."],
+        pl:["Zij hebben zware tassen gedragen.","They carried heavy bags.","Ils ont porté de lourds sacs."]
+      },
+      ovt:{
+        sg:["Ik droeg een blauwe jurk.","I wore a blue dress.","Je portais une robe bleue."],
+        pl:["Zij droegen zware tassen.","They carried heavy bags.","Ils portaient de lourds sacs."]
+      }
+    }
+  },
+  {
+    nl:"drinken", en:"to drink", fr:"boire",
+    vtt:"heeft/hebben gedronken", ovt:"dronk · dronken",
+    s:{
+      vtt:{
+        sg:["Ik heb koffie gedronken.","I drank coffee.","J'ai bu du café."],
+        pl:["Wij hebben thee gedronken.","We drank tea.","Nous avons bu du thé."]
+      },
+      ovt:{
+        sg:["Ik dronk koffie.","I drank coffee.","Je buvais du café."],
+        pl:["Wij dronken thee.","We drank tea.","Nous buvions du thé."]
+      }
+    }
+  },
+  {
+    nl:"eten", en:"to eat", fr:"manger",
+    vtt:"heeft/hebben gegeten", ovt:"at · aten",
+    s:{
+      vtt:{
+        sg:["Ik heb een broodje gegeten.","I ate a sandwich.","J'ai mangé un sandwich."],
+        pl:["Wij hebben samen gegeten.","We ate together.","Nous avons mangé ensemble."]
+      },
+      ovt:{
+        sg:["Ik at een broodje.","I ate a sandwich.","Je mangeais un sandwich."],
+        pl:["Wij aten samen.","We ate together.","Nous mangions ensemble."]
+      }
+    }
+  },
+  {
+    nl:"gaan", en:"to go", fr:"aller",
+    vtt:"is/zijn gegaan", ovt:"ging · gingen",
+    s:{
+      vtt:{
+        sg:["Ik ben naar school gegaan.","I went to school.","Je suis allé(e) à l'école."],
+        pl:["Zij zijn samen gegaan.","They went together.","Ils sont allés ensemble."]
+      },
+      ovt:{
+        sg:["Ik ging naar school.","I went to school.","J'allais à l'école."],
+        pl:["Zij gingen samen.","They went together.","Ils allaient ensemble."]
+      }
+    }
+  },
+  {
+    nl:"geven", en:"to give", fr:"donner",
+    vtt:"heeft/hebben gegeven", ovt:"gaf · gaven",
+    s:{
+      vtt:{
+        sg:["Ik heb haar een boek gegeven.","I gave her a book.","Je lui ai donné un livre."],
+        pl:["Wij hebben cadeaus gegeven.","We gave gifts.","Nous avons donné des cadeaux."]
+      },
+      ovt:{
+        sg:["Ik gaf haar een boek.","I gave her a book.","Je lui donnais un livre."],
+        pl:["Wij gaven cadeaus.","We gave gifts.","Nous donnions des cadeaux."]
+      }
+    }
+  },
+  {
+    nl:"hebben", en:"to have", fr:"avoir",
+    vtt:"heeft/hebben gehad", ovt:"had · hadden",
+    s:{
+      vtt:{
+        sg:["Ik heb honger gehad.","I was hungry.","J'ai eu faim."],
+        pl:["Wij hebben het druk gehad.","We have been busy.","Nous avons été occupés."]
+      },
+      ovt:{
+        sg:["Ik had honger.","I was hungry.","J'avais faim."],
+        pl:["Wij hadden het druk.","We were busy.","Nous étions occupés."]
+      }
+    }
+  },
+  {
+    nl:"helpen", en:"to help", fr:"aider",
+    vtt:"heeft/hebben geholpen", ovt:"hielp · hielpen",
+    s:{
+      vtt:{
+        sg:["Ik heb haar geholpen.","I helped her.","Je l'ai aidée."],
+        pl:["Wij hebben samen geholpen.","We helped together.","Nous avons aidé ensemble."]
+      },
+      ovt:{
+        sg:["Ik hielp haar.","I helped her.","J'aidais."],
+        pl:["Wij hielpen samen.","We helped together.","Nous aidions ensemble."]
+      }
+    }
+  },
+  {
+    nl:"kiezen", en:"to choose", fr:"choisir",
+    vtt:"heeft/hebben gekozen", ovt:"koos · kozen",
+    s:{
+      vtt:{
+        sg:["Ik heb het rode gekozen.","I chose the red one.","J'ai choisi le rouge."],
+        pl:["Wij hebben samen gekozen.","We chose together.","Nous avons choisi ensemble."]
+      },
+      ovt:{
+        sg:["Ik koos het rode.","I chose the red one.","Je choisissais le rouge."],
+        pl:["Wij kozen samen.","We chose together.","Nous choisissions ensemble."]
+      }
+    }
+  },
+  {
+    nl:"kijken (naar)", en:"to look (at)", fr:"regarder",
+    vtt:"heeft/hebben gekeken", ovt:"keek · keken",
+    s:{
+      vtt:{
+        sg:["Ik heb naar de film gekeken.","I watched the film.","J'ai regardé le film."],
+        pl:["Wij hebben samen tv gekeken.","We watched TV together.","Nous avons regardé la télé ensemble."]
+      },
+      ovt:{
+        sg:["Ik keek naar de film.","I watched the film.","Je regardais le film."],
+        pl:["Wij keken samen tv.","We watched TV together.","Nous regardions la télé ensemble."]
+      }
+    }
+  },
+  {
+    nl:"komen", en:"to come", fr:"venir",
+    vtt:"is/zijn gekomen", ovt:"kwam · kwamen",
+    s:{
+      vtt:{
+        sg:["Hij is laat gekomen.","He came late.","Il est venu en retard."],
+        pl:["Zij zijn samen gekomen.","They came together.","Ils sont venus ensemble."]
+      },
+      ovt:{
+        sg:["Hij kwam laat.","He came late.","Il venait en retard."],
+        pl:["Zij kwamen samen.","They came together.","Ils venaient ensemble."]
+      }
+    }
+  },
+  {
+    nl:"kopen", en:"to buy", fr:"acheter",
+    vtt:"heeft/hebben gekocht", ovt:"kocht · kochten",
+    s:{
+      vtt:{
+        sg:["Ik heb een boek gekocht.","I bought a book.","J'ai acheté un livre."],
+        pl:["Wij hebben nieuwe schoenen gekocht.","We bought new shoes.","Nous avons acheté de nouvelles chaussures."]
+      },
+      ovt:{
+        sg:["Ik kocht een boek.","I bought a book.","J'achetais un livre."],
+        pl:["Wij kochten nieuwe schoenen.","We bought new shoes.","Nous achetions de nouvelles chaussures."]
+      }
+    }
+  },
+  {
+    nl:"krijgen", en:"to receive / get", fr:"recevoir",
+    vtt:"heeft/hebben gekregen", ovt:"kreeg · kregen",
+    s:{
+      vtt:{
+        sg:["Ik heb een brief gekregen.","I received a letter.","J'ai reçu une lettre."],
+        pl:["Wij hebben goed nieuws gekregen.","We received good news.","Nous avons reçu de bonnes nouvelles."]
+      },
+      ovt:{
+        sg:["Ik kreeg een brief.","I received a letter.","Je recevais une lettre."],
+        pl:["Wij kregen goed nieuws.","We received good news.","Nous recevions de bonnes nouvelles."]
+      }
+    }
+  },
+  {
+    nl:"lezen", en:"to read", fr:"lire",
+    vtt:"heeft/hebben gelezen", ovt:"las · lazen",
+    s:{
+      vtt:{
+        sg:["Ik heb het boek gelezen.","I read the book.","J'ai lu le livre."],
+        pl:["Wij hebben hetzelfde artikel gelezen.","We read the same article.","Nous avons lu le même article."]
+      },
+      ovt:{
+        sg:["Ik las het boek.","I read the book.","Je lisais le livre."],
+        pl:["Wij lazen hetzelfde artikel.","We read the same article.","Nous lisions le même article."]
+      }
+    }
+  },
+  {
+    nl:"liggen", en:"to lie", fr:"être allongé(e)",
+    vtt:"heeft/hebben gelegen", ovt:"lag · lagen",
+    s:{
+      vtt:{
+        sg:["Ik heb op het strand gelegen.","I lay on the beach.","J'ai été allongé(e) sur la plage."],
+        pl:["De boeken hebben op tafel gelegen.","The books lay on the table.","Les livres ont été sur la table."]
+      },
+      ovt:{
+        sg:["Ik lag op het strand.","I lay on the beach.","J'étais allongé(e) sur la plage."],
+        pl:["De boeken lagen op tafel.","The books lay on the table.","Les livres étaient sur la table."]
+      }
+    }
+  },
+  {
+    nl:"lopen", en:"to walk / run", fr:"marcher / courir",
+    vtt:"heeft/hebben gelopen", ovt:"liep · liepen",
+    note:"(zijn) gelopen naar … (bestemming)",
+    s:{
+      vtt:{
+        sg:["Ik heb een uur gelopen.","I walked for an hour.","J'ai marché une heure."],
+        pl:["Wij hebben samen gelopen.","We walked together.","Nous avons marché ensemble."]
+      },
+      ovt:{
+        sg:["Ik liep een uur.","I walked for an hour.","Je marchais depuis une heure."],
+        pl:["Wij liepen samen.","We walked together.","Nous marchions ensemble."]
+      }
+    }
+  },
+  {
+    nl:"nemen", en:"to take", fr:"prendre",
+    vtt:"heeft/hebben genomen", ovt:"nam · namen",
+    s:{
+      vtt:{
+        sg:["Ik heb de bus genomen.","I took the bus.","J'ai pris le bus."],
+        pl:["Wij hebben de trein genomen.","We took the train.","Nous avons pris le train."]
+      },
+      ovt:{
+        sg:["Ik nam de bus.","I took the bus.","Je prenais le bus."],
+        pl:["Wij namen de trein.","We took the train.","Nous prenions le train."]
+      }
+    }
+  },
+  {
+    nl:"ontbijten", en:"to have breakfast", fr:"prendre le petit-déjeuner",
+    vtt:"heeft/hebben ontbeten", ovt:"ontbeet · ontbeten",
+    s:{
+      vtt:{
+        sg:["Ik heb vroeg ontbeten.","I had breakfast early.","J'ai pris le petit-déjeuner tôt."],
+        pl:["Wij hebben samen ontbeten.","We had breakfast together.","Nous avons pris le petit-déjeuner ensemble."]
+      },
+      ovt:{
+        sg:["Ik ontbeet vroeg.","I had breakfast early.","Je prenais le petit-déjeuner tôt."],
+        pl:["Wij ontbeten samen.","We had breakfast together.","Nous prenions le petit-déjeuner ensemble."]
+      }
+    }
+  },
+  {
+    nl:"opstaan", en:"to get up", fr:"se lever",
+    vtt:"is/zijn opgestaan", ovt:"stond op · stonden op",
+    s:{
+      vtt:{
+        sg:["Ik ben vroeg opgestaan.","I got up early.","Je me suis levé(e) tôt."],
+        pl:["Zij zijn laat opgestaan.","They got up late.","Ils se sont levés en retard."]
+      },
+      ovt:{
+        sg:["Ik stond vroeg op.","I got up early.","Je me levais tôt."],
+        pl:["Zij stonden laat op.","They got up late.","Ils se levaient en retard."]
+      }
+    }
+  },
+  {
+    nl:"rijden", en:"to drive / ride", fr:"conduire / rouler",
+    vtt:"heeft/hebben gereden", ovt:"reed · reden",
+    note:"(zijn) gereden naar … (bestemming)",
+    s:{
+      vtt:{
+        sg:["Ik heb twee uur gereden.","I drove for two hours.","J'ai conduit deux heures."],
+        pl:["Wij hebben samen naar Amsterdam gereden.","We drove to Amsterdam together.","Nous avons conduit vers Amsterdam ensemble."]
+      },
+      ovt:{
+        sg:["Ik reed twee uur.","I drove for two hours.","Je conduisais depuis deux heures."],
+        pl:["Wij reden samen naar Amsterdam.","We drove to Amsterdam together.","Nous conduisions vers Amsterdam ensemble."]
+      }
+    }
+  },
+  {
+    nl:"roepen", en:"to call / shout", fr:"appeler / crier",
+    vtt:"heeft/hebben geroepen", ovt:"riep · riepen",
+    s:{
+      vtt:{
+        sg:["Ik heb om hulp geroepen.","I called for help.","J'ai appelé à l'aide."],
+        pl:["De kinderen hebben hard geroepen.","The children shouted loudly.","Les enfants ont crié fort."]
+      },
+      ovt:{
+        sg:["Ik riep om hulp.","I called for help.","J'appelais à l'aide."],
+        pl:["De kinderen riepen hard.","The children shouted loudly.","Les enfants criaient fort."]
+      }
+    }
+  },
+  {
+    nl:"scheiden", en:"to separate / divorce", fr:"se séparer",
+    vtt:"is/zijn gescheiden", ovt:"scheidde · scheidden",
+    s:{
+      vtt:{
+        sg:["Hij is vorig jaar gescheiden.","He divorced last year.","Il a divorcé l'année dernière."],
+        pl:["Zij zijn na tien jaar gescheiden.","They divorced after ten years.","Ils ont divorcé après dix ans."]
+      },
+      ovt:{
+        sg:["Hij scheidde vorig jaar.","He divorced last year.","Il divorçait l'année dernière."],
+        pl:["Zij scheidden na tien jaar.","They divorced after ten years.","Ils divorçaient après dix ans."]
+      }
+    }
+  },
+  {
+    nl:"schrijven", en:"to write", fr:"écrire",
+    vtt:"heeft/hebben geschreven", ovt:"schreef · schreven",
+    s:{
+      vtt:{
+        sg:["Ik heb een brief geschreven.","I wrote a letter.","J'ai écrit une lettre."],
+        pl:["Wij hebben een rapport geschreven.","We wrote a report.","Nous avons écrit un rapport."]
+      },
+      ovt:{
+        sg:["Ik schreef een brief.","I wrote a letter.","J'écrivais une lettre."],
+        pl:["Wij schreven een rapport.","We wrote a report.","Nous écrivions un rapport."]
+      }
+    }
+  },
+  {
+    nl:"slapen", en:"to sleep", fr:"dormir",
+    vtt:"heeft/hebben geslapen", ovt:"sliep · sliepen",
+    s:{
+      vtt:{
+        sg:["Ik heb goed geslapen.","I slept well.","J'ai bien dormi."],
+        pl:["De kinderen hebben lang geslapen.","The children slept long.","Les enfants ont dormi longtemps."]
+      },
+      ovt:{
+        sg:["Ik sliep goed.","I slept well.","Je dormais bien."],
+        pl:["De kinderen sliepen lang.","The children slept long.","Les enfants dormaient longtemps."]
+      }
+    }
+  },
+  {
+    nl:"sluiten", en:"to close", fr:"fermer",
+    vtt:"heeft/hebben gesloten", ovt:"sloot · sloten",
+    s:{
+      vtt:{
+        sg:["Ik heb de deur gesloten.","I closed the door.","J'ai fermé la porte."],
+        pl:["Wij hebben de ramen gesloten.","We closed the windows.","Nous avons fermé les fenêtres."]
+      },
+      ovt:{
+        sg:["Ik sloot de deur.","I closed the door.","Je fermais la porte."],
+        pl:["Wij sloten de ramen.","We closed the windows.","Nous fermions les fenêtres."]
+      }
+    }
+  },
+  {
+    nl:"snijden", en:"to cut", fr:"couper",
+    vtt:"heeft/hebben gesneden", ovt:"sneed · sneden",
+    s:{
+      vtt:{
+        sg:["Ik heb het brood gesneden.","I cut the bread.","J'ai coupé le pain."],
+        pl:["Wij hebben de groenten gesneden.","We cut the vegetables.","Nous avons coupé les légumes."]
+      },
+      ovt:{
+        sg:["Ik sneed het brood.","I cut the bread.","Je coupais le pain."],
+        pl:["Wij sneden de groenten.","We cut the vegetables.","Nous coupions les légumes."]
+      }
+    }
+  },
+  {
+    nl:"spreken", en:"to speak", fr:"parler",
+    vtt:"heeft/hebben gesproken", ovt:"sprak · spraken",
+    s:{
+      vtt:{
+        sg:["Ik heb met hem gesproken.","I spoke with him.","J'ai parlé avec lui."],
+        pl:["Wij hebben over de plannen gesproken.","We discussed the plans.","Nous avons parlé des projets."]
+      },
+      ovt:{
+        sg:["Ik sprak met hem.","I spoke with him.","Je parlais avec lui."],
+        pl:["Wij spraken over de plannen.","We discussed the plans.","Nous parlions des projets."]
+      }
+    }
+  },
+  {
+    nl:"strijken", en:"to iron", fr:"repasser",
+    vtt:"heeft/hebben gestreken", ovt:"streek · streken",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn hemd gestreken.","I ironed my shirt.","J'ai repassé ma chemise."],
+        pl:["Wij hebben de kleren gestreken.","We ironed the clothes.","Nous avons repassé les vêtements."]
+      },
+      ovt:{
+        sg:["Ik streek mijn hemd.","I ironed my shirt.","Je repassais ma chemise."],
+        pl:["Wij streken de kleren.","We ironed the clothes.","Nous repassions les vêtements."]
+      }
+    }
+  },
+  {
+    nl:"uitdoen", en:"to take off (clothing)", fr:"enlever",
+    vtt:"heeft/hebben uitgedaan", ovt:"deed uit · deden uit",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn jas uitgedaan.","I took off my coat.","J'ai enlevé mon manteau."],
+        pl:["Wij hebben onze schoenen uitgedaan.","We took off our shoes.","Nous avons enlevé nos chaussures."]
+      },
+      ovt:{
+        sg:["Ik deed mijn jas uit.","I took off my coat.","J'enlevais mon manteau."],
+        pl:["Wij deden onze schoenen uit.","We took off our shoes.","Nous enlevions nos chaussures."]
+      }
+    }
+  },
+  {
+    nl:"vallen", en:"to fall", fr:"tomber",
+    vtt:"is/zijn gevallen", ovt:"viel · vielen",
+    s:{
+      vtt:{
+        sg:["Ik ben van de trap gevallen.","I fell down the stairs.","Je suis tombé(e) dans les escaliers."],
+        pl:["De bladeren zijn gevallen.","The leaves fell.","Les feuilles sont tombées."]
+      },
+      ovt:{
+        sg:["Ik viel van de trap.","I fell down the stairs.","Je tombais dans les escaliers."],
+        pl:["De bladeren vielen.","The leaves fell.","Les feuilles tombaient."]
+      }
+    }
+  },
+  {
+    nl:"vergeten", en:"to forget", fr:"oublier",
+    vtt:"heeft/hebben vergeten", ovt:"vergat · vergaten",
+    note:"(zijn) vergeten — persoon / idee",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn sleutels vergeten.","I forgot my keys.","J'ai oublié mes clés."],
+        pl:["Wij hebben de afspraak vergeten.","We forgot the appointment.","Nous avons oublié le rendez-vous."]
+      },
+      ovt:{
+        sg:["Ik vergat mijn sleutels.","I forgot my keys.","J'oubliais mes clés."],
+        pl:["Wij vergaten de afspraak.","We forgot the appointment.","Nous oubliions le rendez-vous."]
+      }
+    }
+  },
+  {
+    nl:"verkopen", en:"to sell", fr:"vendre",
+    vtt:"heeft/hebben verkocht", ovt:"verkocht · verkochten",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn auto verkocht.","I sold my car.","J'ai vendu ma voiture."],
+        pl:["Zij hebben hun huis verkocht.","They sold their house.","Ils ont vendu leur maison."]
+      },
+      ovt:{
+        sg:["Ik verkocht mijn auto.","I sold my car.","Je vendais ma voiture."],
+        pl:["Zij verkochten hun huis.","They sold their house.","Ils vendaient leur maison."]
+      }
+    }
+  },
+  {
+    nl:"verliezen", en:"to lose", fr:"perdre",
+    vtt:"heeft/hebben verloren", ovt:"verloor · verloren",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn portemonnee verloren.","I lost my wallet.","J'ai perdu mon portefeuille."],
+        pl:["Wij hebben de wedstrijd verloren.","We lost the match.","Nous avons perdu le match."]
+      },
+      ovt:{
+        sg:["Ik verloor mijn portemonnee.","I lost my wallet.","Je perdais mon portefeuille."],
+        pl:["Wij verloren de wedstrijd.","We lost the match.","Nous perdions le match."]
+      }
+    }
+  },
+  {
+    nl:"vertrekken", en:"to leave / depart", fr:"partir",
+    vtt:"is/zijn vertrokken", ovt:"vertrok · vertrokken",
+    s:{
+      vtt:{
+        sg:["De trein is om acht uur vertrokken.","The train departed at eight.","Le train est parti à huit heures."],
+        pl:["Zij zijn vroeg vertrokken.","They left early.","Ils sont partis tôt."]
+      },
+      ovt:{
+        sg:["De trein vertrok om acht uur.","The train departed at eight.","Le train partait à huit heures."],
+        pl:["Zij vertrokken vroeg.","They left early.","Ils partaient tôt."]
+      }
+    }
+  },
+  {
+    nl:"vinden", en:"to find", fr:"trouver",
+    vtt:"heeft/hebben gevonden", ovt:"vond · vonden",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn sleutels gevonden.","I found my keys.","J'ai trouvé mes clés."],
+        pl:["Wij hebben een oplossing gevonden.","We found a solution.","Nous avons trouvé une solution."]
+      },
+      ovt:{
+        sg:["Ik vond mijn sleutels.","I found my keys.","Je trouvais mes clés."],
+        pl:["Wij vonden een oplossing.","We found a solution.","Nous trouvions une solution."]
+      }
+    }
+  },
+  {
+    nl:"wassen", en:"to wash", fr:"laver",
+    vtt:"heeft/hebben gewassen", ovt:"waste · wasten",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn haar gewassen.","I washed my hair.","J'ai lavé mes cheveux."],
+        pl:["Wij hebben de auto gewassen.","We washed the car.","Nous avons lavé la voiture."]
+      },
+      ovt:{
+        sg:["Ik waste mijn haar.","I washed my hair.","Je lavais mes cheveux."],
+        pl:["Wij wasten de auto.","We washed the car.","Nous lavions la voiture."]
+      }
+    }
+  },
+  {
+    nl:"weten", en:"to know", fr:"savoir",
+    vtt:"heeft/hebben geweten", ovt:"wist · wisten",
+    s:{
+      vtt:{
+        sg:["Ik heb het altijd geweten.","I always knew it.","Je l'ai toujours su."],
+        pl:["Wij hebben het niet geweten.","We didn't know it.","Nous ne l'avons pas su."]
+      },
+      ovt:{
+        sg:["Ik wist het al.","I already knew it.","Je le savais déjà."],
+        pl:["Wij wisten het niet.","We didn't know it.","Nous ne le savions pas."]
+      }
+    }
+  },
+  {
+    nl:"winnen", en:"to win", fr:"gagner",
+    vtt:"heeft/hebben gewonnen", ovt:"won · wonnen",
+    s:{
+      vtt:{
+        sg:["Ik heb de wedstrijd gewonnen.","I won the match.","J'ai gagné le match."],
+        pl:["Wij hebben het toernooi gewonnen.","We won the tournament.","Nous avons gagné le tournoi."]
+      },
+      ovt:{
+        sg:["Ik won de wedstrijd.","I won the match.","Je gagnais le match."],
+        pl:["Wij wonnen het toernooi.","We won the tournament.","Nous gagnions le tournoi."]
+      }
+    }
+  },
+  {
+    nl:"worden", en:"to become", fr:"devenir",
+    vtt:"is/zijn geworden", ovt:"werd · werden",
+    s:{
+      vtt:{
+        sg:["Hij is dokter geworden.","He became a doctor.","Il est devenu médecin."],
+        pl:["Zij zijn goede vrienden geworden.","They became good friends.","Ils sont devenus de bons amis."]
+      },
+      ovt:{
+        sg:["Hij werd dokter.","He became a doctor.","Il devenait médecin."],
+        pl:["Zij werden goede vrienden.","They became good friends.","Ils devenaient de bons amis."]
+      }
+    }
+  },
+  {
+    nl:"zien", en:"to see", fr:"voir",
+    vtt:"heeft/hebben gezien", ovt:"zag · zagen",
+    s:{
+      vtt:{
+        sg:["Ik heb de film gezien.","I saw the film.","J'ai vu le film."],
+        pl:["Wij hebben haar gisteren gezien.","We saw her yesterday.","Nous l'avons vue hier."]
+      },
+      ovt:{
+        sg:["Ik zag de film.","I saw the film.","Je voyais le film."],
+        pl:["Wij zagen haar gisteren.","We saw her yesterday.","Nous la voyions hier."]
+      }
+    }
+  },
+  {
+    nl:"zijn", en:"to be", fr:"être",
+    vtt:"is/zijn geweest", ovt:"was · waren",
+    s:{
+      vtt:{
+        sg:["Ik ben blij geweest.","I have been happy.","J'ai été content(e)."],
+        pl:["Wij zijn er samen geweest.","We have been there together.","Nous y avons été ensemble."]
+      },
+      ovt:{
+        sg:["Ik was blij.","I was happy.","J'étais content(e)."],
+        pl:["Wij waren er samen.","We were there together.","Nous étions là ensemble."]
+      }
+    }
+  },
+  {
+    nl:"zingen", en:"to sing", fr:"chanter",
+    vtt:"heeft/hebben gezongen", ovt:"zong · zongen",
+    s:{
+      vtt:{
+        sg:["Ik heb een lied gezongen.","I sang a song.","J'ai chanté une chanson."],
+        pl:["Wij hebben samen gezongen.","We sang together.","Nous avons chanté ensemble."]
+      },
+      ovt:{
+        sg:["Ik zong een lied.","I sang a song.","Je chantais une chanson."],
+        pl:["Wij zongen samen.","We sang together.","Nous chantions ensemble."]
+      }
+    }
+  },
+  {
+    nl:"zitten", en:"to sit", fr:"être assis(e)",
+    vtt:"heeft/hebben gezeten", ovt:"zat · zaten",
+    s:{
+      vtt:{
+        sg:["Ik heb de hele dag gezeten.","I sat all day.","J'ai été assis(e) toute la journée."],
+        pl:["Wij hebben naast elkaar gezeten.","We sat next to each other.","Nous avons été assis l'un à côté de l'autre."]
+      },
+      ovt:{
+        sg:["Ik zat de hele dag.","I sat all day.","J'étais assis(e) toute la journée."],
+        pl:["Wij zaten naast elkaar.","We sat next to each other.","Nous étions assis l'un à côté de l'autre."]
+      }
+    }
+  },
+  {
+    nl:"zoeken", en:"to look for", fr:"chercher",
+    vtt:"heeft/hebben gezocht", ovt:"zocht · zochten",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn sleutels gezocht.","I looked for my keys.","J'ai cherché mes clés."],
+        pl:["Wij hebben een oplossing gezocht.","We looked for a solution.","Nous avons cherché une solution."]
+      },
+      ovt:{
+        sg:["Ik zocht mijn sleutels.","I looked for my keys.","Je cherchais mes clés."],
+        pl:["Wij zochten een oplossing.","We looked for a solution.","Nous cherchions une solution."]
+      }
+    }
+  },
+  {
+    nl:"zwemmen", en:"to swim", fr:"nager",
+    vtt:"heeft/hebben gezwommen", ovt:"zwom · zwommen",
+    s:{
+      vtt:{
+        sg:["Ik heb een kilometer gezwommen.","I swam a kilometre.","J'ai nagé un kilomètre."],
+        pl:["Wij hebben in de zee gezwommen.","We swam in the sea.","Nous avons nagé dans la mer."]
+      },
+      ovt:{
+        sg:["Ik zwom een kilometer.","I swam a kilometre.","Je nageais un kilomètre."],
+        pl:["Wij zwommen in de zee.","We swam in the sea.","Nous nagions dans la mer."]
+      }
+    }
+  }
 ];
 
-let cur = 0, flipped = false;
+let cur = 0;
 
-function render() {
-  const v = VERBS[cur];
-  const inner = document.getElementById('inner');
-  inner.classList.toggle('flipped', flipped);
-
-  document.getElementById('front').innerHTML =
-    `<div class="card-num">${cur + 1} / ${VERBS.length}</div>
-     <div class="verb-lemma">${v[0]}</div>
-     <div class="verb-gloss">🇬🇧 ${v[1]}</div>
-     <div class="verb-gloss">🇫🇷 ${v[2]}</div>
-     <div class="flip-hint">tik om te draaien · tap to flip</div>`;
-
-  document.getElementById('back').innerHTML =
-    `<div class="perfectum-label">Perfectum (VTT)</div>
-     <div class="perfectum-value">${v[3]}</div>
-     ${v[4] ? `<div class="perfectum-note">${v[4]}</div>` : ''}`;
-
-  document.getElementById('counter').textContent = `${cur + 1} / ${VERBS.length}`;
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#x27;');
 }
 
-document.getElementById('prev-btn').onclick = () => { cur = (cur - 1 + VERBS.length) % VERBS.length; flipped = false; render(); };
-document.getElementById('next-btn').onclick = () => { cur = (cur + 1) % VERBS.length; flipped = false; render(); };
-document.getElementById('scene').onclick    = () => { flipped = !flipped; render(); };
+function sentBox(label, arr) {
+  return `<div class="sent-box">
+    <div class="sent-label">${label}</div>
+    <p class="sent-nl" lang="nl">${escHtml(arr[0])}</p>
+    <div class="sent-trans">
+      <p class="sent-en" lang="en">${escHtml(arr[1])}</p>
+      <p class="sent-fr" lang="fr">${escHtml(arr[2])}</p>
+    </div>
+  </div>`;
+}
+
+function buildCard(v, i) {
+  const front = `
+    <div class="face front">
+      <div class="num">${i+1} / ${VERBS.length}</div>
+      <div class="lemma" lang="nl">${escHtml(v.nl)}</div>
+      <div class="glosses">
+        <p class="gloss-line" lang="en"><span class="lang">EN</span> ${escHtml(v.en)}</p>
+        <p class="gloss-line" lang="fr"><span class="lang">FR</span> ${escHtml(v.fr)}</p>
+      </div>
+    </div>`;
+
+  const back = `
+    <div class="face back">
+      <div class="tense-grid">
+        <div class="tense-box vtt">
+          <div class="tense-head"><span class="tense-name">Perfectum</span><span class="tense-abbr">VTT</span></div>
+          <p class="tense-value">${escHtml(v.vtt)}</p>
+          ${v.note ? `<p style="font-size:.75rem;color:var(--muted);font-style:italic;margin:.3rem 0 0">${escHtml(v.note)}</p>` : ''}
+        </div>
+        <div class="tense-box ovt">
+          <div class="tense-head"><span class="tense-name">Imperfectum</span><span class="tense-abbr">OVT</span></div>
+          <p class="tense-value">${escHtml(v.ovt)}</p>
+        </div>
+      </div>
+      <div class="sentences">
+        <div class="sent-two-col">
+          <div class="sent-col sent-col-vtt">
+            <div class="sent-col-head">Perfectum (VTT)</div>
+            ${sentBox('Enkelvoud', v.s.vtt.sg)}
+            ${sentBox('Meervoud', v.s.vtt.pl)}
+          </div>
+          <div class="sent-col sent-col-ovt">
+            <div class="sent-col-head">Imperfectum (OVT)</div>
+            ${sentBox('Enkelvoud', v.s.ovt.sg)}
+            ${sentBox('Meervoud', v.s.ovt.pl)}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  return `<div class="slide"${i !== 0 ? ' hidden' : ''} data-index="${i}">
+    <div class="card">
+      <div class="inner" onclick="this.classList.toggle('flipped')">${front}${back}</div>
+    </div>
+  </div>`;
+}
+
+// Render all slides
+const viewer = document.getElementById('viewer');
+viewer.innerHTML = VERBS.map((v, i) => buildCard(v, i)).join('');
+
+const slides = viewer.querySelectorAll('.slide');
+
+function goTo(idx, keepFlip) {
+  slides[cur].hidden = true;
+  if (!keepFlip) slides[cur].querySelector('.inner').classList.remove('flipped');
+  cur = (idx + VERBS.length) % VERBS.length;
+  slides[cur].hidden = false;
+  document.getElementById('counter').textContent = `${cur+1} / ${VERBS.length}`;
+}
+
+document.getElementById('prev-btn').onclick = () => goTo(cur - 1);
+document.getElementById('next-btn').onclick = () => goTo(cur + 1);
 
 document.getElementById('goto-btn').onclick = () => {
   const v = parseInt(document.getElementById('goto-input').value);
-  if (v >= 1 && v <= VERBS.length) { cur = v - 1; flipped = false; render(); }
+  if (v >= 1 && v <= VERBS.length) goTo(v - 1);
 };
-document.getElementById('goto-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('goto-btn').click(); });
+document.getElementById('goto-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('goto-btn').click();
+});
 
-// keyboard
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { cur = (cur + 1) % VERBS.length; flipped = false; render(); }
-  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { cur = (cur - 1 + VERBS.length) % VERBS.length; flipped = false; render(); }
-  else if (e.key === ' ') { e.preventDefault(); flipped = !flipped; render(); }
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(cur + 1);
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(cur - 1);
+  else if (e.key === ' ') { e.preventDefault(); slides[cur].querySelector('.inner').classList.toggle('flipped'); }
 });
 
 // swipe
 let tx = 0;
-const sc = document.getElementById('scene');
-sc.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-sc.addEventListener('touchend', e => {
+viewer.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+viewer.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - tx;
-  if (Math.abs(dx) > 40) {
-    cur = dx < 0 ? (cur + 1) % VERBS.length : (cur - 1 + VERBS.length) % VERBS.length;
-    flipped = false; render();
-  }
+  if (Math.abs(dx) > 40) goTo(dx < 0 ? cur + 1 : cur - 1);
 }, { passive: true });
-
-render();
 </script>
 </body>
 </html>
