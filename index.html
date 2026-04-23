@@ -45,6 +45,7 @@ h1{font-size:1.2rem;color:var(--accent);margin-bottom:10px;letter-spacing:.5px}
 .welcome-h1{font-size:1.8rem;color:var(--accent);margin-bottom:6px}
 .welcome-sub{color:var(--muted);font-size:.92rem;margin-bottom:32px}
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:min(400px,92vw)}
+.mode-btn.full{grid-column:1/-1}
 .mode-btn{display:flex;flex-direction:column;align-items:center;padding:20px 12px;border:2px solid var(--border);border-radius:14px;background:var(--card);cursor:pointer;transition:.2s;gap:6px;text-align:center;touch-action:manipulation}
 .mode-btn:hover,.mode-btn:active{border-color:var(--accent);box-shadow:0 4px 16px rgba(44,106,160,.15);transform:translateY(-2px)}
 .mode-icon{font-size:2.4rem;line-height:1}
@@ -76,6 +77,11 @@ h1{font-size:1.2rem;color:var(--accent);margin-bottom:10px;letter-spacing:.5px}
       <span class="mode-icon">🔤</span>
       <span class="mode-title">Werkwoorden</span>
       <span class="mode-sub">Perfectum · Imperfectum · 200 verbs</span>
+    </button>
+    <button class="mode-btn full" onclick="window.location='sandra21.html'">
+      <span class="mode-icon">📝</span>
+      <span class="mode-title">Sandra 2.1</span>
+      <span class="mode-sub">Irreguliere verba · Perfectum · 55 verbs</span>
     </button>
   </div>
   <p class="byline">by Fatima Lokhandwala</p>
