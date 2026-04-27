@@ -310,12 +310,12 @@
 <div class="toolbar">
   <button id="home-btn" onclick="window.location='index.html'">← Home</button>
   <button id="prev-btn">&#9664;</button>
-  <span id="counter">1 / 55</span>
+  <span id="counter">1 / 79</span>
   <button id="next-btn">&#9654;</button>
 </div>
 
 <div class="goto-bar">
-  <input id="goto-input" type="number" min="1" max="55" placeholder="# (1–55)"/>
+  <input id="goto-input" type="number" min="1" max="79" placeholder="# (1–79)"/>
   <button id="goto-btn">Go →</button>
 </div>
 
@@ -536,6 +536,20 @@ const VERBS = [
     }
   },
   {
+    nl:"genezen", en:"to heal / cure", fr:"guérir", emoji:"🩹", ec:"1fa79",
+    vtt:"heeft/hebben genezen", ovt:"genas · genazen",
+    s:{
+      vtt:{
+        sg:["De wond heeft snel genezen.","The wound healed quickly.","La blessure a guéri rapidement."],
+        pl:["Veel patiënten hebben genezen na de behandeling.","Many patients healed after the treatment.","Beaucoup de patients ont guéri après le traitement."]
+      },
+      ovt:{
+        sg:["De wond genas snel.","The wound healed quickly.","La blessure guérissait vite."],
+        pl:["De patiënten genazen na de behandeling.","The patients healed after treatment.","Les patients guérissaient après le traitement."]
+      }
+    }
+  },
+  {
     nl:"geven", en:"to give", fr:"donner", emoji:"🤲", ec:"1f932",
     vtt:"heeft/hebben gegeven", ovt:"gaf · gaven",
     s:{
@@ -546,6 +560,34 @@ const VERBS = [
       ovt:{
         sg:["Ik gaf haar een boek.","I gave her a book.","Je lui donnais un livre."],
         pl:["Wij gaven cadeaus.","We gave gifts.","Nous donnions des cadeaux."]
+      }
+    }
+  },
+  {
+    nl:"gieten", en:"to pour", fr:"verser", emoji:"💧", ec:"1f4a7",
+    vtt:"heeft/hebben gegoten", ovt:"goot · goten",
+    s:{
+      vtt:{
+        sg:["Ik heb water in het glas gegoten.","I poured water into the glass.","J'ai versé de l'eau dans le verre."],
+        pl:["Wij hebben de planten water gegoten.","We watered the plants.","Nous avons arrosé les plantes."]
+      },
+      ovt:{
+        sg:["Ik goot water in het glas.","I poured water into the glass.","Je versais de l'eau dans le verre."],
+        pl:["Wij goten de planten.","We watered the plants.","Nous arrosions les plantes."]
+      }
+    }
+  },
+  {
+    nl:"hangen", en:"to hang", fr:"accrocher / être suspendu", emoji:"🖼️", ec:"1f5bc-fe0f",
+    vtt:"heeft/hebben gehangen", ovt:"hing · hingen",
+    s:{
+      vtt:{
+        sg:["Ik heb het schilderij gehangen.","I hung the painting.","J'ai accroché le tableau."],
+        pl:["Wij hebben de foto's gehangen.","We hung the photos.","Nous avons accroché les photos."]
+      },
+      ovt:{
+        sg:["Het schilderij hing aan de muur.","The painting hung on the wall.","Le tableau était accroché au mur."],
+        pl:["De schilderijen hingen aan de muur.","The paintings hung on the wall.","Les tableaux étaient accrochés au mur."]
       }
     }
   },
@@ -574,6 +616,34 @@ const VERBS = [
       ovt:{
         sg:["Ik hielp haar.","I helped her.","J'aidais."],
         pl:["Wij hielpen samen.","We helped together.","Nous aidions ensemble."]
+      }
+    }
+  },
+  {
+    nl:"houden van", en:"to love / like", fr:"aimer", emoji:"❤️", ec:"2764-fe0f",
+    vtt:"heeft/hebben gehouden van", ovt:"hield van · hielden van",
+    s:{
+      vtt:{
+        sg:["Ik heb altijd van muziek gehouden.","I have always loved music.","J'ai toujours aimé la musique."],
+        pl:["Zij hebben van dit restaurant gehouden.","They loved this restaurant.","Ils ont aimé ce restaurant."]
+      },
+      ovt:{
+        sg:["Ik hield van haar.","I loved her.","Je l'aimais."],
+        pl:["Wij hielden van reizen.","We loved travelling.","Nous aimions voyager."]
+      }
+    }
+  },
+  {
+    nl:"innemen", en:"to take (medicine) / occupy", fr:"prendre (médicament)", emoji:"💊", ec:"1f48a",
+    vtt:"heeft/hebben ingenomen", ovt:"nam in · namen in",
+    s:{
+      vtt:{
+        sg:["Ik heb mijn medicijn ingenomen.","I took my medicine.","J'ai pris mon médicament."],
+        pl:["Wij hebben onze pillen ingenomen.","We took our pills.","Nous avons pris nos médicaments."]
+      },
+      ovt:{
+        sg:["Ik nam elke dag een pil in.","I took a pill every day.","Je prenais une pilule chaque jour."],
+        pl:["De soldaten namen de stad in.","The soldiers took the city.","Les soldats prenaient la ville."]
       }
     }
   },
@@ -648,6 +718,34 @@ const VERBS = [
     }
   },
   {
+    nl:"kunnen", en:"to be able to / can", fr:"pouvoir", emoji:"💪", ec:"1f4aa",
+    vtt:"heeft/hebben gekund", ovt:"kon · konden",
+    s:{
+      vtt:{
+        sg:["Ik heb het niet gekund.","I wasn't able to do it.","Je n'ai pas pu le faire."],
+        pl:["Wij hebben het samen gekund.","We managed it together.","Nous avons pu le faire ensemble."]
+      },
+      ovt:{
+        sg:["Ik kon niet komen.","I couldn't come.","Je ne pouvais pas venir."],
+        pl:["Zij konden het niet geloven.","They couldn't believe it.","Ils ne pouvaient pas le croire."]
+      }
+    }
+  },
+  {
+    nl:"laten", en:"to let / leave", fr:"laisser", emoji:"🚪", ec:"1f6aa",
+    vtt:"heeft/hebben gelaten", ovt:"liet · lieten",
+    s:{
+      vtt:{
+        sg:["Ik heb hem gaan gelaten.","I let him go.","Je l'ai laissé partir."],
+        pl:["Wij hebben de hond buiten gelaten.","We left the dog outside.","Nous avons laissé le chien dehors."]
+      },
+      ovt:{
+        sg:["Ik liet hem gaan.","I let him go.","Je le laissais partir."],
+        pl:["Zij lieten de kinderen spelen.","They let the children play.","Ils laissaient les enfants jouer."]
+      }
+    }
+  },
+  {
     nl:"lezen", en:"to read", fr:"lire", emoji:"📖", ec:"1f4d6",
     vtt:"heeft/hebben gelezen", ovt:"las · lazen",
     s:{
@@ -691,6 +789,62 @@ const VERBS = [
     }
   },
   {
+    nl:"meenemen", en:"to take along", fr:"emporter / emmener", emoji:"🎒", ec:"1f392",
+    vtt:"heeft/hebben meegenomen", ovt:"nam mee · namen mee",
+    s:{
+      vtt:{
+        sg:["Ik heb een lunch meegenomen.","I brought a packed lunch.","J'ai emporté un déjeuner."],
+        pl:["Wij hebben extra spullen meegenomen.","We brought extra things.","Nous avons emporté des affaires supplémentaires."]
+      },
+      ovt:{
+        sg:["Ik nam mijn paraplu mee.","I took my umbrella along.","J'emportais mon parapluie."],
+        pl:["Zij namen de kinderen mee.","They took the children along.","Ils emmenaient les enfants."]
+      }
+    }
+  },
+  {
+    nl:"moeten", en:"to have to / must", fr:"devoir", emoji:"⚠️", ec:"26a0-fe0f",
+    vtt:"heeft/hebben gemoeten", ovt:"moest · moesten",
+    s:{
+      vtt:{
+        sg:["Ik heb vroeg weg gemoeten.","I had to leave early.","J'ai dû partir tôt."],
+        pl:["Wij hebben lang wachten gemoeten.","We had to wait a long time.","Nous avons dû attendre longtemps."]
+      },
+      ovt:{
+        sg:["Ik moest vroeg opstaan.","I had to get up early.","Je devais me lever tôt."],
+        pl:["Zij moesten hard werken.","They had to work hard.","Ils devaient travailler dur."]
+      }
+    }
+  },
+  {
+    nl:"mogen", en:"to be allowed / may", fr:"avoir le droit / pouvoir", emoji:"✋", ec:"270b",
+    vtt:"heeft/hebben gemogen", ovt:"mocht · mochten",
+    s:{
+      vtt:{
+        sg:["Ik heb nooit laat op mogen blijven.","I was never allowed to stay up late.","Je n'ai jamais eu le droit de veiller tard."],
+        pl:["De kinderen hebben buiten mogen spelen.","The children were allowed to play outside.","Les enfants ont pu jouer dehors."]
+      },
+      ovt:{
+        sg:["Ik mocht niet gaan.","I wasn't allowed to go.","Je ne pouvais pas y aller."],
+        pl:["Zij mochten later komen.","They were allowed to come later.","Ils pouvaient venir plus tard."]
+      }
+    }
+  },
+  {
+    nl:"nakijken", en:"to check / mark", fr:"corriger / vérifier", emoji:"📋", ec:"1f4cb",
+    vtt:"heeft/hebben nagekeken", ovt:"keek na · keken na",
+    s:{
+      vtt:{
+        sg:["De leraar heeft de toetsen nagekeken.","The teacher marked the tests.","Le professeur a corrigé les examens."],
+        pl:["Wij hebben de antwoorden nagekeken.","We checked the answers.","Nous avons vérifié les réponses."]
+      },
+      ovt:{
+        sg:["De leraar keek de toetsen na.","The teacher marked the tests.","Le professeur corrigeait les examens."],
+        pl:["Zij keken de documenten na.","They checked the documents.","Ils vérifiaient les documents."]
+      }
+    }
+  },
+  {
     nl:"nemen", en:"to take", fr:"prendre", emoji:"🚌", ec:"1f68c",
     vtt:"heeft/hebben genomen", ovt:"nam · namen",
     s:{
@@ -701,6 +855,20 @@ const VERBS = [
       ovt:{
         sg:["Ik nam de bus.","I took the bus.","Je prenais le bus."],
         pl:["Wij namen de trein.","We took the train.","Nous prenions le train."]
+      }
+    }
+  },
+  {
+    nl:"onderzoeken", en:"to investigate / examine", fr:"examiner / rechercher", emoji:"🔬", ec:"1f52c",
+    vtt:"heeft/hebben onderzocht", ovt:"onderzocht · onderzochten",
+    s:{
+      vtt:{
+        sg:["De arts heeft de patiënt onderzocht.","The doctor examined the patient.","Le médecin a examiné le patient."],
+        pl:["De politie heeft de zaak onderzocht.","The police investigated the case.","La police a examiné l'affaire."]
+      },
+      ovt:{
+        sg:["De arts onderzocht de patiënt.","The doctor examined the patient.","Le médecin examinait le patient."],
+        pl:["Zij onderzochten de oorzaak.","They investigated the cause.","Ils examinaient la cause."]
       }
     }
   },
@@ -729,6 +897,20 @@ const VERBS = [
       ovt:{
         sg:["Ik stond vroeg op.","I got up early.","Je me levais tôt."],
         pl:["Zij stonden laat op.","They got up late.","Ils se levaient en retard."]
+      }
+    }
+  },
+  {
+    nl:"oversteken", en:"to cross (the street)", fr:"traverser", emoji:"🚦", ec:"1f6a6",
+    vtt:"is/zijn overgestoken", ovt:"overstak · overstaken",
+    s:{
+      vtt:{
+        sg:["Ik ben de straat overgestoken.","I crossed the street.","J'ai traversé la rue."],
+        pl:["De kinderen zijn veilig overgestoken.","The children crossed safely.","Les enfants ont traversé en sécurité."]
+      },
+      ovt:{
+        sg:["Ik overstak de straat.","I crossed the street.","Je traversais la rue."],
+        pl:["Zij overstaken de grens.","They crossed the border.","Ils traversaient la frontière."]
       }
     }
   },
@@ -772,6 +954,20 @@ const VERBS = [
       ovt:{
         sg:["Hij scheidde vorig jaar.","He divorced last year.","Il divorçait l'année dernière."],
         pl:["Zij scheidden na tien jaar.","They divorced after ten years.","Ils divorçaient après dix ans."]
+      }
+    }
+  },
+  {
+    nl:"schijnen", en:"to shine / seem", fr:"briller / sembler", emoji:"☀️", ec:"2600-fe0f",
+    vtt:"heeft/hebben geschenen", ovt:"scheen · schenen",
+    s:{
+      vtt:{
+        sg:["De zon heeft de hele dag geschenen.","The sun shone all day.","Le soleil a brillé toute la journée."],
+        pl:["De sterren hebben de hele nacht geschenen.","The stars shone all night.","Les étoiles ont brillé toute la nuit."]
+      },
+      ovt:{
+        sg:["De zon scheen door het raam.","The sun shone through the window.","Le soleil brillait à travers la fenêtre."],
+        pl:["De lampen schenen helder.","The lights shone brightly.","Les lampes brillaient fort."]
       }
     }
   },
@@ -846,6 +1042,34 @@ const VERBS = [
     }
   },
   {
+    nl:"staan", en:"to stand", fr:"se tenir debout", emoji:"🧍", ec:"1f9cd",
+    vtt:"heeft/hebben gestaan", ovt:"stond · stonden",
+    s:{
+      vtt:{
+        sg:["Ik heb lang in de rij gestaan.","I stood in the queue for a long time.","J'ai fait la queue longtemps."],
+        pl:["Wij hebben uren in de rij gestaan.","We stood in the queue for hours.","Nous avons fait la queue pendant des heures."]
+      },
+      ovt:{
+        sg:["Ik stond voor het raam.","I stood at the window.","Je me tenais devant la fenêtre."],
+        pl:["Zij stonden buiten te wachten.","They stood outside waiting.","Ils attendaient debout dehors."]
+      }
+    }
+  },
+  {
+    nl:"sterven", en:"to die", fr:"mourir", emoji:"🕯️", ec:"1f56f-fe0f",
+    vtt:"is/zijn gestorven", ovt:"stierf · stierven",
+    s:{
+      vtt:{
+        sg:["Hij is op hoge leeftijd gestorven.","He died at an old age.","Il est mort à un âge avancé."],
+        pl:["Veel mensen zijn aan de ziekte gestorven.","Many people died of the disease.","Beaucoup de gens sont morts de la maladie."]
+      },
+      ovt:{
+        sg:["Hij stierf rustig in zijn slaap.","He died peacefully in his sleep.","Il mourut paisiblement dans son sommeil."],
+        pl:["Zij stierven voor hun land.","They died for their country.","Ils moururent pour leur pays."]
+      }
+    }
+  },
+  {
     nl:"strijken", en:"to iron", fr:"repasser", emoji:"👔", ec:"1f454",
     vtt:"heeft/hebben gestreken", ovt:"streek · streken",
     s:{
@@ -870,6 +1094,20 @@ const VERBS = [
       ovt:{
         sg:["Ik deed mijn jas uit.","I took off my coat.","J'enlevais mon manteau."],
         pl:["Wij deden onze schoenen uit.","We took off our shoes.","Nous enlevions nos chaussures."]
+      }
+    }
+  },
+  {
+    nl:"uitgaan", en:"to go out", fr:"sortir", emoji:"🎉", ec:"1f389",
+    vtt:"is/zijn uitgegaan", ovt:"ging uit · gingen uit",
+    s:{
+      vtt:{
+        sg:["Ik ben vrijdagavond uitgegaan.","I went out on Friday evening.","Je suis sorti(e) vendredi soir."],
+        pl:["Wij zijn samen uitgegaan.","We went out together.","Nous sommes sortis ensemble."]
+      },
+      ovt:{
+        sg:["Ik ging elke week uit.","I went out every week.","Je sortais chaque semaine."],
+        pl:["Zij gingen gisteren samen uit.","They went out together yesterday.","Ils sortaient ensemble hier."]
       }
     }
   },
@@ -931,6 +1169,20 @@ const VERBS = [
     }
   },
   {
+    nl:"verstaan", en:"to understand (hear)", fr:"comprendre (entendre)", emoji:"👂", ec:"1f442",
+    vtt:"heeft/hebben verstaan", ovt:"verstond · verstonden",
+    s:{
+      vtt:{
+        sg:["Ik heb je niet verstaan.","I didn't understand you.","Je ne t'ai pas compris."],
+        pl:["Wij hebben hem goed verstaan.","We understood him well.","Nous l'avons bien compris."]
+      },
+      ovt:{
+        sg:["Ik verstond haar niet goed.","I didn't understand her well.","Je ne la comprenais pas bien."],
+        pl:["Zij verstonden het accent niet.","They didn't understand the accent.","Ils ne comprenaient pas l'accent."]
+      }
+    }
+  },
+  {
     nl:"vertrekken", en:"to leave / depart", fr:"partir", emoji:"✈️", ec:"2708-fe0f",
     vtt:"is/zijn vertrokken", ovt:"vertrok · vertrokken",
     s:{
@@ -955,6 +1207,49 @@ const VERBS = [
       ovt:{
         sg:["Ik vond mijn sleutels.","I found my keys.","Je trouvais mes clés."],
         pl:["Wij vonden een oplossing.","We found a solution.","Nous trouvions une solution."]
+      }
+    }
+  },
+  {
+    nl:"vliegen", en:"to fly", fr:"voler", emoji:"🛫", ec:"1f6eb",
+    vtt:"heeft/hebben gevlogen", ovt:"vloog · vlogen",
+    note:"(zijn) gevlogen naar … (bestemming)",
+    s:{
+      vtt:{
+        sg:["Het vliegtuig heeft drie uur gevlogen.","The plane flew for three hours.","L'avion a volé trois heures."],
+        pl:["Wij hebben boven de wolken gevlogen.","We flew above the clouds.","Nous avons volé au-dessus des nuages."]
+      },
+      ovt:{
+        sg:["Het vliegtuig vloog laag.","The plane flew low.","L'avion volait bas."],
+        pl:["De vogels vlogen naar het zuiden.","The birds flew south.","Les oiseaux volaient vers le sud."]
+      }
+    }
+  },
+  {
+    nl:"vragen", en:"to ask", fr:"demander", emoji:"❓", ec:"2753",
+    vtt:"heeft/hebben gevraagd", ovt:"vroeg · vroegen",
+    s:{
+      vtt:{
+        sg:["Ik heb om hulp gevraagd.","I asked for help.","J'ai demandé de l'aide."],
+        pl:["Wij hebben naar de weg gevraagd.","We asked for directions.","Nous avons demandé le chemin."]
+      },
+      ovt:{
+        sg:["Ik vroeg om hulp.","I asked for help.","Je demandais de l'aide."],
+        pl:["Zij vroegen naar de weg.","They asked for directions.","Ils demandaient le chemin."]
+      }
+    }
+  },
+  {
+    nl:"vriezen", en:"to freeze", fr:"geler / congeler", emoji:"❄️", ec:"2744-fe0f",
+    vtt:"heeft/hebben gevroren", ovt:"vroor · vroren",
+    s:{
+      vtt:{
+        sg:["Het heeft vannacht gevroren.","It froze last night.","Il a gelé cette nuit."],
+        pl:["De rivieren hebben gevroren.","The rivers froze.","Les rivières ont gelé."]
+      },
+      ovt:{
+        sg:["Het vroor hard in de winter.","It froze hard in winter.","Il gelait fort en hiver."],
+        pl:["De vijvers vroren dicht.","The ponds froze over.","Les étangs gelaient."]
       }
     }
   },
@@ -987,6 +1282,20 @@ const VERBS = [
     }
   },
   {
+    nl:"willen", en:"to want", fr:"vouloir", emoji:"🙋", ec:"1f64b",
+    vtt:"heeft/hebben gewild", ovt:"wou/wilde · wilden",
+    s:{
+      vtt:{
+        sg:["Ik heb altijd dokter gewild.","I always wanted to be a doctor.","J'ai toujours voulu être médecin."],
+        pl:["Zij hebben mee gewild.","They wanted to come along.","Ils ont voulu venir."]
+      },
+      ovt:{
+        sg:["Ik wou meer tijd hebben.","I wanted more time.","Je voulais avoir plus de temps."],
+        pl:["Zij wilden eerder vertrekken.","They wanted to leave earlier.","Ils voulaient partir plus tôt."]
+      }
+    }
+  },
+  {
     nl:"winnen", en:"to win", fr:"gagner", emoji:"🏆", ec:"1f3c6",
     vtt:"heeft/hebben gewonnen", ovt:"won · wonnen",
     s:{
@@ -1011,6 +1320,20 @@ const VERBS = [
       ovt:{
         sg:["Hij werd dokter.","He became a doctor.","Il devenait médecin."],
         pl:["Zij werden goede vrienden.","They became good friends.","Ils devenaient de bons amis."]
+      }
+    }
+  },
+  {
+    nl:"zeggen", en:"to say", fr:"dire", emoji:"🗣️", ec:"1f5e3-fe0f",
+    vtt:"heeft/hebben gezegd", ovt:"zei · zeiden",
+    s:{
+      vtt:{
+        sg:["Ik heb haar de waarheid gezegd.","I told her the truth.","Je lui ai dit la vérité."],
+        pl:["Zij hebben niets gezegd.","They said nothing.","Ils n'ont rien dit."]
+      },
+      ovt:{
+        sg:["Ik zei hem gedag.","I said goodbye to him.","Je lui disais au revoir."],
+        pl:["Zij zeiden dat ze ziek waren.","They said they were ill.","Ils disaient qu'ils étaient malades."]
       }
     }
   },
@@ -1081,6 +1404,21 @@ const VERBS = [
       ovt:{
         sg:["Ik zocht mijn sleutels.","I looked for my keys.","Je cherchais mes clés."],
         pl:["Wij zochten een oplossing.","We looked for a solution.","Nous cherchions une solution."]
+      }
+    }
+  },
+  {
+    nl:"zullen", en:"shall / will", fr:"aller (futur) / devoir", emoji:"🔮", ec:"1f52e",
+    vtt:"heeft/hebben gezuld", ovt:"zou · zouden",
+    note:"Perfectum (gezuld) wordt zelden gebruikt",
+    s:{
+      vtt:{
+        sg:["Het heeft zo gezuld zijn.","It was supposed to be that way.","C'est ainsi que cela devait être."],
+        pl:["Wij hebben het nooit zo gezuld.","We never intended it to be this way.","Nous n'avons jamais voulu que ce soit ainsi."]
+      },
+      ovt:{
+        sg:["Ik zou morgen komen.","I was going to come tomorrow.","Je devais venir demain."],
+        pl:["Zij zouden het huis kopen.","They were going to buy the house.","Ils allaient acheter la maison."]
       }
     }
   },
