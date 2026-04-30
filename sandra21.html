@@ -238,6 +238,39 @@
       cursor: pointer;
     }
     #goto-btn:hover { background: #d0e8f7; }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin: 0 auto 0.6rem;
+      width: 100%;
+      max-width: min(480px, 100vw - 2rem);
+    }
+    #search-input {
+      flex: 1;
+      padding: 0.35rem 0.6rem;
+      font-size: 0.9rem;
+      border: 1px solid #b0c4d8;
+      border-radius: 6px;
+    }
+    #search-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #b0c4d8;
+      background: #e8f4fc;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    #search-btn:hover { background: #d0e8f7; }
+    #search-msg {
+      font-size: 0.8rem;
+      color: #c0392b;
+      text-align: center;
+      min-height: 1.1rem;
+      margin: -0.3rem auto 0.2rem;
+    }
 
     @media (max-width: 480px) {
       body { padding-top: max(0.5rem, env(safe-area-inset-top, 0px)); padding-left: 0.65rem; padding-right: 0.65rem; }
@@ -249,6 +282,8 @@
       #goto-input { font-size: 16px; width: 100%; }
       #goto-btn { font-size: 16px; min-height: 44px; }
       .goto-bar { width: 100%; max-width: 340px; }
+      #search-input { font-size: 16px; min-height: 44px; }
+      #search-btn { font-size: 16px; min-height: 44px; }
       .viewer { align-items: stretch; min-height: 0; flex: 1 1 auto; }
       .card { min-height: 0; }
       .inner {
@@ -318,6 +353,13 @@
   <input id="goto-input" type="number" min="1" max="79" placeholder="# (1–79)"/>
   <button id="goto-btn">Go →</button>
 </div>
+
+<div class="search-bar">
+  <input id="search-input" list="verb-list" placeholder="Search verb (NL / EN / FR)…" autocomplete="off" autocorrect="off" spellcheck="false"/>
+  <datalist id="verb-list"></datalist>
+  <button id="search-btn">🔍</button>
+</div>
+<p id="search-msg"></p>
 
 <div class="viewer" id="viewer"></div>
 
@@ -1547,6 +1589,37 @@ viewer.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - tx;
   if (Math.abs(dx) > 40) goTo(dx < 0 ? cur + 1 : cur - 1);
 }, { passive: true });
+
+// Search
+const dl = document.getElementById('verb-list');
+VERBS.forEach(v => {
+  const o = document.createElement('option');
+  o.value = v.nl;
+  dl.appendChild(o);
+});
+
+function doSearch() {
+  const q = document.getElementById('search-input').value.trim().toLowerCase();
+  const msg = document.getElementById('search-msg');
+  if (!q) { msg.textContent = ''; return; }
+  const idx = VERBS.findIndex(v =>
+    v.nl.toLowerCase().includes(q) ||
+    v.en.toLowerCase().includes(q) ||
+    v.fr.toLowerCase().includes(q)
+  );
+  if (idx >= 0) {
+    msg.textContent = '';
+    goTo(idx);
+    document.getElementById('search-input').value = '';
+  } else {
+    msg.textContent = `"${q}" not found`;
+  }
+}
+
+document.getElementById('search-btn').onclick = doSearch;
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
 </script>
 </body>
 </html>
