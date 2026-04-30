@@ -527,11 +527,11 @@ const VERBS = [
     s:{
       vtt:{
         sg:["Ik ben naar school gegaan.","I went to school.","Je suis allé(e) à l'école."],
-        pl:["Zij zijn samen gegaan.","They went together.","Ils sont allés ensemble."]
+        pl:["Ze zijn samen naar school gegaan.","They went to school together.","Ils sont allés ensemble à l'école."]
       },
       ovt:{
         sg:["Ik ging naar school.","I went to school.","J'allais à l'école."],
-        pl:["Zij gingen samen.","They went together.","Ils allaient ensemble."]
+        pl:["Ze gingen samen naar school.","They went to school together.","Ils allaient ensemble à l'école."]
       }
     }
   },
@@ -540,8 +540,8 @@ const VERBS = [
     vtt:"heeft/hebben genezen", ovt:"genas · genazen",
     s:{
       vtt:{
-        sg:["De wond heeft snel genezen.","The wound healed quickly.","La blessure a guéri rapidement."],
-        pl:["Veel patiënten hebben genezen na de behandeling.","Many patients healed after the treatment.","Beaucoup de patients ont guéri après le traitement."]
+        sg:["De dokter heeft de patiënt genezen.","The doctor cured the patient.","Le médecin a guéri le patient."],
+        pl:["De dokters hebben de patiënt genezen.","The doctors cured the patient.","Les médecins ont guéri le patient."]
       },
       ovt:{
         sg:["De wond genas snel.","The wound healed quickly.","La blessure guérissait vite."],
@@ -568,8 +568,8 @@ const VERBS = [
     vtt:"heeft/hebben gegoten", ovt:"goot · goten",
     s:{
       vtt:{
-        sg:["Ik heb water in het glas gegoten.","I poured water into the glass.","J'ai versé de l'eau dans le verre."],
-        pl:["Wij hebben de planten water gegoten.","We watered the plants.","Nous avons arrosé les plantes."]
+        sg:["We hebben de planten gegoten.","We watered the plants.","Nous avons arrosé les plantes."],
+        pl:["Zij hebben de bloemen gegoten.","They watered the flowers.","Ils ont arrosé les fleurs."]
       },
       ovt:{
         sg:["Ik goot water in het glas.","I poured water into the glass.","Je versais de l'eau dans le verre."],
@@ -582,7 +582,7 @@ const VERBS = [
     vtt:"heeft/hebben gehangen", ovt:"hing · hingen",
     s:{
       vtt:{
-        sg:["Ik heb het schilderij gehangen.","I hung the painting.","J'ai accroché le tableau."],
+        sg:["Ik heb het schilderij aan de muur gehangen.","I hung the painting on the wall.","J'ai accroché le tableau au mur."],
         pl:["Wij hebben de foto's gehangen.","We hung the photos.","Nous avons accroché les photos."]
       },
       ovt:{
@@ -652,11 +652,11 @@ const VERBS = [
     vtt:"heeft/hebben gekozen", ovt:"koos · kozen",
     s:{
       vtt:{
-        sg:["Ik heb het rode gekozen.","I chose the red one.","J'ai choisi le rouge."],
+        sg:["Ik heb het rode kleedje gekozen.","I chose the red dress.","J'ai choisi la robe rouge."],
         pl:["Wij hebben samen gekozen.","We chose together.","Nous avons choisi ensemble."]
       },
       ovt:{
-        sg:["Ik koos het rode.","I chose the red one.","Je choisissais le rouge."],
+        sg:["Ik koos het rode kleedje.","I chose the red dress.","Je choisissais la robe rouge."],
         pl:["Wij kozen samen.","We chose together.","Nous choisissions ensemble."]
       }
     }
@@ -736,7 +736,7 @@ const VERBS = [
     vtt:"heeft/hebben gelaten", ovt:"liet · lieten",
     s:{
       vtt:{
-        sg:["Ik heb hem gaan gelaten.","I let him go.","Je l'ai laissé partir."],
+        sg:["Ik heb de hond buiten gelaten.","I left the dog outside.","J'ai laissé le chien dehors."],
         pl:["Wij hebben de hond buiten gelaten.","We left the dog outside.","Nous avons laissé le chien dehors."]
       },
       ovt:{
@@ -805,10 +805,11 @@ const VERBS = [
   {
     nl:"moeten", en:"to have to / must", fr:"devoir", emoji:"⚠️", ec:"26a0-fe0f",
     vtt:"heeft/hebben gemoeten", ovt:"moest · moesten",
+    note:"Perfectum (gemoeten) wordt quasi nooit gebruikt",
     s:{
       vtt:{
-        sg:["Ik heb vroeg weg gemoeten.","I had to leave early.","J'ai dû partir tôt."],
-        pl:["Wij hebben lang wachten gemoeten.","We had to wait a long time.","Nous avons dû attendre longtemps."]
+        sg:["— (perfectum wordt quasi nooit gebruikt)","— (the perfect tense is almost never used)","— (le parfait n'est presque jamais utilisé)"],
+        pl:["— (perfectum wordt quasi nooit gebruikt)","— (the perfect tense is almost never used)","— (le parfait n'est presque jamais utilisé)"]
       },
       ovt:{
         sg:["Ik moest vroeg opstaan.","I had to get up early.","Je devais me lever tôt."],
@@ -902,15 +903,15 @@ const VERBS = [
   },
   {
     nl:"oversteken", en:"to cross (the street)", fr:"traverser", emoji:"🚦", ec:"1f6a6",
-    vtt:"is/zijn overgestoken", ovt:"overstak · overstaken",
+    vtt:"is/zijn overgestoken", ovt:"stak over · staken over",
     s:{
       vtt:{
         sg:["Ik ben de straat overgestoken.","I crossed the street.","J'ai traversé la rue."],
         pl:["De kinderen zijn veilig overgestoken.","The children crossed safely.","Les enfants ont traversé en sécurité."]
       },
       ovt:{
-        sg:["Ik overstak de straat.","I crossed the street.","Je traversais la rue."],
-        pl:["Zij overstaken de grens.","They crossed the border.","Ils traversaient la frontière."]
+        sg:["Ik stak de straat over.","I crossed the street.","Je traversais la rue."],
+        pl:["Wij staken de straat over.","We crossed the street.","Nous traversions la rue."]
       }
     }
   },
@@ -921,7 +922,7 @@ const VERBS = [
     s:{
       vtt:{
         sg:["Ik heb twee uur gereden.","I drove for two hours.","J'ai conduit deux heures."],
-        pl:["Wij hebben samen naar Amsterdam gereden.","We drove to Amsterdam together.","Nous avons conduit vers Amsterdam ensemble."]
+        pl:["Wij zijn naar Amsterdam gereden.","We drove to Amsterdam.","Nous sommes allés à Amsterdam en voiture."]
       },
       ovt:{
         sg:["Ik reed twee uur.","I drove for two hours.","Je conduisais depuis deux heures."],
@@ -1286,8 +1287,8 @@ const VERBS = [
     vtt:"heeft/hebben gewild", ovt:"wou/wilde · wilden",
     s:{
       vtt:{
-        sg:["Ik heb altijd dokter gewild.","I always wanted to be a doctor.","J'ai toujours voulu être médecin."],
-        pl:["Zij hebben mee gewild.","They wanted to come along.","Ils ont voulu venir."]
+        sg:["Ik heb altijd een hond gewild.","I always wanted a dog.","J'ai toujours voulu un chien."],
+        pl:["Ze hebben altijd een hond gewild.","They always wanted a dog.","Ils ont toujours voulu un chien."]
       },
       ovt:{
         sg:["Ik wou meer tijd hebben.","I wanted more time.","Je voulais avoir plus de temps."],
@@ -1410,11 +1411,11 @@ const VERBS = [
   {
     nl:"zullen", en:"shall / will", fr:"aller (futur) / devoir", emoji:"🔮", ec:"1f52e",
     vtt:"heeft/hebben gezuld", ovt:"zou · zouden",
-    note:"Perfectum (gezuld) wordt zelden gebruikt",
+    note:"Perfectum (gezuld) wordt niet gebruikt",
     s:{
       vtt:{
-        sg:["Het heeft zo gezuld zijn.","It was supposed to be that way.","C'est ainsi que cela devait être."],
-        pl:["Wij hebben het nooit zo gezuld.","We never intended it to be this way.","Nous n'avons jamais voulu que ce soit ainsi."]
+        sg:["— (perfectum wordt niet gebruikt)","— (the perfect tense is not used)","— (le parfait n'est pas utilisé)"],
+        pl:["— (perfectum wordt niet gebruikt)","— (the perfect tense is not used)","— (le parfait n'est pas utilisé)"]
       },
       ovt:{
         sg:["Ik zou morgen komen.","I was going to come tomorrow.","Je devais venir demain."],
