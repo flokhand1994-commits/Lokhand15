@@ -1,4 +1,4 @@
-const CACHE = 'dutch-v1';
+const CACHE = 'dutch-v3';
 const ASSETS = [
   './',
   './index.html',

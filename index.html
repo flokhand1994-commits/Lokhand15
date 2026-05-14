@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dutch Nouns – Flashcards</title>
+<title>Learning Material for Dutch</title>
 <style>
 :root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--de:#2c6aa0;--het:#2a7a6a}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -811,7 +811,7 @@ if ('serviceWorker' in navigator) {
   });
   let refreshing;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) { refreshing = true; location.reload(); }
+    if (!refreshing) { refreshing = true; location.href = './index.html'; }
   });
 }
 

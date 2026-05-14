@@ -257,7 +257,7 @@ if ('serviceWorker' in navigator) {
   });
   let refreshing;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) { refreshing = true; location.reload(); }
+    if (!refreshing) { refreshing = true; location.href = './index.html'; }
   });
 }
 
