@@ -63,6 +63,10 @@ h1{font-size:1.2rem;color:var(--accent);margin-bottom:10px;letter-spacing:.5px}
 </style>
 </head>
 <body>
+<div id="update-banner" style="display:none;position:fixed;top:0;left:0;right:0;background:#2c6aa0;color:#fff;padding:10px 16px;z-index:9999;align-items:center;justify-content:space-between;gap:12px;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.2)">
+  <span>New version available</span>
+  <button onclick="applyUpdate()" style="background:#fff;color:#2c6aa0;border:none;border-radius:6px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:.85rem">Refresh</button>
+</div>
 <div id="welcome">
   <div class="welcome-logo">🇳🇱</div>
   <h1 class="welcome-h1">Learning Material for Dutch</h1>
@@ -793,6 +797,29 @@ function startNouns(filter){
 }
 
 showWelcome();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+          document.getElementById('update-banner').style.display = 'flex';
+        }
+      });
+    });
+  });
+  let refreshing;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) { refreshing = true; location.reload(); }
+  });
+}
+
+function applyUpdate() {
+  navigator.serviceWorker.ready.then(reg => {
+    if (reg.waiting) reg.waiting.postMessage('skipWaiting');
+  });
+}
 </script>
 </body>
 </html>
