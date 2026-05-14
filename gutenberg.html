@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verhalen van Project Gutenberg</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px;-webkit-tap-highlight-color:transparent}
+.app-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;width:min(600px,96vw)}
+#home-btn{padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;touch-action:manipulation}
+#home-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.app-title{font-size:1rem;color:var(--accent);font-weight:700}
+
+/* Story navigation */
+.story-nav{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.nav-btn{padding:8px 18px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:1rem;cursor:pointer;font-weight:700;touch-action:manipulation;min-height:44px;min-width:44px}
+.nav-btn:hover:not(:disabled){background:var(--accent);color:#fff}
+.nav-btn:disabled{opacity:.35;cursor:default}
+#story-counter{font-size:.9rem;color:var(--muted);min-width:60px;text-align:center}
+
+/* Story card */
+.story-card{width:min(600px,96vw);background:var(--card);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.07);padding:24px;margin-bottom:16px}
+.story-num{font-size:.72rem;color:var(--muted);margin-bottom:4px}
+.story-title{font-size:1.45rem;font-weight:700;color:var(--accent);margin-bottom:6px;line-height:1.25}
+.story-desc{font-size:.88rem;color:var(--muted);font-style:italic;margin-bottom:18px;line-height:1.5}
+
+/* Story text */
+.story-text{font-size:1rem;line-height:1.8;color:var(--ink);margin-bottom:20px}
+.story-text p{margin-bottom:1em}
+.story-text p:last-child{margin-bottom:0}
+
+/* Section headings within stories */
+.story-text p.section-heading{
+  font-weight:700;font-size:.95rem;color:var(--accent);
+  margin-top:1.4em;margin-bottom:.3em;font-style:normal;
+  border-bottom:1px solid var(--border);padding-bottom:3px;
+}
+
+/* word spans */
+.w{cursor:pointer;border-radius:3px;transition:background .15s}
+.w:hover,.w:active{background:rgba(44,106,160,.13)}
+
+/* Source note */
+.source-note{font-size:.68rem;color:var(--muted);opacity:.7;margin-top:14px;line-height:1.5;border-top:1px solid var(--border);padding-top:10px}
+
+/* Hint bar */
+.hint-bar{font-size:.75rem;color:var(--muted);text-align:center;margin-bottom:10px;opacity:.8}
+
+/* Translation bottom sheet */
+#backdrop{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:998;display:none}
+#tooltip{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:2px solid var(--accent);border-radius:18px 18px 0 0;padding:20px 24px 30px;box-shadow:0 -4px 28px rgba(0,0,0,.15);z-index:999;transform:translateY(100%);transition:transform .28s ease;max-height:60vh;overflow:auto}
+#tooltip.show{transform:translateY(0)}
+.tooltip-word{font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:10px}
+.tooltip-row{display:flex;align-items:baseline;gap:8px;font-size:1rem;margin-bottom:6px;line-height:1.4}
+.tooltip-flag{font-size:1.1rem}
+.tooltip-text{color:var(--ink)}
+.tooltip-loading{color:var(--muted);font-size:.9rem;margin-top:6px}
+.tooltip-close{position:absolute;top:14px;right:18px;font-size:1.2rem;cursor:pointer;color:var(--muted);background:none;border:none;padding:4px 8px;border-radius:6px;touch-action:manipulation}
+.tooltip-close:hover{background:var(--bg)}
+</style>
+</head>
+<body>
+
+<div id="update-banner" style="display:none;position:fixed;top:0;left:0;right:0;background:#2c6aa0;color:#fff;padding:10px 16px;z-index:9999;align-items:center;justify-content:space-between;gap:12px;font-size:.88rem;box-shadow:0 2px 8px rgba(0,0,0,.2)">
+  <span>New version available</span>
+  <button onclick="applyUpdate()" style="background:#fff;color:#2c6aa0;border:none;border-radius:6px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:.85rem">Refresh</button>
+</div>
+
+<div class="app-header">
+  <button id="home-btn" onclick="window.location='index.html'">← Home</button>
+  <span class="app-title">📜 Gutenberg Verhalen</span>
+</div>
+
+<div class="story-nav">
+  <button class="nav-btn" id="prev-btn" onclick="go(-1)">&#9664;</button>
+  <span id="story-counter">1 / 17</span>
+  <button class="nav-btn" id="next-btn" onclick="go(1)">&#9654;</button>
+</div>
+
+<p class="hint-bar">Tik op een woord voor de vertaling · Tap any word to translate</p>
+
+<div class="story-card" id="story-card">
+  <div class="story-num" id="story-num"></div>
+  <h2 class="story-title" id="story-title"></h2>
+  <p class="story-desc" id="story-desc"></p>
+  <div class="story-text" id="story-text"></div>
+  <p class="source-note">Bron / Source: <span id="story-source"></span> — via <em>Project Gutenberg</em> (gutenberg.org). Publiek domein / Public domain.</p>
+</div>
+
+<div id="backdrop" onclick="closeTooltip()"></div>
+<div id="tooltip">
+  <button class="tooltip-close" onclick="closeTooltip()">✕</button>
+  <div class="tooltip-word" id="tt-word"></div>
+  <div id="tt-body"></div>
+</div>
+
+<script src="gutenberg_stories.js"></script>
+<script>
+let cur = 0;
+const cache = {};
+
+// Proper-noun-aware word wrapper
+// Words starting with a capital mid-sentence are skipped (not clickable)
+function wrapWords(text) {
+  let sentenceStart = true;
+  return text.replace(/(\S+)/g, m => {
+    const core = m.replace(/^[^a-zA-ZÀ-ɏ]+|[^a-zA-ZÀ-ɏ]+$/g, '');
+    const trailMatch = m.match(/[^a-zA-ZÀ-ɏ]+$/);
+    const trail = trailMatch ? trailMatch[0] : '';
+
+    if (!core || core.length < 2) {
+      if (/[.!?]/.test(m)) sentenceStart = true;
+      return m;
+    }
+
+    const isCapitalized = /^[A-ZÀ-Ü]/.test(core);
+    const isProperNoun  = isCapitalized && !sentenceStart;
+
+    // Update state for next token
+    sentenceStart = /[.!?]$/.test(trail);
+
+    if (isProperNoun) return m;
+    return `<span class="w" data-w="${core.toLowerCase()}">${m}</span>`;
+  });
+}
+
+function isHeading(para) {
+  const p = para.trim();
+  // Roman numeral alone: I. II. III. etc.
+  if (/^[IVX]+\.$/.test(p)) return true;
+  // ALL-CAPS line up to ~80 chars
+  if (p === p.toUpperCase() && p.length > 2 && p.length < 90 && p.split(' ').length <= 12) return true;
+  return false;
+}
+
+function render() {
+  const s = GUTENBERG_STORIES[cur];
+  document.getElementById('story-num').textContent = `Verhaal ${cur + 1} van ${GUTENBERG_STORIES.length}`;
+  document.getElementById('story-title').innerHTML  = wrapWords(s.title);
+  document.getElementById('story-desc').innerHTML   = wrapWords(s.desc);
+  document.getElementById('story-source').textContent = s.source;
+  document.getElementById('story-counter').textContent = `${cur + 1} / ${GUTENBERG_STORIES.length}`;
+  document.getElementById('prev-btn').disabled = cur === 0;
+  document.getElementById('next-btn').disabled = cur === GUTENBERG_STORIES.length - 1;
+
+  // Story text — detect internal headings
+  const html = s.paras.map(p => {
+    const trimmed = p.trim();
+    if (isHeading(trimmed)) {
+      return `<p class="section-heading">${trimmed}</p>`;
+    }
+    return `<p>${wrapWords(trimmed)}</p>`;
+  }).join('');
+  document.getElementById('story-text').innerHTML = html;
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  closeTooltip();
+}
+
+function go(dir) {
+  const next = cur + dir;
+  if (next < 0 || next >= GUTENBERG_STORIES.length) return;
+  cur = next;
+  render();
+}
+
+// Keyboard nav
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') go(1);
+  else if (e.key === 'ArrowLeft') go(-1);
+});
+
+// Swipe nav
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive: true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 55 && !document.getElementById('tooltip').classList.contains('show')) {
+    go(dx < 0 ? 1 : -1);
+  }
+}, {passive: true});
+
+// Translation
+async function gtrans(word, tl) {
+  const res = await fetch(
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=nl&tl=${tl}&dt=t&q=${encodeURIComponent(word)}`
+  );
+  const d = await res.json();
+  const t = (d[0] || []).map(x => x[0] || '').join('').trim();
+  return (t && t.toLowerCase() !== word.toLowerCase()) ? t : '—';
+}
+
+async function showTranslation(el) {
+  const raw = el.dataset.w;
+  if (!raw) return;
+  document.getElementById('tt-word').textContent = raw;
+  document.getElementById('tt-body').innerHTML = `<p class="tooltip-loading">⏳ Vertaling laden…</p>`;
+  openTooltip();
+
+  if (cache[raw]) { renderTooltip(cache[raw]); return; }
+
+  try {
+    const [en, fr] = await Promise.all([gtrans(raw, 'en'), gtrans(raw, 'fr')]);
+    cache[raw] = {en, fr};
+    renderTooltip({en, fr});
+  } catch {
+    document.getElementById('tt-body').innerHTML = `<p class="tooltip-loading">⚠️ Geen verbinding</p>`;
+  }
+}
+
+function renderTooltip({en, fr}) {
+  document.getElementById('tt-body').innerHTML =
+    `<div class="tooltip-row"><span class="tooltip-flag">🇬🇧</span><span class="tooltip-text">${en}</span></div>
+     <div class="tooltip-row"><span class="tooltip-flag">🇫🇷</span><span class="tooltip-text">${fr}</span></div>`;
+}
+
+function openTooltip() {
+  document.getElementById('backdrop').style.display = 'block';
+  document.getElementById('tooltip').classList.add('show');
+}
+
+function closeTooltip() {
+  document.getElementById('backdrop').style.display = 'none';
+  document.getElementById('tooltip').classList.remove('show');
+}
+
+// Click (desktop)
+document.getElementById('story-card').addEventListener('click', e => {
+  const w = e.target.closest('.w');
+  if (w) showTranslation(w);
+});
+
+// Tap (mobile)
+document.getElementById('story-card').addEventListener('touchend', e => {
+  const w = e.target.closest('.w');
+  if (w) { e.preventDefault(); showTranslation(w); }
+}, {passive: false});
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+          document.getElementById('update-banner').style.display = 'flex';
+        }
+      });
+    });
+  });
+  let refreshing;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) { refreshing = true; location.href = './index.html'; }
+  });
+}
+
+function applyUpdate() {
+  navigator.serviceWorker.ready.then(reg => {
+    if (reg.waiting) reg.waiting.postMessage('skipWaiting');
+  });
+}
+
+render();
+</script>
+</body>
+</html>
