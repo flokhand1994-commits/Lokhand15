@@ -124,8 +124,8 @@ function wrapWords(text) {
 function render() {
   const s = DUTCH_STORIES[cur];
   document.getElementById('story-num').textContent = `Verhaal ${cur + 1} van ${DUTCH_STORIES.length}`;
-  document.getElementById('story-title').textContent = s.title;
-  document.getElementById('story-desc').textContent = s.desc;
+  document.getElementById('story-title').innerHTML = wrapWords(s.title);
+  document.getElementById('story-desc').innerHTML = wrapWords(s.desc);
   document.getElementById('story-counter').textContent = `${cur + 1} / ${DUTCH_STORIES.length}`;
   document.getElementById('prev-btn').disabled = cur === 0;
   document.getElementById('next-btn').disabled = cur === DUTCH_STORIES.length - 1;
@@ -227,13 +227,13 @@ function closeTooltip() {
 }
 
 // Single click (desktop)
-document.getElementById('story-text').addEventListener('click', e => {
+document.getElementById('story-card').addEventListener('click', e => {
   const w = e.target.closest('.w');
   if (w) showTranslation(w);
 });
 
 // Tap (mobile)
-document.getElementById('story-text').addEventListener('touchend', e => {
+document.getElementById('story-card').addEventListener('touchend', e => {
   const w = e.target.closest('.w');
   if (w) { e.preventDefault(); showTranslation(w); }
 }, {passive: false});

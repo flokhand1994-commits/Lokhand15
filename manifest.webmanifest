@@ -1,7 +1,7 @@
 {
-  "name": "Dutch Flashcards",
-  "short_name": "NL Flashcards",
-  "description": "Dutch nouns and verbs — flashcards with EN/FR glosses",
+  "name": "Learning Material for Dutch",
+  "short_name": "Dutch Learning",
+  "description": "Dutch learning material — flashcards, stories, and verb practice",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

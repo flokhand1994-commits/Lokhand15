@@ -52,13 +52,13 @@ const DUTCH_STORIES = [
       `Het is inmiddels laat in de middag en Joost en Fieke zijn moe van alle indrukken. Ze besluiten om terug te gaan naar het station en de trein naar huis te nemen. Ze kijken terug op een geweldige dag en zijn blij dat ze dit samen hebben kunnen doen.`
     ],
     vocab: [
-      ["ik heb zin in", "I feel like doing it"],
+      ["ik heb zin in", "I feel like it / I'm in the mood for it"],
       ["'s morgens", "in the morning"],
       ["van iets houden", "to like / love something"],
       ["schilderij", "painting"],
       ["geschiedenis", "history"],
       ["wennen", "to get used to something"],
-      ["inmiddels", "meanwhile"],
+      ["inmiddels", "by now / by that point"],
       ["geweldig", "awesome"]
     ],
     questions: [
@@ -81,7 +81,7 @@ const DUTCH_STORIES = [
     ],
     vocab: [
       ["ontmoeten", "to meet"],
-      ["toevallig", "accidentally / by chance"],
+      ["toevallig", "by chance / coincidentally"],
       ["wandeling", "stroll"],
       ["gezelschap", "company (of people)"],
       ["gevoelens", "feelings"],
