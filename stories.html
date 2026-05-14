@@ -25,6 +25,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .story-num{font-size:.72rem;color:var(--muted);margin-bottom:4px}
 .story-title{font-size:1.45rem;font-weight:700;color:var(--accent);margin-bottom:6px;line-height:1.25}
 .story-desc{font-size:.88rem;color:var(--muted);font-style:italic;margin-bottom:18px;line-height:1.5}
+.story-img{width:100%;border-radius:10px;margin-bottom:18px;display:block;object-fit:cover;max-height:260px}
 
 /* Story text */
 .story-text{font-size:1rem;line-height:1.8;color:var(--ink);margin-bottom:20px}
@@ -78,12 +79,13 @@ details[open] summary::before{transform:rotate(90deg)}
   <button class="nav-btn" id="next-btn" onclick="go(1)">&#9654;</button>
 </div>
 
-<p class="hint-bar">Dubbeltik of houd een woord ingedrukt voor de vertaling · Double-tap or long-press any word to translate</p>
+<p class="hint-bar">Tik op een woord voor de vertaling · Tap any word to translate</p>
 
 <div class="story-card" id="story-card">
   <div class="story-num" id="story-num"></div>
   <h2 class="story-title" id="story-title"></h2>
   <p class="story-desc" id="story-desc"></p>
+  <img class="story-img" id="story-img" src="" alt="">
   <div class="story-text" id="story-text"></div>
 
   <details id="vocab-details">
@@ -127,6 +129,11 @@ function render() {
   document.getElementById('story-counter').textContent = `${cur + 1} / ${DUTCH_STORIES.length}`;
   document.getElementById('prev-btn').disabled = cur === 0;
   document.getElementById('next-btn').disabled = cur === DUTCH_STORIES.length - 1;
+
+  // Illustration
+  const img = document.getElementById('story-img');
+  img.src = `story_images/story_${cur + 1}.jpeg`;
+  img.alt = s.title;
 
   // Story text
   document.getElementById('story-text').innerHTML =
@@ -175,6 +182,16 @@ document.addEventListener('touchend', e => {
 }, {passive: true});
 
 // Translation
+async function gtrans(word, tl) {
+  const res = await fetch(
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=nl&tl=${tl}&dt=t&q=${encodeURIComponent(word)}`
+  );
+  const d = await res.json();
+  const t = (d[0] || []).map(x => x[0] || '').join('').trim();
+  return (t && t.toLowerCase() !== word.toLowerCase()) ? t : '—';
+}
+
+
 async function showTranslation(el) {
   const raw = el.dataset.w;
   if (!raw) return;
@@ -182,21 +199,10 @@ async function showTranslation(el) {
   document.getElementById('tt-body').innerHTML = `<p class="tooltip-loading">⏳ Vertaling laden…</p>`;
   openTooltip();
 
-  if (cache[raw]) {
-    renderTooltip(cache[raw]);
-    return;
-  }
+  if (cache[raw]) { renderTooltip(cache[raw]); return; }
 
   try {
-    const [enRes, frRes] = await Promise.all([
-      fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(raw)}&langpair=nl|en`).then(r => r.json()),
-      fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(raw)}&langpair=nl|fr`).then(r => r.json())
-    ]);
-    let en = enRes.responseData?.translatedText || '—';
-    let fr = frRes.responseData?.translatedText || '—';
-    // If API echoes back the same word, mark as unknown
-    if (en.toLowerCase() === raw.toLowerCase()) en = '—';
-    if (fr.toLowerCase() === raw.toLowerCase()) fr = '—';
+    const [en, fr] = await Promise.all([gtrans(raw, 'en'), gtrans(raw, 'fr')]);
     cache[raw] = {en, fr};
     renderTooltip({en, fr});
   } catch {
@@ -220,25 +226,17 @@ function closeTooltip() {
   document.getElementById('tooltip').classList.remove('show');
 }
 
-// Double-click (desktop)
-document.getElementById('story-text').addEventListener('dblclick', e => {
+// Single click (desktop)
+document.getElementById('story-text').addEventListener('click', e => {
   const w = e.target.closest('.w');
   if (w) showTranslation(w);
 });
 
-// Long press (mobile)
-let pressTimer = null;
-document.getElementById('story-text').addEventListener('touchstart', e => {
+// Tap (mobile)
+document.getElementById('story-text').addEventListener('touchend', e => {
   const w = e.target.closest('.w');
-  if (!w) return;
-  pressTimer = setTimeout(() => { showTranslation(w); pressTimer = null; }, 450);
-}, {passive: true});
-document.getElementById('story-text').addEventListener('touchend', () => {
-  if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
-}, {passive: true});
-document.getElementById('story-text').addEventListener('touchmove', () => {
-  if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
-}, {passive: true});
+  if (w) { e.preventDefault(); showTranslation(w); }
+}, {passive: false});
 
 render();
 </script>
