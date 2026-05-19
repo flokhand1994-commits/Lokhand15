@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kookinstructies – Beeldwoordenboek</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--green:#2a7a6a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px;-webkit-tap-highlight-color:transparent}
+.app-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;width:min(420px,96vw)}
+#home-btn{padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;min-height:36px}
+#home-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.app-title{font-size:1rem;color:var(--accent);font-weight:700}
+#scene{width:min(420px,96vw);height:300px;perspective:1000px;cursor:pointer;margin-bottom:14px;touch-action:pan-y}
+.inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s ease}
+.inner.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;background:var(--card);border:1.5px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);padding:22px 24px;display:flex;flex-direction:column;justify-content:center;user-select:none;-webkit-user-select:none}
+.back{transform:rotateY(180deg)}
+/* Front */
+.card-num{font-size:.75rem;color:var(--muted);margin-bottom:6px}
+.front-emoji{font-size:3rem;margin-bottom:8px;line-height:1;text-align:center}
+.front-nl{font-size:2.2rem;font-weight:700;color:var(--accent);margin-bottom:6px;line-height:1.1;text-align:center}
+.front-en{font-size:.95rem;color:var(--muted);text-align:center}
+.front-fr{font-size:.95rem;color:var(--muted);text-align:center}
+.flip-hint{margin-top:12px;font-size:.72rem;color:#aab;text-align:center}
+/* Back */
+.back-tag{display:inline-block;font-size:.85rem;font-weight:700;padding:3px 12px;border-radius:8px;margin-bottom:10px;color:#fff;background:var(--green);align-self:flex-start}
+.back-verb{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.back-sent{font-size:1rem;line-height:1.55;margin-bottom:6px;color:var(--ink)}
+.back-sent strong{color:var(--accent)}
+.back-en{font-size:.84rem;color:var(--muted);line-height:1.4;font-style:italic}
+.back-fr{font-size:.84rem;color:var(--muted);line-height:1.4;font-style:italic}
+/* Toolbar */
+#toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;width:min(420px,96vw)}
+.nav-btn{padding:7px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:.9rem;cursor:pointer;font-weight:600;touch-action:manipulation;min-height:44px}
+.nav-btn:hover{background:var(--accent);color:#fff}
+#counter{font-size:.88rem;color:var(--muted);min-width:70px;text-align:center}
+.byline{position:fixed;bottom:10px;right:14px;font-size:.65rem;color:var(--muted);opacity:.55;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <button id="home-btn" onclick="window.location='index.html'">← Home</button>
+  <span class="app-title">🍳 Kookinstructies</span>
+</div>
+
+<div id="toolbar">
+  <button class="nav-btn" id="prev-btn">&#9664;</button>
+  <span id="counter">1 / 12</span>
+  <button class="nav-btn" id="next-btn">&#9654;</button>
+</div>
+
+<div id="scene">
+  <div class="inner" id="inner">
+    <div class="face front" id="front"></div>
+    <div class="face back"  id="back"></div>
+  </div>
+</div>
+
+<span class="byline">by Fatima Lokhandwala</span>
+
+<script>
+const CARDS = [
+  {
+    emoji: '🧅',
+    nl: 'pellen',
+    en: 'to peel',
+    fr: 'éplucher / peler',
+    sent_nl: 'Pel de <strong>ui</strong>.',
+    sent_en: 'Peel the onion.',
+    sent_fr: 'Épluchez l\'oignon.'
+  },
+  {
+    emoji: '🍲',
+    nl: 'stoven',
+    en: 'to stew / braise',
+    fr: 'étuver / braiser',
+    sent_nl: 'Stoof de uien/het vlees in een <strong>stoofpot</strong>.',
+    sent_en: 'Stew the onions/meat in a stew pot.',
+    sent_fr: 'Faites braiser les oignons/la viande dans une cocotte.'
+  },
+  {
+    emoji: '🧈',
+    nl: 'laten smelten',
+    en: 'to let melt',
+    fr: 'faire fondre',
+    sent_nl: 'Laat <strong>boter</strong> smelten in een pan.',
+    sent_en: 'Let butter melt in a pan.',
+    sent_fr: 'Faites fondre le beurre dans une poêle.'
+  },
+  {
+    emoji: '🍳',
+    nl: 'bakken',
+    en: 'to fry / bake',
+    fr: 'faire frire / cuire',
+    sent_nl: 'Bak het <strong>vlees</strong> in de pan.',
+    sent_en: 'Fry the meat in the pan.',
+    sent_fr: 'Faites frire la viande dans la poêle.'
+  },
+  {
+    emoji: '➕',
+    nl: 'doen',
+    en: 'to put / add',
+    fr: 'mettre / ajouter',
+    sent_nl: 'Doe het vlees in de <strong>stoofpot</strong>.',
+    sent_en: 'Put the meat in the stew pot.',
+    sent_fr: 'Mettez la viande dans la cocotte.'
+  },
+  {
+    emoji: '🫗',
+    nl: 'gieten',
+    en: 'to pour',
+    fr: 'verser',
+    sent_nl: 'Giet het <strong>bier/water</strong> bij het vlees.',
+    sent_en: 'Pour the beer/water with the meat.',
+    sent_fr: 'Versez la bière/l\'eau sur la viande.'
+  },
+  {
+    emoji: '🌿',
+    nl: 'toevoegen',
+    en: 'to add',
+    fr: 'ajouter',
+    sent_nl: 'Voeg <strong>kruiden/azijn</strong> toe.',
+    sent_en: 'Add herbs/vinegar.',
+    sent_fr: 'Ajoutez des herbes/du vinaigre.'
+  },
+  {
+    emoji: '🥪',
+    nl: 'smeren',
+    en: 'to spread',
+    fr: 'tartiner / étaler',
+    sent_nl: 'Smeer <strong>mosterd</strong> op een boterham.',
+    sent_en: 'Spread mustard on a sandwich.',
+    sent_fr: 'Tartinez la moutarde sur une tranche de pain.'
+  },
+  {
+    emoji: '♨️',
+    nl: 'laten sudderen',
+    en: 'to let simmer',
+    fr: 'laisser mijoter',
+    sent_nl: 'Laat het <strong>stoofvlees</strong> drie uur sudderen.',
+    sent_en: 'Let the stew simmer for three hours.',
+    sent_fr: 'Laissez mijoter le ragoût pendant trois heures.'
+  },
+  {
+    emoji: '🥄',
+    nl: 'roeren',
+    en: 'to stir',
+    fr: 'remuer',
+    sent_nl: 'Roer <strong>af en toe</strong>.',
+    sent_en: 'Stir occasionally.',
+    sent_fr: 'Remuez de temps en temps.'
+  },
+  {
+    emoji: '🧂',
+    nl: 'kruiden',
+    en: 'to season',
+    fr: 'assaisonner',
+    sent_nl: 'Kruid met <strong>peper en zout</strong>.',
+    sent_en: 'Season with pepper and salt.',
+    sent_fr: 'Assaisonnez avec du poivre et du sel.'
+  },
+  {
+    emoji: '🫙',
+    nl: 'mengen',
+    en: 'to mix',
+    fr: 'mélanger',
+    sent_nl: 'Meng <strong>alles</strong>.',
+    sent_en: 'Mix everything.',
+    sent_fr: 'Mélangez tout.'
+  }
+];
+
+let cur = 0, flipped = false;
+
+function render() {
+  const c = CARDS[cur];
+  const inner = document.getElementById('inner');
+  inner.classList.toggle('flipped', flipped);
+
+  document.getElementById('front').innerHTML =
+    `<div class="card-num">#${cur + 1}</div>
+     <div class="front-emoji">${c.emoji}</div>
+     <div class="front-nl">${c.nl}</div>
+     <div class="front-en">${c.en}</div>
+     <div class="front-fr">${c.fr}</div>
+     <div class="flip-hint">tap to flip</div>`;
+
+  document.getElementById('back').innerHTML =
+    `<span class="back-tag">kookinstructie</span>
+     <div class="back-verb">${c.nl}</div>
+     <div class="back-sent">${c.sent_nl}</div>
+     <div class="back-en">${c.sent_en}</div>
+     <div class="back-fr">${c.sent_fr}</div>`;
+
+  document.getElementById('counter').textContent = `${cur + 1} / ${CARDS.length}`;
+}
+
+document.getElementById('prev-btn').onclick = () => { cur = (cur - 1 + CARDS.length) % CARDS.length; flipped = false; render(); };
+document.getElementById('next-btn').onclick = () => { cur = (cur + 1) % CARDS.length; flipped = false; render(); };
+document.getElementById('scene').onclick = () => { flipped = !flipped; render(); };
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { cur = (cur + 1) % CARDS.length; flipped = false; render(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { cur = (cur - 1 + CARDS.length) % CARDS.length; flipped = false; render(); }
+  else if (e.key === ' ') { e.preventDefault(); flipped = !flipped; render(); }
+});
+
+let tx = 0;
+const sc = document.getElementById('scene');
+sc.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+sc.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) {
+    if (dx < 0) { cur = (cur + 1) % CARDS.length; } else { cur = (cur - 1 + CARDS.length) % CARDS.length; }
+    flipped = false; render();
+  }
+}, { passive: true });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+
+render();
+</script>
+</body>
+</html>
