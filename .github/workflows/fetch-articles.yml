@@ -1,0 +1,36 @@
+name: Fetch Wablieft Articles
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 8am Belgian time (6am UTC) every day
+  workflow_dispatch:        # also allow manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 python-dotenv
+
+      - name: Fetch articles
+        env:
+          WABLIEFT_EMAIL: ${{ secrets.WABLIEFT_EMAIL }}
+          WABLIEFT_PASSWORD: ${{ secrets.WABLIEFT_PASSWORD }}
+        run: python fetch_wablieft.py
+
+      - name: Commit updated articles
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add wablieft_articles.json
+          git diff --cached --quiet || git commit -m "chore: refresh wablieft articles"
+          git push

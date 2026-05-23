@@ -4,3 +4,7 @@ __pycache__/
 .venv/
 dutch_verbs_for_sharing.zip
 dutch_verbs_flashcards_study_only.zip
+.env
+wablieft_articles.js
+debug_wablieft.py
+Nederlandse_Kinderverhalen.pdf

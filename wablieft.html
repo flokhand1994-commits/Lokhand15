@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wablieft Nieuws</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px;-webkit-tap-highlight-color:transparent}
+
+/* ── Header ── */
+.app-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;width:min(900px,96vw)}
+#home-btn{padding:5px 14px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;touch-action:manipulation;flex-shrink:0}
+#home-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.app-title{font-size:1.15rem;color:var(--accent);font-weight:700}
+.last-updated{margin-left:auto;font-size:.68rem;color:var(--muted);opacity:.75;white-space:nowrap}
+
+/* ── Section tabs ── */
+.section-tabs{display:flex;gap:7px;margin-bottom:20px;width:min(900px,96vw);flex-wrap:wrap}
+.tab-btn{padding:7px 16px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.84rem;cursor:pointer;touch-action:manipulation;transition:.18s;font-weight:500}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab-btn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+
+/* ── Article grid ── */
+#article-list{width:min(900px,96vw)}
+.article-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:620px){.article-grid{grid-template-columns:1fr}}
+
+/* ── Article card ── */
+.article-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:.18s;display:flex;flex-direction:column}
+.article-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.article-card-body{padding:16px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.article-card:hover{border-color:var(--accent);box-shadow:0 4px 18px rgba(44,106,160,.13);transform:translateY(-2px)}
+.article-badge{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);opacity:.75}
+.article-card-title{font-size:1rem;font-weight:700;color:var(--ink);line-height:1.32}
+.article-teaser{font-size:.82rem;color:var(--muted);line-height:1.56;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.article-date{font-size:.67rem;color:var(--muted);margin-top:auto;padding-top:6px;opacity:.8}
+
+/* ── Reader ── */
+#reader{display:none;width:min(900px,96vw)}
+.reader-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+#back-btn{padding:5px 14px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;touch-action:manipulation;flex-shrink:0}
+#back-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.reader-section-badge{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);opacity:.7}
+
+.reader-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 2px 14px rgba(0,0,0,.07);padding:36px 44px;margin-bottom:16px}
+@media(max-width:620px){.reader-card{padding:22px 18px}}
+
+.reader-title{font-size:1.75rem;font-weight:700;color:var(--accent);margin-bottom:10px;line-height:1.22}
+.reader-img{width:100%;border-radius:10px;margin-bottom:18px;display:block}
+.reader-date{font-size:.78rem;color:var(--muted);margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.reader-text{font-size:1.08rem;line-height:1.92;color:var(--ink)}
+.reader-text p{margin-bottom:1.1em}
+.reader-text p:last-child{margin-bottom:0}
+
+/* ── Word spans ── */
+.w{cursor:pointer;border-radius:3px;transition:background .14s}
+.w:hover,.w:active{background:rgba(44,106,160,.13)}
+
+/* ── Hint bar ── */
+.hint-bar{font-size:.74rem;color:var(--muted);text-align:center;margin-bottom:12px;opacity:.8}
+
+/* ── Source note ── */
+.source-note{font-size:.67rem;color:var(--muted);opacity:.7;margin-top:20px;line-height:1.6;border-top:1px solid var(--border);padding-top:12px}
+.source-note a{color:var(--accent);text-decoration:none}
+.source-note a:hover{text-decoration:underline}
+
+/* ── Translation bottom sheet ── */
+#backdrop{position:fixed;inset:0;background:rgba(0,0,0,.32);z-index:998;display:none}
+#tooltip{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:2px solid var(--accent);border-radius:18px 18px 0 0;padding:20px 26px 32px;box-shadow:0 -4px 28px rgba(0,0,0,.16);z-index:999;transform:translateY(100%);transition:transform .26s ease;max-height:60vh;overflow:auto}
+#tooltip.show{transform:translateY(0)}
+.tooltip-word{font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:10px}
+.tooltip-row{display:flex;align-items:baseline;gap:9px;font-size:1rem;margin-bottom:7px;line-height:1.4}
+.tooltip-flag{font-size:1.1rem}
+.tooltip-text{color:var(--ink)}
+.tooltip-loading{color:var(--muted);font-size:.9rem;margin-top:6px}
+.tooltip-close{position:absolute;top:14px;right:18px;font-size:1.2rem;cursor:pointer;color:var(--muted);background:none;border:none;padding:4px 8px;border-radius:6px;touch-action:manipulation}
+.tooltip-close:hover{background:var(--bg)}
+
+/* ── Empty / setup state ── */
+#empty-state{width:min(900px,96vw);background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:48px 44px;text-align:center;display:none}
+@media(max-width:620px){#empty-state{padding:30px 20px}}
+#empty-state h2{color:var(--accent);margin-bottom:14px;font-size:1.3rem}
+#empty-state .lead{color:var(--muted);font-size:.92rem;line-height:1.75;margin-bottom:20px}
+.setup-step{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 20px;margin:10px 0;text-align:left;font-size:.88rem;color:var(--ink);line-height:1.75}
+.setup-step strong{color:var(--accent)}
+.setup-step code{background:var(--card);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-family:'SF Mono',Monaco,monospace;font-size:.82rem;color:var(--ink)}
+.setup-step pre{background:var(--card);border:1px solid var(--border);padding:10px 14px;border-radius:7px;margin-top:6px;font-family:'SF Mono',Monaco,monospace;font-size:.82rem;line-height:1.6;overflow-x:auto}
+#empty-state .note{margin-top:16px;font-size:.78rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <button id="home-btn" onclick="window.location='index.html'">← Home</button>
+  <span class="app-title">📰 Wablieft Nieuws</span>
+  <span class="last-updated" id="last-updated"></span>
+</div>
+
+<div class="section-tabs" id="section-tabs"></div>
+
+<!-- Setup instructions (shown when no articles exist yet) -->
+<div id="empty-state">
+  <h2>📥 Artikelen ophalen</h2>
+  <p class="lead">Voer het fetch-script eenmalig uit om artikelen te laden.<br>Je hebt een betaald abonnement op wablieft.be nodig.</p>
+  <div class="setup-step">
+    <strong>Stap 1</strong> — Maak een bestand <code>.env</code> in de projectmap:<br>
+    <pre>WABLIEFT_EMAIL=jouw@email.com
+WABLIEFT_PASSWORD=jouwwachtwoord</pre>
+  </div>
+  <div class="setup-step">
+    <strong>Stap 2</strong> — Installeer Python-afhankelijkheden:<br>
+    <code>pip install requests beautifulsoup4 python-dotenv</code>
+  </div>
+  <div class="setup-step">
+    <strong>Stap 3</strong> — Haal de artikelen op:<br>
+    <code>python fetch_wablieft.py</code>
+  </div>
+  <p class="note">Herlaad daarna deze pagina. Herhaal stap 3 om de nieuwste artikelen te krijgen.</p>
+</div>
+
+<!-- Article grid -->
+<div id="article-list">
+  <div class="article-grid" id="article-grid"></div>
+</div>
+
+<!-- Article reader -->
+<div id="reader">
+  <div class="reader-nav">
+    <button id="back-btn" onclick="showList()">← Terug</button>
+    <span class="reader-section-badge" id="reader-badge"></span>
+  </div>
+  <p class="hint-bar">Tik op een woord voor de vertaling &middot; Tap any word to translate</p>
+  <div class="reader-card" id="reader-card">
+    <h1 class="reader-title" id="reader-title"></h1>
+    <div class="reader-date" id="reader-date"></div>
+    <div id="reader-img-wrap"></div>
+    <div class="reader-text" id="reader-text"></div>
+    <p class="source-note">Bron: <a href="https://wablieft.be" target="_blank" rel="noopener">wablieft.be</a> &mdash; Eenvoudig nieuws in het Nederlands</p>
+  </div>
+</div>
+
+<div id="backdrop" onclick="closeTooltip()"></div>
+<div id="tooltip">
+  <button class="tooltip-close" onclick="closeTooltip()">✕</button>
+  <div class="tooltip-word" id="tt-word"></div>
+  <div id="tt-body"></div>
+</div>
+
+<script>
+const SECTION_ORDER = ['buitenland','binnenland','sport','interview','blog','mening','leuk','ster'];
+const SECTION_LABELS = {
+  buitenland: '🌍 Wereld',
+  binnenland: '🇧🇪 België',
+  sport:      '⚽ Sport',
+  interview:  '🎤 Interview',
+  blog:       '✍️ Blog',
+  mening:     '💬 Mening',
+  leuk:       '😊 Leuk',
+  ster:       '⭐ Ster',
+};
+
+let curSection = null;
+const cache = {};
+
+function init() {
+  if (!window.WABLIEFT_ARTICLES || WABLIEFT_ARTICLES.length === 0) {
+    document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('article-list').style.display = 'none';
+    document.getElementById('section-tabs').style.display = 'none';
+    return;
+  }
+
+  if (window.WABLIEFT_UPDATED) {
+    document.getElementById('last-updated').textContent = 'Bijgewerkt: ' + WABLIEFT_UPDATED;
+  }
+
+  const available = new Set(WABLIEFT_ARTICLES.map(a => a.section));
+  const sections = SECTION_ORDER.filter(s => available.has(s));
+
+  const tabsEl = document.getElementById('section-tabs');
+  sections.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = SECTION_LABELS[s] || s;
+    btn.onclick = () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      curSection = s;
+      renderGrid();
+      showList();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+    tabsEl.appendChild(btn);
+  });
+
+  curSection = sections[0];
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById('article-grid');
+  const articles = WABLIEFT_ARTICLES.filter(a => a.section === curSection);
+  if (articles.length === 0) {
+    grid.innerHTML = '<p style="color:var(--muted);font-size:.9rem;padding:20px 0">Geen artikelen gevonden.</p>';
+    return;
+  }
+  grid.innerHTML = articles.map(a => {
+    const idx = WABLIEFT_ARTICLES.indexOf(a);
+    return `<div class="article-card" onclick="openArticle(${idx})">
+      ${a.image ? `<img class="article-card-img" src="${escHtml(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}
+      <div class="article-card-body">
+        <div class="article-badge">${a.sectionLabel || a.section}</div>
+        <div class="article-card-title">${escHtml(a.title)}</div>
+        ${a.teaser ? `<div class="article-teaser">${escHtml(a.teaser)}</div>` : ''}
+        ${a.date   ? `<div class="article-date">${escHtml(a.date)}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function wrapWords(text) {
+  return text.replace(/(\S+)/g, m => {
+    const core = m.replace(/^[^a-zA-ZÀ-ɏ]+|[^a-zA-ZÀ-ɏ]+$/g, '');
+    if (!core || core.length < 2) return escHtml(m);
+    return `<span class="w" data-w="${core.toLowerCase()}">${escHtml(m)}</span>`;
+  });
+}
+
+function openArticle(idx) {
+  const a = WABLIEFT_ARTICLES[idx];
+  document.getElementById('reader-badge').textContent =
+    (SECTION_LABELS[a.section] || a.section).replace(/^\S+\s/, '');
+  document.getElementById('reader-title').innerHTML = wrapWords(a.title);
+  document.getElementById('reader-date').textContent = a.date || '';
+  document.getElementById('reader-img-wrap').innerHTML = a.image
+    ? `<img class="reader-img" src="${escHtml(a.image)}" alt="" referrerpolicy="no-referrer">`
+    : '';
+  document.getElementById('reader-text').innerHTML =
+    (a.paras || []).map(p => `<p>${wrapWords(p)}</p>`).join('');
+
+  document.getElementById('article-list').style.display = 'none';
+  document.getElementById('section-tabs').style.display = 'none';
+  document.getElementById('reader').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  closeTooltip();
+}
+
+function showList() {
+  document.getElementById('reader').style.display = 'none';
+  document.getElementById('article-list').style.display = 'block';
+  document.getElementById('section-tabs').style.display = 'flex';
+}
+
+// ── Translation ──
+async function gtrans(word, tl) {
+  const res = await fetch(
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=nl&tl=${tl}&dt=t&q=${encodeURIComponent(word)}`
+  );
+  const d = await res.json();
+  const t = (d[0] || []).map(x => x[0] || '').join('').trim();
+  return (t && t.toLowerCase() !== word.toLowerCase()) ? t : '—';
+}
+
+async function showTranslation(el) {
+  const raw = el.dataset.w;
+  if (!raw) return;
+  document.getElementById('tt-word').textContent = raw;
+  document.getElementById('tt-body').innerHTML = '<p class="tooltip-loading">⏳ Vertaling laden…</p>';
+  openTooltip();
+  if (cache[raw]) { renderTooltip(cache[raw]); return; }
+  try {
+    const [en, fr] = await Promise.all([gtrans(raw, 'en'), gtrans(raw, 'fr')]);
+    cache[raw] = {en, fr};
+    renderTooltip({en, fr});
+  } catch {
+    document.getElementById('tt-body').innerHTML = '<p class="tooltip-loading">⚠️ Geen verbinding</p>';
+  }
+}
+
+function renderTooltip({en, fr}) {
+  document.getElementById('tt-body').innerHTML =
+    `<div class="tooltip-row"><span class="tooltip-flag">🇬🇧</span><span class="tooltip-text">${en}</span></div>
+     <div class="tooltip-row"><span class="tooltip-flag">🇫🇷</span><span class="tooltip-text">${fr}</span></div>`;
+}
+
+function openTooltip() {
+  document.getElementById('backdrop').style.display = 'block';
+  document.getElementById('tooltip').classList.add('show');
+}
+
+function closeTooltip() {
+  document.getElementById('backdrop').style.display = 'none';
+  document.getElementById('tooltip').classList.remove('show');
+}
+
+// Click / tap on words
+document.getElementById('reader-card').addEventListener('click', e => {
+  const w = e.target.closest('.w');
+  if (w) showTranslation(w);
+});
+document.getElementById('reader-card').addEventListener('touchend', e => {
+  const w = e.target.closest('.w');
+  if (w) { e.preventDefault(); showTranslation(w); }
+}, {passive: false});
+
+// Back with keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('tooltip').classList.contains('show')) closeTooltip();
+    else if (document.getElementById('reader').style.display !== 'none') showList();
+  }
+});
+
+fetch('wablieft_articles.json', {cache: 'no-store'})
+  .then(r => r.json())
+  .then(data => {
+    window.WABLIEFT_ARTICLES = data.articles || [];
+    window.WABLIEFT_UPDATED  = data.updated  || '';
+    init();
+  })
+  .catch(() => init());
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+</script>
+</body>
+</html>

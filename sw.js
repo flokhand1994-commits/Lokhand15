@@ -1,9 +1,10 @@
-const CACHE = 'dutch-v4';
+const CACHE = 'dutch-v7';
 const ASSETS = [
   './',
   './index.html',
   './stories.html',
   './gutenberg.html',
+  './wablieft.html',
   './dutch_nouns.js',
   './dutch_stories.js',
   './gutenberg_stories.js',
