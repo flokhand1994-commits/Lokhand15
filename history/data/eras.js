@@ -1,0 +1,49 @@
+H.era([
+{id:'origins', from:-2e10, short:'Origins', span:'13.8 billion years ago – 3500 BCE', name:'Origins: The Universe, Life and the First Humans',
+ summary:'Before there was history, there was the universe, a living planet and a long, slow human journey out of Africa and into farming.',
+ intro:`"History" usually means the part of the human story that was written down, which began only about 5,000 years ago. But that is a tiny sliver of time. The universe is about 13.8 billion years old, the Earth about 4.5 billion, and our own species, Homo sapiens, roughly 300,000 years.
+
+This era explains where everything came from: the stars, the planet, life, and the human beings who eventually spread across every continent. It ends with the single most important change in the human story: the switch from hunting and gathering to farming, which made cities, kings, armies and writing possible.
+
+A useful way to think about it: for 95% of our species' existence, every human lived in small bands of a few dozen people, moving with the seasons. Everything you will read about in later eras (nations, wars, religions, money) is very new.`},
+{id:'ancient', from:-3500, short:'First civilizations', span:'3500 – 800 BCE', name:'The First Civilizations',
+ summary:'Cities, writing, kings, laws and gods appear along great river valleys in Mesopotamia, Egypt, India and China.',
+ intro:`A "civilization", in the historian's sense, is a society with cities, a government, specialised jobs, organised religion and usually writing. The first ones grew up next to big rivers: the Tigris and Euphrates (Mesopotamia, modern Iraq), the Nile (Egypt), the Indus (Pakistan and northwest India) and the Yellow River (China). Rivers gave water for crops and fertile soil after floods, so farmers could grow a surplus, and a surplus could feed priests, soldiers, scribes and kings.
+
+In this era humans invented writing, the wheel, bronze tools, written law codes and monumental buildings like the pyramids. They also invented organised war between states. The era ends with a mysterious collapse around 1200 BCE, when many of the great Bronze Age kingdoms fell at once.`},
+{id:'classical', from:-800, short:'Classical age', span:'800 BCE – 500 CE', name:'The Classical Age: Philosophers and Great Empires',
+ summary:'Greece, Persia, India, China and Rome build huge empires, and thinkers from Confucius to Plato ask the big questions that still shape us.',
+ intro:`Between about 800 and 200 BCE, something remarkable happened in several places at once. In Greece, India, China, Persia and Israel, thinkers began asking deep questions: What is a good life? What is justice? Is there one God? How should rulers behave? The philosopher Karl Jaspers called this the "Axial Age", because so much of later human thought turns on it. Confucius, the Buddha, Socrates, Plato and the Hebrew prophets all belong here.
+
+It was also the age of the first truly giant empires: Persia, Alexander's empire, the Maurya Empire in India, the Han dynasty in China and, above all, Rome. These empires connected huge regions through roads, trade and shared languages, which is how ideas and religions such as Buddhism and Christianity were able to spread. The era ends with the fall of the Western Roman Empire and great migrations of peoples across Eurasia.`},
+{id:'medieval', from:500, short:'Middle Ages', span:'500 – 1450', name:'The Middle Ages: Faith, Conquest and Connection',
+ summary:'Islam rises and spreads, China flourishes, Europe rebuilds around Christianity, and the Mongols create the largest land empire ever.',
+ intro:`In Europe this period is called the "Middle Ages", the time between ancient Rome and the modern world. For a long time Europeans called it the "Dark Ages", but that is misleading. Western Europe was poorer after Rome fell, but at the same time the Islamic world, Byzantium, China under the Tang and Song dynasties, and empires in West Africa and the Americas were flourishing.
+
+The big themes: world religions (Christianity, Islam and Buddhism) became the organising force of whole societies. Feudalism, a system of land in exchange for loyalty, shaped Europe and Japan. Long-distance trade along the Silk Roads and Indian Ocean linked continents. And the Mongols, then the Black Death, showed how connected the world had already become, for good and ill.`},
+{id:'early-modern', from:1450, short:'Early modern', span:'1450 – 1750', name:'The Early Modern World: Discovery, Reformation and Science',
+ summary:'Printing, ocean voyages, the conquest of the Americas, the Reformation and the Scientific Revolution tie the world together and transform Europe.',
+ intro:`Around 1500 the world became, for the first time, truly global. European sailors crossed the Atlantic and rounded Africa, linking the Americas, Africa, Europe and Asia into one system of trade, conquest and exchange of plants, animals and diseases. This brought enormous wealth to some and catastrophe to others: Indigenous American populations collapsed and millions of Africans were enslaved and shipped across the ocean.
+
+Meanwhile, the printing press spread ideas faster than ever. The Renaissance revived classical learning, the Protestant Reformation split Western Christianity, and the Scientific Revolution taught people to test ideas by experiment. In Asia, great "gunpowder empires" (the Ottomans, Safavids, Mughals, and China's Ming and Qing) were at the height of their power. The modern world's shape begins to appear.`},
+{id:'revolutions', from:1750, short:'Revolutions', span:'1750 – 1914', name:'The Age of Revolutions and Empire',
+ summary:'Political revolutions spread ideas of rights and nations; the Industrial Revolution changes how humans live; Europe conquers much of the globe.',
+ intro:`This is the era when the modern world was born. Two revolutions happened at once. The first was political: in America, France, Haiti and Latin America, people overthrew kings and colonial rulers in the name of liberty, equality and the nation. Ideas like human rights, democracy, nationalism, liberalism, socialism and conservatism were born or took their modern form here.
+
+The second was the Industrial Revolution: machines, coal, steam, railways and factories. For the first time in history, economies grew year after year, and populations exploded. Industrial power also let a handful of European countries (and later the US and Japan) dominate most of the world through imperialism. By 1914 Europe ruled or controlled about 80% of the Earth's land, and its rivalries were about to explode.`},
+{id:'world-wars', from:1914, short:'World Wars', span:'1914 – 1945', name:'The Age of the World Wars',
+ summary:'Two world wars, a global depression, communist and fascist dictatorships and the Holocaust: the most violent thirty years in human history.',
+ intro:`In 1914 the great powers of Europe went to war, and the world followed. The First World War destroyed four empires (German, Austro-Hungarian, Russian and Ottoman), produced the communist revolution in Russia and redrew the map of Europe and the Middle East.
+
+The peace that followed was fragile. The Great Depression of 1929 threw millions out of work and made people desperate. In Italy, Germany and Japan, extreme nationalist and militarist regimes took power and set out to conquer. The Second World War (1939–1945) killed perhaps 70–85 million people, including six million Jews murdered in the Holocaust, and ended with the first use of nuclear weapons. Almost every institution we live with today (the United Nations, NATO, the European Union, modern human-rights law) was built in response to these thirty years.`},
+{id:'cold-war', from:1945, short:'Cold War', span:'1945 – 1991', name:'The Cold War and Decolonisation',
+ summary:'The US and the Soviet Union compete for the world without fighting each other directly, while dozens of colonies win independence.',
+ intro:`After 1945 two superpowers were left standing: the United States (capitalist and democratic) and the Soviet Union (communist and one-party). They never fought each other directly, because nuclear weapons made that suicidal, so their rivalry was called the "Cold War". Instead they fought through arms races, the space race, spying, propaganda and "proxy wars" in Korea, Vietnam, Afghanistan, Africa and Latin America.
+
+At the same time, the European empires collapsed. India, Pakistan, Indonesia, almost all of Africa and much of the Middle East became independent countries, often after violent struggles. Inside many countries, movements fought for civil rights, women's equality and the environment. The era ends suddenly, with the fall of the Berlin Wall in 1989 and the collapse of the Soviet Union in 1991.`},
+{id:'contemporary', from:1991.9, short:'Today', span:'1991 – present', name:'The Contemporary World',
+ summary:'Globalisation, the internet, terrorism, financial crisis, the rise of China, climate change, pandemics and the return of great-power war.',
+ intro:`With the Cold War over, many people in the 1990s believed liberal democracy and free markets would spread everywhere. Trade, travel and the internet tied the world together more closely than ever ("globalisation"), and hundreds of millions of people, above all in China and India, rose out of poverty.
+
+But the story did not end there. Genocide returned in Rwanda and Bosnia. The 9/11 attacks led to long wars in Afghanistan and Iraq. The 2008 financial crisis shook faith in the economic system. The Arab Spring raised hopes and then often ended in war. China rose to rival the United States. Climate change became the defining long-term challenge, the COVID-19 pandemic stopped the world, and Russia's full-scale invasion of Ukraine in 2022 brought major war back to Europe. These articles bring the story up to the mid-2020s. The most recent events are still unfolding, and historians will judge them differently with time.`}
+]);
