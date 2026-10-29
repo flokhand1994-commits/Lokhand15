@@ -98,6 +98,10 @@ article.full h1{font-family:var(--serif);font-size:clamp(1.7rem,5.5vw,2.4rem);li
 .pager a span{font-family:var(--serif);display:block;overflow:hidden;text-overflow:ellipsis}
 .pager .next{text-align:right}
 .markbtn{margin-top:10px}
+.voice{display:inline-flex;gap:4px;padding:4px;border-radius:12px;background:var(--chip);margin:0 0 20px}
+.voice button{border:0;background:none;padding:7px 12px;border-radius:9px;cursor:pointer;font-size:.88rem;color:var(--muted)}
+.voice button.on{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.body.story p:first-child::first-letter{font-size:3.1em;float:left;line-height:.9;margin:4px 8px 0 0;color:var(--accent);font-weight:700}
 
 .concepts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;padding-bottom:40px}
 .concepts a{display:block;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);text-decoration:none;color:var(--ink)}
@@ -127,7 +131,8 @@ footer{color:var(--muted);font-size:.8rem;text-align:center;padding:30px 16px 50
 window.H = {articles: [], concepts: [], eras: [],
   add(list){ this.articles.push(...list); },
   ideas(list){ this.concepts.push(...list); },
-  era(list){ this.eras.push(...list); }};
+  era(list){ this.eras.push(...list); },
+  stories: {}, story(map){ Object.assign(this.stories, map); }};
 </script>
 <script src="data/eras.js"></script>
 <script src="data/concepts.js"></script>
@@ -140,6 +145,22 @@ window.H = {articles: [], concepts: [], eras: [],
 <script src="data/07-world-wars.js"></script>
 <script src="data/08-cold-war.js"></script>
 <script src="data/09-contemporary.js"></script>
+<script src="data/stories/01-origins.js"></script>
+<script src="data/stories/02-ancient.js"></script>
+<script src="data/stories/03-classical.js"></script>
+<script src="data/stories/03b-classical.js"></script>
+<script src="data/stories/04-medieval.js"></script>
+<script src="data/stories/04b-medieval.js"></script>
+<script src="data/stories/05-early-modern.js"></script>
+<script src="data/stories/05b-early-modern.js"></script>
+<script src="data/stories/06-revolutions.js"></script>
+<script src="data/stories/06b-revolutions.js"></script>
+<script src="data/stories/07-world-wars.js"></script>
+<script src="data/stories/07b-world-wars.js"></script>
+<script src="data/stories/08-cold-war.js"></script>
+<script src="data/stories/08b-cold-war.js"></script>
+<script src="data/stories/09-contemporary.js"></script>
+<script src="data/stories/09b-contemporary.js"></script>
 <script>
 (function(){
 const A = H.articles.slice().sort((a,b)=>a.y-b.y);
@@ -158,6 +179,7 @@ const store = {
 };
 let read = new Set(store.get('read', []));
 let filter = {q:'', cat:''};
+let voice = store.get('voice', 'story');
 const app = document.getElementById('app');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -181,7 +203,7 @@ function home(){
     <h1>Everything that happened, in order.</h1>
     <p>${A.length} articles telling the story of the world, from the Big Bang to the present day: the wars, the empires, the
     revolutions, the migrations and the ideas that shaped them. You don't need to know anything about history, politics or
-    philosophy to start. Read from the top and each article builds on the last.</p>
+    philosophy to start. Read from the top and each article builds on the last. Every article is told as a story in the voice of a certain silver-tongued Boston lawyer, and you can switch to a plain, just-the-facts version at any time.</p>
     <div class="btnrow">
       <a class="btn primary" href="#/a/${next.id}">${started ? 'Continue: '+esc(next.t) : 'Start at the beginning'}</a>
       <a class="btn" href="#/ideas">Learn the key ideas first</a>
@@ -236,13 +258,17 @@ function article(id){
   const prev = A[a.i-1], next = A[a.i+1];
   const rel = (a.l||[]).map(x=>byId[x]).filter(Boolean);
   const ideas = (a.k||[]).map(x=>C[x]).filter(Boolean);
+  const story = H.stories[a.id], useStory = story && voice==='story';
   app.innerHTML = `<article class="full">
     <div class="crumbs"><a href="#/">Timeline</a> › <a href="#/" data-era="${a.era.id}">${esc(a.era.name)}</a></div>
     <div>${tags(a)}</div>
     <h1>${esc(a.t)}</h1>
     <div class="meta"><span>📅 ${esc(a.d)}</span><span>🌍 ${esc(a.r)}</span><span>${a.i+1} of ${A.length}</span></div>
     <p class="lede">${esc(a.s)}</p>
-    <div class="body">${a.b.trim().split(/\n\s*\n/).map(p=>`<p>${esc(p.trim())}</p>`).join('')}</div>
+    ${story?`<div class="voice" role="group" aria-label="Reading style">
+      <button class="${voice==='story'?'on':''}" data-voice="story">🎙 Told by Alan Shore</button>
+      <button class="${voice==='plain'?'on':''}" data-voice="plain">📄 Just the facts</button></div>`:''}
+    <div class="body ${useStory?'story':''}">${(useStory?story:a.b).trim().split(/\n\s*\n/).map(p=>`<p>${esc(p.trim())}</p>`).join('')}</div>
     <div class="box"><h4>Why it matters</h4><p>${esc(a.m)}</p></div>
     ${a.p&&a.p.length?`<div class="box"><h4>Key people</h4><p>${a.p.map(esc).join(' · ')}</p></div>`:''}
     ${ideas.length?`<div class="box"><h4>Ideas to understand</h4><div class="linkrow">${ideas.map(c=>`<a href="#/idea/${c.id}">${esc(c.t)}</a>`).join('')}</div></div>`:''}
@@ -256,6 +282,10 @@ function article(id){
     read.has(a.id) ? read.delete(a.id) : read.add(a.id);
     store.set('read',[...read]); updateProgress(); article(id);
   };
+  app.querySelectorAll('[data-voice]').forEach(b=>b.onclick = ()=>{
+    voice = b.dataset.voice; store.set('voice', voice);
+    const y = scrollY; article(id); window.scrollTo(0, y);
+  });
   const n = app.querySelector('[data-mark]');
   if (n) n.addEventListener('click', ()=>{ read.add(a.id); store.set('read',[...read]); updateProgress(); });
   const ec = app.querySelector('[data-era]');
