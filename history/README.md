@@ -5,7 +5,7 @@ It is a static site with no build step: open `history/` from any static server, 
 
 - **170 articles** across 9 eras. Each article has a summary, a full explanation, a "why it matters" box, the key people, linked ideas and connected events.
 - **37 "key ideas" explainers**, covering terms like democracy, empire, nationalism, capitalism, communism, fascism, the world religions and philosophy, for readers starting from zero.
-- **A storyteller's version of every article**, written as a courtroom-style monologue in the spirit of Alan Shore (*Boston Legal*). It's the default, and readers can switch to the plain version with the "Just the facts" toggle; their choice is remembered.
+- **A storyteller's version of every article**, written in the wry, eloquent, morally sharp voice of Alan Shore (*Boston Legal*), without the courtroom framing. It's the default, and readers can switch to the plain version with the "Just the facts" toggle; their choice is remembered.
 - Search, category filters, era jump links, reading progress (saved in the browser) and light and dark themes.
 
 ## Adding an article

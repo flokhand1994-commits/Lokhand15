@@ -17,13 +17,13 @@ Around 3100 BCE, tradition says a king named Narmer united Upper Egypt in the so
 
 The pharaoh was not merely a king. He was a god in human form, charged with maintaining "ma'at", the cosmic order of the universe. One can see the appeal of the job. The Egyptians developed hieroglyphic writing, a 365-day calendar, surgery and dentistry, and a bureaucracy of scribes that would have impressed any modern government.
 
-During the Old Kingdom, the pharaohs built pyramids as their tombs. The Great Pyramid of Giza, built for Khufu around 2560 BCE, remained the tallest human-made structure on Earth for nearly four thousand years. And I'm pleased to correct the record: it was most likely not built by slaves, as Hollywood insists, but by organised, fed and housed labourers, many of them farmers doing seasonal service. Some even left graffiti naming their work gangs, things like "Friends of Khufu". Team spirit has a long history.
+During the Old Kingdom, the pharaohs built pyramids as their tombs. The Great Pyramid of Giza, built for Khufu around 2560 BCE, remained the tallest human-made structure on Earth for nearly four thousand years. And I'm pleased to correct a popular myth: it was most likely not built by slaves, as Hollywood insists, but by organised, fed and housed labourers, many of them farmers doing seasonal service. Some even left graffiti naming their work gangs, things like "Friends of Khufu". Team spirit has a long history.
 
 Egypt rose and fell and rose again, through the Old, Middle and New Kingdoms. It produced Hatshepsut, a woman who ruled as pharaoh and wore a false beard to do it, and Ramesses II, a builder and self-promoter of such energy that he'd have thrived on social media. And it produced Tutankhamun, a minor boy-king who became the most famous pharaoh of all for one reason: grave robbers missed his tomb. Fame, it turns out, is often a matter of luck.`,
 
-'indus-valley': `Here's a mystery worthy of any courtroom. A great civilisation, larger than Egypt and Mesopotamia combined, with planned cities, sophisticated plumbing and international trade, and we don't know what its people called themselves, what language they spoke, or who was in charge.
+'indus-valley': `Here's a mystery worthy of any detective novel. A great civilisation, larger than Egypt and Mesopotamia combined, with planned cities, sophisticated plumbing and international trade, and we don't know what its people called themselves, what language they spoke, or who was in charge.
 
-Between about 2600 and 1900 BCE, along the Indus River in today's Pakistan and northwest India, people built cities like Mohenjo-daro and Harappa. And I mean built, in the sense an urban planner would admire. Streets in tidy grids. Bricks of standard sizes. Houses with private bathrooms. Covered drains running beneath the streets, an achievement many European cities would not match for four thousand years. I'd ask the jury to sit with that for a moment.
+Between about 2600 and 1900 BCE, along the Indus River in today's Pakistan and northwest India, people built cities like Mohenjo-daro and Harappa. And I mean built, in the sense an urban planner would admire. Streets in tidy grids. Bricks of standard sizes. Houses with private bathrooms. Covered drains running beneath the streets, an achievement many European cities would not match for four thousand years. I'd ask you to sit with that for a moment.
 
 They used standard weights and measures, which suggests a strong sense of fairness in trade, or at least a strong suspicion of cheating. They traded by sea with Mesopotamia. They carved small stone seals showing animals, among them a creature that looks suspiciously like a unicorn, alongside brief inscriptions. Those inscriptions have never been deciphered. Thousands of scholars have tried. The script is the locked filing cabinet of ancient history.
 
@@ -39,7 +39,7 @@ Sargon overthrew his master, founded the city of Akkad, and conquered all of Sum
 
 How do you hold such a thing together? Sargon worked out the answers that every empire after him would use. A professional standing army. Loyal governors installed in conquered cities. A single official language, Akkadian, for government. And propaganda. He called himself "king of the four quarters of the world", which was ambitious given that he didn't know where most of the world was.
 
-His daughter, Enheduanna, deserves your special attention. She was high priestess of the moon god at the city of Ur, and she wrote hymns, and she signed them. She is the first named author in human history. The first person to put their name on their words was a woman. I find that a highly satisfying fact to bring before a jury.
+His daughter, Enheduanna, deserves your special attention. She was high priestess of the moon god at the city of Ur, and she wrote hymns, and she signed them. She is the first named author in human history. The first person to put their name on their words was a woman. I find that a deeply satisfying fact.
 
 The Akkadian Empire lasted about a century and a half, then collapsed under revolts, invaders and, it seems, a devastating drought. But the idea outlived it. Ambitious men ever since have looked at a map of independent peoples and thought: wouldn't they all be better off ruled by me?`,
 
@@ -51,9 +51,9 @@ Linguists reconstructed the lost ancestor language and called it Proto-Indo-Euro
 
 Over centuries, groups spread out in every direction: west into Europe, east into Central Asia, south into Iran and India. Not one great invasion, but waves of migration, conquest and intermarriage with the people already there.
 
-In India, they called themselves "Arya", meaning "noble". Around 1500 to 1000 BCE they composed the Vedas, hymns in Sanskrit that form the oldest layer of Hinduism. Now, I must address a stain on the record. The Nazis later stole the word "Aryan" and twisted it into a racist fantasy about blond supermen. The real Aryans were Bronze Age herders singing to their gods in what is now Pakistan and India. The Nazis were, as usual, wrong about everything.
+In India, they called themselves "Arya", meaning "noble". Around 1500 to 1000 BCE they composed the Vedas, hymns in Sanskrit that form the oldest layer of Hinduism. Now, I must address a stain on this word's reputation. The Nazis later stole the word "Aryan" and twisted it into a racist fantasy about blond supermen. The real Aryans were Bronze Age herders singing to their gods in what is now Pakistan and India. The Nazis were, as usual, wrong about everything.
 
-The details remain hotly contested in Indian politics to this day. But here is the evidence I'd leave you with. Nearly half of humanity speaks an Indo-European language, from English and Spanish to Hindi, Bengali, Persian and Russian. Whenever you say "mother", you're speaking with the voice of a herder on the steppe five thousand years ago.`,
+The details remain hotly contested in Indian politics to this day. But here is the thought I'd leave you with. Nearly half of humanity speaks an Indo-European language, from English and Spanish to Hindi, Bengali, Persian and Russian. Whenever you say "mother", you're speaking with the voice of a herder on the steppe five thousand years ago.`,
 
 'hammurabi': `Imagine living somewhere where the law is whatever the king said this morning. And he might say something different this afternoon. And you've no idea what he said, because nobody wrote it down.
 
@@ -71,9 +71,9 @@ Along the Yellow River in the north, the Shang dynasty ruled from about 1600 to 
 
 Around 1046 BCE, the Zhou people overthrew the Shang. Now, every rebel faces an awkward question: if you overthrow a king, what's to stop someone overthrowing you? The Zhou came up with an answer of real genius. They called it the Mandate of Heaven.
 
-It goes like this. Heaven grants the right to rule to a virtuous king. But if a dynasty grows cruel, corrupt or incompetent, Heaven withdraws its mandate, and announces it through floods, famines, earthquakes and revolts. At that point, overthrowing the ruler isn't treason. It's simply carrying out Heaven's verdict.
+It goes like this. Heaven grants the right to rule to a virtuous king. But if a dynasty grows cruel, corrupt or incompetent, Heaven withdraws its mandate, and announces it through floods, famines, earthquakes and revolts. At that point, overthrowing the ruler isn't treason. It's simply carrying out Heaven's wishes.
 
-Members of the jury, observe the beauty of it. It's both a justification for power and a warning to it. Every new dynasty for three thousand years claimed the Mandate. Every rebellion argued it had been lost. And the proof was always the same: if you won, Heaven was obviously on your side. It's the most elegant piece of circular reasoning in political history, and I say that with professional admiration.
+Observe the beauty of it. It's both a justification for power and a warning to it. Every new dynasty for three thousand years claimed the Mandate. Every rebellion argued it had been lost. And the proof was always the same: if you won, Heaven was obviously on your side. It's the most elegant piece of circular reasoning in political history, and I say that with professional admiration.
 
 After 771 BCE the Zhou kings lost their grip, and China splintered into rival states. Chaos, as you'll see, produced some of the finest thinkers the world has ever known.`,
 
@@ -89,13 +89,13 @@ European explorers, arriving centuries later, were astonished to find people on 
 
 'bronze-age-collapse': `Picture a world, around 1250 BCE, that feels oddly familiar. Great powers trading across the sea. Diplomatic letters flying between capitals. Royal marriages arranged to seal alliances. Egypt, the Hittite Empire in Turkey, the Mycenaean Greeks of later Trojan legend, Babylon, Assyria, rich port cities like Ugarit. A globalised world, held together by trade, and in particular by bronze.
 
-Here's the catch. Bronze is made from copper and tin, and they're rarely found in the same place. Tin might come from Afghanistan, copper from Cyprus. Everyone's weapons, tools and wealth depended on supply chains stretching across the known world. I trust no one in this courtroom needs that danger explained to them.
+Here's the catch. Bronze is made from copper and tin, and they're rarely found in the same place. Tin might come from Afghanistan, copper from Cyprus. Everyone's weapons, tools and wealth depended on supply chains stretching across the known world. I trust no one living in the twenty-first century needs that danger explained to them.
 
 Then, within roughly fifty years, it nearly all collapsed. The Hittite Empire vanished. The Mycenaean palaces burned, and Greeks forgot how to write for four hundred years. Ugarit was destroyed so suddenly that its last letters, clay tablets begging allies for help against approaching enemy ships, seem never to have been sent. Egypt survived, barely, after fighting off mysterious raiders its records call the "Sea Peoples".
 
-Who's to blame? I put it to you that there is no single defendant. The evidence suggests a perfect storm: years of drought and famine, earthquakes, rebellions, migrations and raids, and the breakdown of the trade that everyone depended on. When one part failed, it dragged down the rest, like climbers roped together on a cliff.
+Who's to blame? I'm afraid there is no single culprit. The evidence suggests a perfect storm: years of drought and famine, earthquakes, rebellions, migrations and raids, and the breakdown of the trade that everyone depended on. When one part failed, it dragged down the rest, like climbers roped together on a cliff.
 
-But collapse, ladies and gentlemen, is rarely the end of the story. Out of the rubble came new peoples and new ideas: the Phoenicians, the Israelites and, crucially, iron, a metal far more widely available than bronze. Ordinary people could now afford metal tools and weapons. Historians call what followed the Iron Age. And ever since, the Bronze Age collapse has been cited by anyone who looks at a complex, interdependent world and wonders, quietly, how fragile it might be. I don't think they're wrong to wonder.`,
+But collapse, it turns out, is rarely the end of the story. Out of the rubble came new peoples and new ideas: the Phoenicians, the Israelites and, crucially, iron, a metal far more widely available than bronze. Ordinary people could now afford metal tools and weapons. Historians call what followed the Iron Age. And ever since, the Bronze Age collapse has been cited by anyone who looks at a complex, interdependent world and wonders, quietly, how fragile it might be. I don't think they're wrong to wonder.`,
 
 'phoenicians': `If you can read this sentence, you owe a thank-you to a nation of merchants from Lebanon.
 
@@ -111,15 +111,15 @@ They also founded colonies across the Mediterranean, the most famous of which, a
 
 'ancient-israel': `Out of the wreckage of the Bronze Age emerged a small people in the hill country of Canaan, and the idea they developed would change the world more than any empire.
 
-The Hebrew Bible tells their story: Abraham, called by God to a new land; slavery in Egypt; Moses leading the Exodus; the conquest of the promised land. Historians debate how much of the earliest material reflects events as they happened, and I'll leave the theology to a higher court. But the evidence for the kingdoms that followed is good. Tradition says King David made Jerusalem his capital around 1000 BCE, and his son Solomon built the First Temple there. The kingdom then split, as kingdoms do, into Israel in the north and Judah in the south.
+The Hebrew Bible tells their story: Abraham, called by God to a new land; slavery in Egypt; Moses leading the Exodus; the conquest of the promised land. Historians debate how much of the earliest material reflects events as they happened, and I'll leave the theology to higher authorities. But the evidence for the kingdoms that followed is good. Tradition says King David made Jerusalem his capital around 1000 BCE, and his son Solomon built the First Temple there. The kingdom then split, as kingdoms do, into Israel in the north and Judah in the south.
 
 Then the superpowers arrived. Assyria crushed Israel in 722 BCE. Babylon took Jerusalem in 586 BCE, destroyed the Temple and marched much of the population into exile. By every law of history, this people should have vanished, as countless others did.
 
-They didn't. And the reason is what happened to their faith in the crisis. The prophets (Isaiah, Jeremiah, Amos) insisted that there is only one God, not a local deity of one small tribe but the God of all the world. And this God, the prophets thundered, did not much care for your sacrifices if you were cheating your workers. Amos, a shepherd, put it magnificently: "Let justice roll down like waters, and righteousness like an ever-flowing stream." I've quoted it to juries. It works.
+They didn't. And the reason is what happened to their faith in the crisis. The prophets (Isaiah, Jeremiah, Amos) insisted that there is only one God, not a local deity of one small tribe but the God of all the world. And this God, the prophets thundered, did not much care for your sacrifices if you were cheating your workers. Amos, a shepherd, put it magnificently: "Let justice roll down like waters, and righteousness like an ever-flowing stream." I've quoted it more than once. It never fails.
 
 Think about how radical that was. The gods of every other nation were patrons of kings. This God demanded justice for the widow, the orphan, the poor and the stranger, against kings if need be. In exile, the Judeans gathered their sacred writings and built an identity around a law rather than a land. In 539 BCE, the Persian king Cyrus let them go home. The monotheism forged in those years would become the foundation of Judaism, Christianity and Islam: the faiths of more than half of humanity.`,
 
-'assyria': `I'd like to introduce you to history's first superpower, and I'll warn you now: the defendant is not sympathetic.
+'assyria': `I'd like to introduce you to history's first superpower, and I'll warn you now: it is not a sympathetic character.
 
 From its homeland in northern Iraq, between the 9th and 7th centuries BCE, Assyria built an empire stretching from Iran to Egypt. Its weapon was the most effective army the world had yet seen. Professional soldiers with iron weapons. Cavalry. Chariots. Engineers with battering rams and siege towers that turned city walls from guarantees into suggestions.
 
@@ -127,7 +127,7 @@ And it ruled by terror. Deliberately. Assyrian kings boasted about it in writing
 
 They had a second technique, more modern than it sounds: mass deportation. Uproot an entire conquered population, march them to the far side of the empire, and replace them with strangers. A people torn from its land, its temples and its neighbours struggles to resist. The ten "lost tribes" of Israel disappeared this way after 722 BCE.
 
-In fairness, which I'm obliged to offer even this defendant, Assyria was sophisticated. It built roads and a royal messenger service. Its capital, Nineveh, was magnificent. King Ashurbanipal assembled one of the world's first great libraries, and thanks to him we still have the Epic of Gilgamesh.
+In fairness, and even Assyria deserves a little, it was sophisticated. It built roads and a royal messenger service. Its capital, Nineveh, was magnificent. King Ashurbanipal assembled one of the world's first great libraries, and thanks to him we still have the Epic of Gilgamesh.
 
-But here's the lesson. When you rule entirely by fear, you have no friends, only victims waiting. In 612 BCE, an alliance of Babylonians and Medes stormed Nineveh. The empire vanished within a few years, and its neighbours danced on its grave. One biblical prophet greeted the news with something like glee: "All who hear the news about you clap their hands." Terror is efficient, ladies and gentlemen. It is never secure.`
+But here's the lesson. When you rule entirely by fear, you have no friends, only victims waiting. In 612 BCE, an alliance of Babylonians and Medes stormed Nineveh. The empire vanished within a few years, and its neighbours danced on its grave. One biblical prophet greeted the news with something like glee: "All who hear the news about you clap their hands." Terror is efficient, I grant you. It is never secure.`
 });

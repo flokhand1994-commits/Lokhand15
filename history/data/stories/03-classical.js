@@ -29,7 +29,7 @@ Now, the Assyrians had taught the world how to run an empire through terror. Cyr
 
 His successor Darius I turned conquest into administration. He divided the empire into provinces called satrapies, standardised coins, weights and measures, and built a 2,500-kilometre Royal Road with relay stations of fresh horses. Herodotus wrote that "neither snow nor rain nor heat nor gloom of night" stopped the royal messengers. The United States Postal Service later borrowed the line as its motto, without, as far as I'm aware, paying royalties.
 
-The Persian elite followed Zoroastrianism, which pictured the universe as a battle between good and evil, ending in a final judgement. Some scholars believe those ideas influenced Judaism and Christianity. The West, raised on Greek accounts, has long cast Persia as the villain. I'd invite the jury to consider the other side's evidence.`,
+The Persian elite followed Zoroastrianism, which pictured the universe as a battle between good and evil, ending in a final judgement. Some scholars believe those ideas influenced Judaism and Christianity. The West, raised on Greek accounts, has long cast Persia as the villain. I'd invite you to consider the other side of the story.`,
 
 'buddha': `A young prince grows up in a palace where his father has arranged for him never to see suffering. No sickness, no old age, no death. Only beauty and pleasure. It is the ultimate gated community.
 
@@ -37,7 +37,7 @@ Then, the story goes, the prince ventured outside and saw, in turn, a sick man, 
 
 His name was Siddhartha Gautama, born in the 6th or 5th century BCE near today's border between Nepal and India. He left his palace, his wife and his child, and became a wandering seeker. He tried extreme self-denial, starving himself until, it's said, he could feel his spine through his stomach. It didn't work. So he sat beneath a tree at Bodh Gaya and resolved not to rise until he understood. When he did rise, he was the Buddha: "the awakened one".
 
-His diagnosis is one of the most penetrating ever offered about the human condition. Life involves suffering. Suffering is caused by craving: our endless wanting, grasping and clinging. It can end. And the way to end it is the Eightfold Path, a disciplined life of right understanding, intention, speech, action, livelihood, effort, mindfulness and concentration. A "middle way" between indulgence and torment. I've known many attorneys who could use it.
+His diagnosis is one of the most penetrating ever offered about the human condition. Life involves suffering. Suffering is caused by craving: our endless wanting, grasping and clinging. It can end. And the way to end it is the Eightfold Path, a disciplined life of right understanding, intention, speech, action, livelihood, effort, mindfulness and concentration. A "middle way" between indulgence and torment. I've known many people who could use it.
 
 He was not alone in his searching. Northern India was alive with spiritual rebellion against the rituals of the Brahmin priests. The Upanishads taught that your deepest self, atman, is one with the ultimate reality, Brahman. Mahavira founded Jainism, preaching non-violence so absolute that monks sweep the path ahead of them to avoid stepping on insects.
 
@@ -45,7 +45,7 @@ And here is the Buddha's quiet revolution. He welcomed people of every caste int
 
 'confucius': `When things fall apart, people start asking very good questions.
 
-After 771 BCE, China fractured into rival states that fought ever more savage wars, until the "Warring States" period (475 to 221 BCE), when entire armies were slaughtered in a single battle. And yet out of this chaos came an explosion of thinking so rich that the Chinese call it the "Hundred Schools of Thought". I put it to you that philosophy is usually born not in comfort but in crisis.
+After 771 BCE, China fractured into rival states that fought ever more savage wars, until the "Warring States" period (475 to 221 BCE), when entire armies were slaughtered in a single battle. And yet out of this chaos came an explosion of thinking so rich that the Chinese call it the "Hundred Schools of Thought". I've noticed that philosophy is usually born not in comfort but in crisis.
 
 The most influential thinker was a minor official and teacher named Kong Fuzi, whom we call Confucius. He never achieved real political power in his lifetime. He wandered from court to court offering advice that rulers mostly ignored, which, as an advisor myself, I find deeply relatable.
 
@@ -55,7 +55,7 @@ Not everyone agreed, and the arguments were glorious. The Daoists, associated wi
 
 Virtue or law? Freedom or order? Persuasion or punishment? Two and a half thousand years on, these debates are still running, in China and everywhere else.`,
 
-'roman-republic': `Ladies and gentlemen, the most important law in Rome was not written. It was a vow: never again a king.
+'roman-republic': `The most important law in Rome was never written down. It was a vow: never again a king.
 
 Legend says Rome was founded in 753 BCE by Romulus, who'd been raised, with his twin brother Remus, by a she-wolf. He later killed Remus in an argument over city walls. Even Rome's founding story involves fratricide. It set the tone.
 
@@ -85,25 +85,25 @@ When Greek cities in what is now western Turkey rebelled against Persian rule in
 
 In 490 BCE, a Persian force landed at Marathon, near Athens. The heavily outnumbered Athenians charged and won. Legend has a messenger running the forty kilometres back to Athens to announce the victory before collapsing dead. The modern marathon commemorates him; I've always thought it odd to honour a man by making thousands of others do the thing that killed him.
 
-Ten years later, Darius's son Xerxes came with an army so vast that the Greeks claimed it drank rivers dry. At the narrow pass of Thermopylae, King Leonidas of Sparta, with his famous three hundred Spartans and a few thousand allies, held the Persians off for three days. When the Persians demanded they lay down their weapons, the Spartan reply was "Come and take them." A local man then showed the Persians a mountain path around the pass, and the defenders were surrounded and killed to the last. Betrayal, members of the jury, has always been cheaper than courage.
+Ten years later, Darius's son Xerxes came with an army so vast that the Greeks claimed it drank rivers dry. At the narrow pass of Thermopylae, King Leonidas of Sparta, with his famous three hundred Spartans and a few thousand allies, held the Persians off for three days. When the Persians demanded they lay down their weapons, the Spartan reply was "Come and take them." A local man then showed the Persians a mountain path around the pass, and the defenders were surrounded and killed to the last. Betrayal has always been cheaper than courage.
 
 Athens was evacuated and burned. But the Athenian leader Themistocles lured the Persian fleet into the narrow strait of Salamis, where it couldn't manoeuvre, and the nimble Greek warships tore it apart while Xerxes watched from a throne on the shore. A year later, the Greeks crushed the Persian army at Plataea.
 
 Herodotus wrote it all down, trying to explain why it happened. He is called the "father of history". The Greeks saw it as freedom against tyranny. The Persians, I suspect, saw it as a frustrating border dispute. The West has been telling the Greek version ever since.`,
 
-'peloponnesian-war': `I'd like to read into the record a single sentence written about 2,400 years ago that diplomats still quote today: "It was the rise of Athens and the fear that this inspired in Sparta that made war inevitable."
+'peloponnesian-war': `I'd like to share a single sentence written about 2,400 years ago that diplomats still quote today: "It was the rise of Athens and the fear that this inspired in Sparta that made war inevitable."
 
 After defeating Persia, Athens led an alliance of Greek cities called the Delian League. Gradually, the alliance became an empire. Members who tried to leave were crushed, and the league's treasury was moved to Athens and spent, in part, on the Parthenon. Meanwhile, Sparta watched, and worried.
 
 War came in 431 BCE. Athens, the naval power, hid behind its long walls and relied on its fleet. Sparta, the land power, burned the Athenian countryside. Then, in 430 BCE, a plague struck the crowded city and killed perhaps a quarter of its people, including its great leader Pericles. Strategy, as you'll find throughout this history, rarely survives contact with disease.
 
-The war turned ugly, and I mean ugly. When the small, neutral island of Melos refused to join Athens, Athenian envoys delivered what's known as the Melian Dialogue. Don't talk to us about justice, they said: "The strong do what they can and the weak suffer what they must." The Melians refused to submit anyway. The Athenians killed their men and enslaved their women and children. That, ladies and gentlemen, is what a democracy did. I submit that free peoples are not automatically good peoples.
+The war turned ugly, and I mean ugly. When the small, neutral island of Melos refused to join Athens, Athenian envoys delivered what's known as the Melian Dialogue. Don't talk to us about justice, they said: "The strong do what they can and the weak suffer what they must." The Melians refused to submit anyway. The Athenians killed their men and enslaved their women and children. That, I'd remind you, is what a democracy did. Free peoples, it turns out, are not automatically good peoples.
 
 In 415 BCE, Athens launched a reckless invasion of Sicily that destroyed its army and fleet. Sparta, funded by Persian gold, the old enemy now cheerfully bankrolling one Greek against another, built a navy and starved Athens into surrender in 404 BCE.
 
-The Athenian general Thucydides wrote its history with unflinching clarity. Today, scholars speak of the "Thucydides Trap": the danger when a rising power threatens an established one. They usually mean China and the United States. I'll leave the jury to reflect on how such stories have tended to end.`,
+The Athenian general Thucydides wrote its history with unflinching clarity. Today, scholars speak of the "Thucydides Trap": the danger when a rising power threatens an established one. They usually mean China and the United States. I'll leave you to reflect on how such stories have tended to end.`,
 
-'greek-philosophy': `The prosecution calls Socrates of Athens, aged seventy, charged with corrupting the youth and failing to honour the city's gods.
+'greek-philosophy': `Allow me to introduce Socrates of Athens: seventy years old, famously ugly, and about to be put to death for asking too many questions.
 
 I'll be candid. If anyone in history was a gadfly, a persistent irritant to the comfortable and powerful, it was Socrates, and he called himself one. He wrote nothing. He simply walked the streets of Athens asking people questions. What is justice? What is courage? You seem very sure; let's examine that. And under his questioning, generals, politicians and poets discovered that they didn't actually know what they had confidently claimed to know. You can imagine how popular this made him. "The unexamined life," he said, "is not worth living."
 
@@ -113,9 +113,9 @@ His student Plato wrote dialogues starring Socrates and founded the Academy, the
 
 Plato's own student was Aristotle, tutor to the young Alexander the Great. Aristotle studied everything: logic, biology, physics, ethics, politics, poetry. He catalogued governments and their corrupt versions. He called humans "political animals" who can only flourish in community. And he said the purpose of life was eudaimonia: human flourishing, achieved through virtue.
 
-Teacher, student, student's student. Three men in one city, and Western philosophy has been a series of footnotes to them ever since. Not bad for a defendant who was convicted.`,
+Teacher, student, student's student. Three men in one city, and Western philosophy has been a series of footnotes to them ever since. Not bad for a man his own city put to death.`,
 
-'alexander': `He was twenty when he became king. He never lost a battle. He was dead at thirty-two. In between, he conquered most of the known world. Ladies and gentlemen, the overachievers in this courtroom may wish to stop comparing themselves.
+'alexander': `He was twenty when he became king. He never lost a battle. He was dead at thirty-two. In between, he conquered most of the known world. The overachievers among you may wish to stop comparing themselves.
 
 Macedonia lay north of Greece, and Athenians sneered at it as half-barbarian. But Alexander's father, Philip II, built a formidable army and made himself master of Greece anyway. When Philip was assassinated in 336 BCE, his son took the throne. Alexander had been tutored by Aristotle himself. He also slept, it's said, with a copy of Homer's Iliad under his pillow, and a dagger. Make of that pairing what you will.
 
@@ -133,7 +133,7 @@ The First Punic War (264 to 241 BCE) posed a problem. Rome was a land power with
 
 Then came Hannibal. In the Second Punic War, beginning in 218 BCE, this Carthaginian general did something nobody thought possible. He marched an army from Spain, over the Pyrenees and then over the Alps, with war elephants, into Italy. He beat Roman army after Roman army. At Cannae in 216 BCE, he lured a much larger Roman force into a trap, surrounded it and killed perhaps fifty thousand Romans in a single afternoon. Military academies still teach it.
 
-And yet Rome refused to surrender. It refused to negotiate. Most of its Italian allies stayed loyal. Hannibal roamed Italy for fifteen years, winning battles and losing the war. The Roman general Scipio took the fight to Africa and beat Hannibal at Zama in 202 BCE. I submit to you that endurance can defeat genius.
+And yet Rome refused to surrender. It refused to negotiate. Most of its Italian allies stayed loyal. Hannibal roamed Italy for fifteen years, winning battles and losing the war. The Roman general Scipio took the fight to Africa and beat Hannibal at Zama in 202 BCE. Endurance, it turns out, can defeat genius.
 
 The Third Punic War is the ugliest. Carthage was no longer a threat, but the Roman senator Cato ended every speech, whatever the topic, with: "Carthage must be destroyed." In 146 BCE Rome besieged the city, burned it and sold its survivors into slavery. Rome now ruled the Mediterranean and called it "mare nostrum", "our sea". The wealth and slaves that poured in would, in time, poison the Republic itself.`,
 
@@ -169,11 +169,11 @@ The Han gave the world paper, around 105 CE, credited to an official named Cai L
 
 China's great threat came from the northern steppes: the Xiongnu, nomadic horsemen who raided at will. So Emperor Wu sent an envoy, Zhang Qian, westward to find allies. Zhang was captured by the Xiongnu, held for ten years, married, escaped, kept going, was captured again and escaped again. He found no allies. But he found something better: the existence of rich kingdoms to the west, and horses that the Chinese desperately wanted.
 
-Out of such contacts grew the Silk Roads, a web of caravan routes linking China with Central Asia, Persia, India and Rome. Chinese silk ended up draped over Roman senators, who complained that it was ruinously expensive and indecently see-through, and bought it anyway. No merchant travelled the whole way; goods passed from hand to hand. And along with goods travelled ideas, foods, artistic styles and, above all, Buddhism, which entered China this way. Globalisation, ladies and gentlemen, is older than you think.`,
+Out of such contacts grew the Silk Roads, a web of caravan routes linking China with Central Asia, Persia, India and Rome. Chinese silk ended up draped over Roman senators, who complained that it was ruinously expensive and indecently see-through, and bought it anyway. No merchant travelled the whole way; goods passed from hand to hand. And along with goods travelled ideas, foods, artistic styles and, above all, Buddhism, which entered China this way. Globalisation, it turns out, is older than you think.`,
 
 'caesar': `This is the case of a republic murdered by its own success.
 
-Conquest had made Rome fabulously rich. But the wealth went mostly to aristocrats, who bought up land and worked it with armies of slaves, while the small farmers who had once filled Rome's legions were ruined and drifted into the city's slums. When two brothers, Tiberius and Gaius Gracchus, tried as tribunes to give public land to the poor, the senators had them killed, Tiberius beaten to death in the street with chair legs. Members of the jury, once the elite decides political problems can be solved with violence, the elite has started a war it will not be able to control.
+Conquest had made Rome fabulously rich. But the wealth went mostly to aristocrats, who bought up land and worked it with armies of slaves, while the small farmers who had once filled Rome's legions were ruined and drifted into the city's slums. When two brothers, Tiberius and Gaius Gracchus, tried as tribunes to give public land to the poor, the senators had them killed, Tiberius beaten to death in the street with chair legs. Once the elite decides political problems can be solved with violence, the elite has started a war it will not be able to control.
 
 Soon, generals like Marius and Sulla built armies loyal to them personally, not to the state, and marched on Rome. The enslaved gladiator Spartacus led a massive revolt; after it was crushed, six thousand of his followers were crucified along the road to Rome. The Republic was rotting.
 
