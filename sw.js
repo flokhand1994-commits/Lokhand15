@@ -1,4 +1,4 @@
-const CACHE = 'dutch-v8';
+const CACHE = 'dutch-v10';
 const ASSETS = [
   './',
   './index.html',
@@ -26,8 +26,17 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  // Only handle this site's own GET requests; let translation calls etc. go straight to the network
+  if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
+  // Network first, so new versions of pages and stories appear; fall back to cache when offline
   e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
+    fetch(e.request)
+      .then(res => {
+        if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
+        return res;
+      })
+      .catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
   );
 });
 

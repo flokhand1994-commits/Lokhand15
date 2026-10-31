@@ -180,14 +180,38 @@ document.addEventListener('touchend', e => {
   }
 }, {passive: true});
 
-// Translation
-async function gtrans(word, tl) {
-  const res = await fetch(
-    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=nl&tl=${tl}&dt=t&q=${encodeURIComponent(word)}`
-  );
-  const d = await res.json();
+// Translation: Google's free endpoint first, MyMemory as backup.
+// (Google's endpoint is unofficial and often blocks or rate-limits requests.)
+let googleDown = false;
+async function fetchJSON(url, ms = 6000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try {
+    const res = await fetch(url, {signal: ctrl.signal, cache: 'no-store'});
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } finally { clearTimeout(timer); }
+}
+async function viaGoogle(word, tl) {
+  const d = await fetchJSON(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=nl&tl=${tl}&dt=t&q=${encodeURIComponent(word)}`);
   const t = (d[0] || []).map(x => x[0] || '').join('').trim();
-  return (t && t.toLowerCase() !== word.toLowerCase()) ? t : '—';
+  if (!t) throw new Error('empty');
+  return t;
+}
+async function viaMyMemory(word, tl) {
+  const d = await fetchJSON(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=nl|${tl}`);
+  const t = (d.responseData && d.responseData.translatedText || '').trim();
+  if (!t || d.responseStatus != 200 || /MYMEMORY WARNING|QUERY LENGTH/i.test(t)) throw new Error('mymemory ' + d.responseStatus);
+  return t;
+}
+async function gtrans(word, tl) {
+  let t;
+  if (!googleDown) {
+    try { t = await viaGoogle(word, tl); }
+    catch (err) { console.warn('Google translate failed, using backup:', err); googleDown = true; }
+  }
+  if (t === undefined) t = await viaMyMemory(word, tl);
+  return (t.toLowerCase() !== word.toLowerCase()) ? t : '—';
 }
 
 
@@ -205,7 +229,7 @@ async function showTranslation(el) {
     cache[raw] = {en, fr};
     renderTooltip({en, fr});
   } catch {
-    document.getElementById('tt-body').innerHTML = `<p class="tooltip-loading">⚠️ Geen verbinding</p>`;
+    document.getElementById('tt-body').innerHTML = `<p class="tooltip-loading">⚠️ ${navigator.onLine ? 'Vertaling mislukt, tik opnieuw' : 'Geen internet'}</p>`;
   }
 }
 
