@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<title>Dutch — Polyglot Pocket</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--de:#2c6aa0;--het:#2a7a6a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px;-webkit-tap-highlight-color:transparent}
+/* Welcome screen */
+#welcome{display:flex;flex-direction:column;align-items:center;width:100%;padding:8px 0 40px}
+.wrap{width:min(880px,100%)}
+.top{padding:28px 4px 8px}
+.top h1{font-size:clamp(1.7rem,5vw,2.2rem);color:var(--ink);letter-spacing:-.01em;margin-bottom:6px}
+.top p{color:var(--muted);font-size:.95rem;line-height:1.5}
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:30px 4px 12px}
+.section-h h2{font-size:1.15rem;color:var(--ink)}
+.section-h p{font-size:.82rem;color:var(--muted)}
+.lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:700px){.lang-grid{grid-template-columns:repeat(2,1fr)}}
+.lang-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:14px;text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s;touch-action:manipulation}
+.lang-card:hover,.lang-card:focus-visible{border-color:var(--accent);box-shadow:0 4px 14px rgba(44,106,160,.12)}
+.lang-card .flag{font-size:1.9rem;line-height:1}
+.lang-card .name{display:block;font-weight:700;font-size:.98rem}
+.lang-card .native{display:block;font-size:.8rem;color:var(--muted)}
+.lang-card.current{border-color:var(--accent);background:#eef4fa}
+.group{margin:0 4px 18px}
+.group h3{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.mode-btn{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--card);cursor:pointer;text-align:left;font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;touch-action:manipulation}
+.mode-btn:hover,.mode-btn:focus-visible{border-color:var(--accent);box-shadow:0 4px 14px rgba(44,106,160,.12)}
+.mode-icon{flex:none;font-size:1.6rem;line-height:1;width:32px;text-align:center}
+.mode-text{display:flex;flex-direction:column;gap:2px}
+.mode-title{font-size:.95rem;font-weight:700;color:var(--ink)}
+.mode-sub{font-size:.76rem;color:var(--muted);line-height:1.4}
+.site-foot{margin-top:30px;font-size:.75rem;color:var(--muted);text-align:center}
+.back-btn{display:inline-block;padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;text-decoration:none;margin-top:8px}
+.back-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+</style>
+</head>
+<body>
+<div id="welcome">
+  <div class="wrap">
+    <a class="back-btn" href="index.html">← Home</a>
+    <header class="top">
+      <h1>🇳🇱 Dutch</h1>
+      <p>Nederlands · Kies een categorie · Choose a category</p>
+    </header>
+
+    <div class="group">
+      <h3>Words · Woorden</h3>
+      <div class="mode-grid">
+        <button class="mode-btn" onclick="window.location='nouns.html'"><span class="mode-icon">📖</span><span class="mode-text"><span class="mode-title">Zelfstandige naamwoorden</span><span class="mode-sub">500 common nouns · de or het? · flashcards</span></span></button>
+        <button class="mode-btn" onclick="window.location='top10k.html?l=nl'"><span class="mode-icon">💯</span><span class="mode-text"><span class="mode-title">10.000 woorden &amp; zinnen</span><span class="mode-sub">The 10,000 most used words, in order · example sentences</span></span></button>
+      </div>
+    </div>
+    <div class="group">
+      <h3>Verbs · Werkwoorden</h3>
+      <div class="mode-grid">
+        <button class="mode-btn" onclick="window.location='verbs.html'"><span class="mode-icon">🔤</span><span class="mode-text"><span class="mode-title">Werkwoorden</span><span class="mode-sub">200 verbs · perfectum &amp; imperfectum · flashcards</span></span></button>
+        <button class="mode-btn" onclick="window.location='cooking.html'"><span class="mode-icon">🍳</span><span class="mode-text"><span class="mode-title">Kookinstructies</span><span class="mode-sub">12 cooking verbs · Beeldwoordenboek deel 3</span></span></button>
+      </div>
+    </div>
+    <div class="group">
+      <h3>Reading · Lezen</h3>
+      <div class="mode-grid">
+        <button class="mode-btn" onclick="window.location='stories.html'"><span class="mode-icon">📚</span><span class="mode-text"><span class="mode-title">Korte verhalen</span><span class="mode-sub">10 beginner stories · tap a word to translate</span></span></button>
+        <button class="mode-btn" onclick="window.location='wablieft.html'"><span class="mode-icon">📰</span><span class="mode-text"><span class="mode-title">Wablieft nieuws</span><span class="mode-sub">Today's news in easy Dutch · tap a word to translate</span></span></button>
+        <button class="mode-btn" onclick="window.location='gutenberg.html'"><span class="mode-icon">📜</span><span class="mode-text"><span class="mode-title">Verhalen van Gutenberg</span><span class="mode-sub">17 classic stories · advanced · tap a word to translate</span></span></button>
+      </div>
+    </div>
+
+    <p class="site-foot">by Fatima Lokhandwala</p>
+  </div>
+</div>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+</script>
+</body>
+</html>

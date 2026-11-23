@@ -41,7 +41,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 </head>
 <body>
 <div class="app-header">
-  <button id="home-btn" onclick="window.location='index.html'">← Home</button>
+  <button id="home-btn" onclick="window.location='dutch.html'">← Dutch</button>
   <span class="app-title">🍳 Kookinstructies</span>
 </div>
 
@@ -60,6 +60,8 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 
 <span class="byline">by Fatima Lokhandwala</span>
 
+<script src="export.js"></script>
+<script src="voice.js"></script>
 <script>
 const CARDS = [
   {
@@ -174,6 +176,14 @@ const CARDS = [
 
 let cur = 0, flipped = false;
 
+document.getElementById('toolbar').appendChild(ExportCards.button(() => ({
+  name: 'Dutch cooking verbs',
+  header: ['Dutch', 'English', 'French', 'Example', 'Example (English)', 'Example (French)'],
+  rows: CARDS.map(c => [c.nl, c.en, c.fr, c.sent_nl, c.sent_en, c.sent_fr]),
+  front: r => r[0],
+  back: r => `${r[1]} | ${r[3]} = ${r[4]}`,
+})));
+
 function render() {
   const c = CARDS[cur];
   const inner = document.getElementById('inner');
@@ -182,7 +192,7 @@ function render() {
   document.getElementById('front').innerHTML =
     `<div class="card-num">#${cur + 1}</div>
      <div class="front-emoji">${c.emoji}</div>
-     <div class="front-nl">${c.nl}</div>
+     <div class="front-nl">${c.nl} ${speakButton(c.nl, "nl-BE")}</div>
      <div class="front-en">${c.en}</div>
      <div class="front-fr">${c.fr}</div>
      <div class="flip-hint">tap to flip</div>`;
@@ -190,7 +200,7 @@ function render() {
   document.getElementById('back').innerHTML =
     `<span class="back-tag">kookinstructie</span>
      <div class="back-verb">${c.nl}</div>
-     <div class="back-sent">${c.sent_nl}</div>
+     <div class="back-sent">${c.sent_nl} ${speakButton(c.sent_nl, "nl-BE")}</div>
      <div class="back-en">${c.sent_en}</div>
      <div class="back-fr">${c.sent_fr}</div>`;
 

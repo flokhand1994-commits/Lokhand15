@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<title>Learning Material</title>
+<title>Polyglot Pocket</title>
 <style>
 :root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--soft:#eaf1f8}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -53,8 +53,12 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .tense-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;font-size:.95rem}
 .tense-grid .p{color:var(--muted)}
 .tense-one{font-size:.98rem}
-.example{border-top:1px solid var(--border);margin-top:6px;padding-top:10px}
+.example{border-top:1px solid var(--border);margin-top:10px;padding-top:4px}
+.ex{padding-top:8px}
+.ex-label{font-size:.68rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
 .ex-tl{font-size:.98rem;font-weight:600;line-height:1.45}
+.speak-sm{border:none;background:none;font-size:.85rem;cursor:pointer;padding:0 4px;vertical-align:middle;opacity:.75}
+.speak-sm:hover{opacity:1}
 .ex-rom{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:2px}
 .ex-en{font-size:.85rem;color:var(--muted);margin-top:2px}
 .back-en{font-size:1.6rem;font-weight:700;color:var(--ink);text-align:center;margin-bottom:6px}
@@ -112,6 +116,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
     <a class="mode-btn" id="go-verbs"><span class="mode-icon">🔤</span><span class="mode-title">Verbs</span><span class="mode-sub" id="verbs-sub"></span></a>
     <a class="mode-btn" id="go-words"><span class="mode-icon">📖</span><span class="mode-title">Most-used words</span><span class="mode-sub" id="words-sub"></span></a>
     <a class="mode-btn" id="go-stories"><span class="mode-icon">📜</span><span class="mode-title">Free stories</span><span class="mode-sub">Public domain classics · tap any word to translate</span></a>
+    <a class="mode-btn hidden" id="go-top10k"><span class="mode-icon">💯</span><span class="mode-title">10,000 words &amp; phrases</span><span class="mode-sub">The most used words in order · example sentences</span></a>
   </div>
 </div>
 
@@ -164,8 +169,11 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 
 <p class="byline">by Fatima Lokhandwala</p>
 
+<script src="voice.js"></script>
+<script src="export.js"></script>
 <script>
 const LANGS = ['fr', 'es', 'it', 'ru', 'zh', 'ja', 'ko'];
+const TOP10K_LANGS = ['fr'];   // languages with a top10k/<code>.js list
 const params = new URLSearchParams(location.search);
 const code = params.get('l');
 const mode = params.get('m') || 'hub';
@@ -192,11 +200,7 @@ function fail(msg) {
 // ── Speech ────────────────────────────────────────────────────────────────
 const canSpeak = 'speechSynthesis' in window;
 function speak(text) {
-  if (!canSpeak || !text) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = D.tts;
-  speechSynthesis.speak(u);
+  if (canSpeak) softSpeak(text, D.tts);
 }
 function speakBtn(text) {
   return canSpeak ? `<button class="speak" data-say="${esc(text)}" aria-label="Listen">🔊</button>` : '';
@@ -210,7 +214,7 @@ document.addEventListener('click', e => {
 function showHub() {
   $('hub').classList.remove('hidden');
   $('hub-flag').textContent = D.flag;
-  $('hub-name').textContent = `Learning Material for ${D.name}`;
+  $('hub-name').textContent = `${D.name}`;
   $('hub-native').textContent = D.native;
   $('app-title').textContent = `${D.flag} ${D.name}`;
   $('verbs-sub').textContent = `${D.verbs.length} common verbs · conjugations · example sentences`;
@@ -218,6 +222,10 @@ function showHub() {
   $('go-verbs').href = `lang.html?l=${code}&m=verbs`;
   $('go-words').href = `lang.html?l=${code}&m=words`;
   $('go-stories').href = `lang.html?l=${code}&m=stories`;
+  if (TOP10K_LANGS.includes(code)) {
+    $('go-top10k').href = `top10k.html?l=${code}`;
+    $('go-top10k').classList.remove('hidden');
+  }
 }
 
 // ── Flashcards ────────────────────────────────────────────────────────────
@@ -227,8 +235,23 @@ function elide(pron, form) {
   return D.elide && pron === 'je' && /^[aeiouéèêhâîôûœ]/i.test(form) ? `j'${form}` : `${pron} ${form}`;
 }
 
+// An example is [sentence, English] or [sentence, romanization, English]
+function exampleHtml(ex, label) {
+  const [tl, rom, en] = ex.length === 3 ? ex : [ex[0], '', ex[1]];
+  return `<div class="ex">
+      <div class="ex-label">${esc(label)}</div>
+      <div class="ex-tl" lang="${D.code}">${esc(tl)}${canSpeak ? ` <button class="speak-sm" data-say="${esc(tl)}" aria-label="Listen">🔊</button>` : ''}</div>
+      ${rom ? `<div class="ex-rom">${esc(rom)}</div>` : ''}
+      <div class="ex-en">${esc(en)}</div>
+    </div>`;
+}
+
+function examplesHtml(present, past) {
+  return `<div class="example">${exampleHtml(present, D.exLabels[0])}${exampleHtml(past, D.exLabels[1])}</div>`;
+}
+
 function verbFaces(v, i) {
-  const [word, rom, en, forms, ex, exRom, exEn] = v;
+  const [word, rom, en, forms, present, past] = v;
   const front = `
     <div class="card-num">#${i + 1}</div>
     <div class="front-word" lang="${D.code}">${esc(word)}</div>
@@ -251,17 +274,12 @@ function verbFaces(v, i) {
   const back = `
     <div class="back-head" lang="${D.code}">${esc(word)}${rom ? `<span class="rom">${esc(rom)}</span>` : ''}</div>
     ${tenses}
-    <div class="example">
-      <div class="ex-tl" lang="${D.code}">${esc(ex)}</div>
-      ${exRom ? `<div class="ex-rom">${esc(exRom)}</div>` : ''}
-      <div class="ex-en">${esc(exEn)}</div>
-    </div>
-    ${speakBtn(ex)}`;
+    ${examplesHtml(present, past)}`;
   return [front, back];
 }
 
 function wordFaces(w, i) {
-  const [word, rom, en] = w;
+  const [word, rom, en, present, past] = w;
   const front = `
     <div class="card-num">#${i + 1}</div>
     <div class="front-word" lang="${D.code}">${esc(word)}</div>
@@ -270,7 +288,8 @@ function wordFaces(w, i) {
     <div class="flip-hint">Tap to see the meaning</div>`;
   const back = `
     <div class="back-en">${esc(en)}</div>
-    <div class="back-word" lang="${D.code}">${esc(word)}${rom ? ' · ' + esc(rom) : ''}</div>`;
+    <div class="back-word" lang="${D.code}">${esc(word)}${rom ? ' · ' + esc(rom) : ''}</div>
+    ${examplesHtml(present, past)}`;
   return [front, back];
 }
 
@@ -288,8 +307,46 @@ function step(d) {
   renderCard();
 }
 
+// Conjugation as one line: "je suis, tu es, …" or "Polite (-masu): します shimasu; …"
+function formsText(forms) {
+  let k = 0;
+  return D.table.map(t => {
+    const part = forms.slice(k, k + t.n); k += t.n;
+    const value = t.pron ? part.map((f, j) => f === '—' ? `${D.pron[j]} —` : elide(D.pron[j], f)).join(', ') : part.join(' · ');
+    return `${t.t}: ${value}`;
+  }).join('; ');
+}
+
+function exampleCols(ex) {
+  return ex.length === 3 ? ex : [ex[0], '', ex[1]];
+}
+
+function exportData() {
+  const roman = ['ru', 'zh', 'ja', 'ko'].includes(code);
+  const exHead = label => roman ? [label, `${label} (pronunciation)`, `${label} (English)`] : [label, `${label} (English)`];
+  const exCells = ex => { const [tl, rom, en] = exampleCols(ex); return roman ? [tl, rom, en] : [tl, en]; };
+  const exLine = ex => { const [tl, rom, en] = exampleCols(ex); return `${tl}${rom ? ` (${rom})` : ''} = ${en}`; };
+  if (mode === 'verbs') {
+    return {
+      name: `${D.name} verbs`,
+      header: [D.name, ...(roman ? ['Pronunciation'] : []), 'English', 'Conjugation', ...exHead('Present example'), ...exHead('Past example')],
+      rows: D.verbs.map(([w, rom, en, forms, pres, past]) => [w, ...(roman ? [rom] : []), en, formsText(forms), ...exCells(pres), ...exCells(past)]),
+      front: r => roman && r[1] ? `${r[0]} (${r[1]})` : r[0],
+      back: r => { const v = D.verbs.find(x => x[0] === r[0]); return `${v[2]} | ${formsText(v[3])} | ${exLine(v[4])} | ${exLine(v[5])}`; },
+    };
+  }
+  return {
+    name: `${D.name} common words`,
+    header: [D.name, ...(roman ? ['Pronunciation'] : []), 'English', ...exHead('Present example'), ...exHead('Past example')],
+    rows: D.words.map(([w, rom, en, pres, past]) => [w, ...(roman ? [rom] : []), en, ...exCells(pres), ...exCells(past)]),
+    front: r => roman && r[1] ? `${r[0]} (${r[1]})` : r[0],
+    back: r => { const v = D.words.find(x => x[0] === r[0]); return `${v[2]} | ${exLine(v[3])} | ${exLine(v[4])}`; },
+  };
+}
+
 function showCards() {
   const list = mode === 'verbs' ? D.verbs : D.words;
+  $('toolbar').appendChild(ExportCards.button(exportData));
   items = list.map((v, i) => ({v, i}));
   $('cards').classList.remove('hidden');
   $('app-title').textContent = `${D.flag} ${D.name} · ${mode === 'verbs' ? 'Verbs' : 'Most-used words'}`;
@@ -492,7 +549,7 @@ $('tt-close').onclick = closeTooltip;
     await loadScript(`lang/${code}.js`);
     D = window.LANG_DATA;
     document.documentElement.lang = code;
-    document.title = `${D.name} — Learning Material`;
+    document.title = `${D.name} — Polyglot Pocket`;
     if (mode === 'stories') {
       await loadScript(`lang/${code}_stories.js`);
       showStories();

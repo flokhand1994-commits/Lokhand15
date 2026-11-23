@@ -1,7 +1,7 @@
 {
-  "name": "Learning Material for Dutch",
-  "short_name": "Dutch Learning",
-  "description": "Dutch learning material — flashcards, stories, and verb practice",
+  "name": "Polyglot Pocket",
+  "short_name": "Polyglot",
+  "description": "Free flashcards, verbs, stories and the 10,000 most used words in 8 languages",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
