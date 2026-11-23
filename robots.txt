@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://flokhand1994-commits.github.io/Lokhand15/sitemap.xml

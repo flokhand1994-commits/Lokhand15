@@ -6,7 +6,8 @@
 <meta name="color-scheme" content="light">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<title>Polyglot Pocket</title>
+<title>Polyglot Pocket — free language learning</title>
+<meta name="description" content="Free flashcards, verb conjugations, stories you can tap to translate, and the most-used words.">
 <style>
 :root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--soft:#eaf1f8}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -553,7 +554,11 @@ $('tt-close').onclick = closeTooltip;
     await loadScript(`lang/${code}.js`);
     D = window.LANG_DATA;
     document.documentElement.lang = code;
-    document.title = `${D.name} — Polyglot Pocket`;
+    const what = {verbs: `${D.name} verbs — conjugations & examples`, words: `Most common ${D.name} words — flashcards`,
+                  stories: `Free ${D.name} stories — tap any word to translate`}[mode] || `Learn ${D.name} for free`;
+    document.title = `${what} · Polyglot Pocket`;
+    document.querySelector('meta[name="description"]').content =
+      `${what}. Free ${D.name} flashcards, verb conjugations with present and past examples, audio, and stories you can tap to translate. No sign-up.`;
     if (mode === 'stories') {
       await loadScript(`lang/${code}_stories.js`);
       showStories();

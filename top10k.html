@@ -6,7 +6,8 @@
 <meta name="color-scheme" content="light">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<title>10,000 Words & Phrases</title>
+<title>10,000 most common words &amp; phrases · Polyglot Pocket</title>
+<meta name="description" content="The 10,000 most common words and phrases, in order of use, with meanings, example sentences and audio. Free.">
 <style>
 :root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--soft:#eaf1f8}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -150,7 +151,9 @@ function go(d) {
 
 function start() {
   all = window.TOP10K;
-  document.title = `${L.name} — 10,000 Words & Phrases · Polyglot Pocket`;
+  document.title = `10,000 most common ${L.name} words & phrases · Polyglot Pocket`;
+  document.querySelector('meta[name="description"]').content =
+    `The 10,000 most common ${L.name} words and phrases in order of use, with meanings, example sentences and audio. Free, no sign-up.`;
   document.documentElement.lang = code;
   $('app-title').textContent = `${L.flag} ${L.name} · 10,000 words & phrases`;
   $('back-btn').href = L.back;

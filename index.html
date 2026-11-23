@@ -16,61 +16,81 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
-:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--de:#2c6aa0;--het:#2a7a6a}
+:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--accent-soft:#eef4fa;--card:#fff;--border:#d6e2ee}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px;-webkit-tap-highlight-color:transparent}
-/* Welcome screen */
-#welcome{display:flex;flex-direction:column;align-items:center;width:100%;padding:8px 0 40px}
-.wrap{width:min(880px,100%)}
-.top{padding:28px 4px 8px}
-.top h1{font-size:clamp(1.7rem,5vw,2.2rem);color:var(--ink);letter-spacing:-.01em;margin-bottom:6px}
-.top p{color:var(--muted);font-size:.95rem;line-height:1.5}
-.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:30px 4px 12px}
-.section-h h2{font-size:1.15rem;color:var(--ink)}
-.section-h p{font-size:.82rem;color:var(--muted)}
-.lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media (max-width:700px){.lang-grid{grid-template-columns:repeat(2,1fr)}}
-.lang-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:14px;text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s;touch-action:manipulation}
-.lang-card:hover,.lang-card:focus-visible{border-color:var(--accent);box-shadow:0 4px 14px rgba(44,106,160,.12)}
-.lang-card .flag{font-size:1.9rem;line-height:1}
-.lang-card .name{display:block;font-weight:700;font-size:.98rem}
-.lang-card .native{display:block;font-size:.8rem;color:var(--muted)}
-.lang-card.current{border-color:var(--accent);background:#eef4fa}
-.group{margin:0 4px 18px}
-.group h3{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
-.mode-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
-.mode-btn{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--card);cursor:pointer;text-align:left;font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;touch-action:manipulation}
-.mode-btn:hover,.mode-btn:focus-visible{border-color:var(--accent);box-shadow:0 4px 14px rgba(44,106,160,.12)}
-.mode-icon{flex:none;font-size:1.6rem;line-height:1;width:32px;text-align:center}
-.mode-text{display:flex;flex-direction:column;gap:2px}
-.mode-title{font-size:.95rem;font-weight:700;color:var(--ink)}
-.mode-sub{font-size:.76rem;color:var(--muted);line-height:1.4}
-.site-foot{margin-top:30px;font-size:.75rem;color:var(--muted);text-align:center;line-height:1.6}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px;-webkit-tap-highlight-color:transparent}
+.wrap{width:min(900px,100%);padding-bottom:40px}
+
+/* Header */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--accent-soft) 0%,#fff 75%);border:1px solid var(--border);border-radius:24px;padding:36px 32px 30px;margin-top:8px}
+.hero::after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(44,106,160,.10),transparent 70%)}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.logo{flex:none;width:48px;height:48px;border-radius:14px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:1.5rem;font-weight:800;box-shadow:0 6px 16px rgba(44,106,160,.25)}
+.hero h1{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.hero p{color:var(--muted);font-size:1rem;line-height:1.6;max-width:560px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{font-size:.8rem;font-weight:600;color:var(--accent);background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px}
+
+/* Languages */
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:32px 4px 14px}
+.section-h h2{font-size:1.2rem;font-weight:700}
+.section-h p{font-size:.85rem;color:var(--muted)}
+.lang-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:560px){.lang-grid{grid-template-columns:1fr}}
+.lang-card{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:16px;text-decoration:none;color:var(--ink);transition:transform .15s ease,border-color .15s,box-shadow .15s;touch-action:manipulation}
+.lang-card:hover,.lang-card:focus-visible{border-color:var(--accent);box-shadow:0 8px 20px rgba(44,106,160,.12);transform:translateY(-2px)}
+.flag{flex:none;width:52px;height:52px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;font-size:1.7rem;line-height:1}
+.names{flex:1;min-width:0}
+.name{display:block;font-weight:700;font-size:1rem}
+.native{display:block;font-size:.82rem;color:var(--muted);margin-top:1px}
+.hello{display:block;font-size:.78rem;font-weight:600;color:var(--accent);margin-top:3px}
+.arrow{flex:none;color:var(--muted);opacity:0;transform:translateX(-4px);transition:.15s}
+.lang-card:hover .arrow,.lang-card:focus-visible .arrow{opacity:1;transform:none}
+
+/* What's inside */
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+@media (max-width:700px){.features{grid-template-columns:repeat(2,1fr)}}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+.feature .ic{font-size:1.4rem;line-height:1;margin-bottom:8px}
+.feature b{display:block;font-size:.9rem;margin-bottom:3px}
+.feature span{font-size:.78rem;color:var(--muted);line-height:1.45}
+
+.site-foot{margin-top:36px;font-size:.75rem;color:var(--muted);text-align:center;line-height:1.6}
 </style>
 </head>
 <body>
-<div id="welcome">
-  <div class="wrap">
-    <header class="top">
-      <h1>Polyglot Pocket</h1>
-      <p>Free flashcards, verbs, stories and the most used words. Pick a language to start.</p>
-    </header>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand"><div class="logo" aria-hidden="true">P</div><h1>Polyglot Pocket</h1></div>
+    <p>Free flashcards, verb drills, real stories you can tap to translate, and the most-used words. Pick a language to start.</p>
+    <div class="pills"><span class="pill">8 languages</span><span class="pill">Free for everyone</span><span class="pill">No sign-up</span></div>
+  </header>
 
-    <div class="section-h"><h2>Languages</h2><p>Each one has verbs, common words and stories</p></div>
-    <div class="lang-grid">
-      <a class="lang-card" href="dutch.html"><span class="flag">🇳🇱</span><span><span class="name">Dutch</span><span class="native" lang="nl">Nederlands</span></span></a>
-      <a class="lang-card" href="lang.html?l=fr"><span class="flag">🇫🇷</span><span><span class="name">French</span><span class="native" lang="fr">Français</span></span></a>
-      <a class="lang-card" href="lang.html?l=es"><span class="flag">🇪🇸</span><span><span class="name">Spanish</span><span class="native" lang="es">Español</span></span></a>
-      <a class="lang-card" href="lang.html?l=it"><span class="flag">🇮🇹</span><span><span class="name">Italian</span><span class="native" lang="it">Italiano</span></span></a>
-      <a class="lang-card" href="lang.html?l=ru"><span class="flag">🇷🇺</span><span><span class="name">Russian</span><span class="native" lang="ru">Русский</span></span></a>
-      <a class="lang-card" href="lang.html?l=zh"><span class="flag">🇨🇳</span><span><span class="name">Chinese (Mandarin)</span><span class="native" lang="zh">普通话 · 中文</span></span></a>
-      <a class="lang-card" href="lang.html?l=ja"><span class="flag">🇯🇵</span><span><span class="name">Japanese</span><span class="native" lang="ja">日本語</span></span></a>
-      <a class="lang-card" href="lang.html?l=ko"><span class="flag">🇰🇷</span><span><span class="name">Korean</span><span class="native" lang="ko">한국어</span></span></a>
-    </div>
-
-    <p class="site-foot">by Fatima Lokhandwala<br>A work in progress — new material is added regularly, and some parts may still change.</p>
+  <div class="section-h"><h2>Choose a language</h2><p>Each one has verbs, common words and stories</p></div>
+  <div class="lang-grid">
+      <a class="lang-card" href="dutch.html"><span class="flag">🇳🇱</span><span class="names"><span class="name">Dutch</span><span class="native" lang="nl">Nederlands</span><span class="hello" lang="nl">“Hallo”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=fr"><span class="flag">🇫🇷</span><span class="names"><span class="name">French</span><span class="native" lang="fr">Français</span><span class="hello" lang="fr">“Bonjour”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=es"><span class="flag">🇪🇸</span><span class="names"><span class="name">Spanish</span><span class="native" lang="es">Español</span><span class="hello" lang="es">“Hola”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=it"><span class="flag">🇮🇹</span><span class="names"><span class="name">Italian</span><span class="native" lang="it">Italiano</span><span class="hello" lang="it">“Ciao”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=ru"><span class="flag">🇷🇺</span><span class="names"><span class="name">Russian</span><span class="native" lang="ru">Русский</span><span class="hello" lang="ru">“Привет”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=zh"><span class="flag">🇨🇳</span><span class="names"><span class="name">Chinese (Mandarin)</span><span class="native" lang="zh">普通话 · 中文</span><span class="hello" lang="zh">“你好”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=ja"><span class="flag">🇯🇵</span><span class="names"><span class="name">Japanese</span><span class="native" lang="ja">日本語</span><span class="hello" lang="ja">“こんにちは”</span></span><span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-card" href="lang.html?l=ko"><span class="flag">🇰🇷</span><span class="names"><span class="name">Korean</span><span class="native" lang="ko">한국어</span><span class="hello" lang="ko">“안녕하세요”</span></span><span class="arrow" aria-hidden="true">→</span></a>
   </div>
+
+  <div class="section-h"><h2>What's inside</h2></div>
+  <div class="features">
+    <div class="feature"><div class="ic">🔤</div><b>Verbs</b><span>Conjugations with present and past examples</span></div>
+    <div class="feature"><div class="ic">📖</div><b>Common words</b><span>Flashcards with audio you can play</span></div>
+    <div class="feature"><div class="ic">📜</div><b>Stories</b><span>Tap any word to see its translation</span></div>
+    <div class="feature"><div class="ic">💯</div><b>10,000 words</b><span>The most-used words, with example sentences</span></div>
+  </div>
+
+  <p class="site-foot">by Fatima Lokhandwala<br>A work in progress — new material is added regularly, and some parts may still change.</p>
 </div>
 <script>
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
