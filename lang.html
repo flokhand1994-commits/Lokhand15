@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<title>Learning Material</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#1a2b3c;--muted:#5a6b7c;--accent:#2c6aa0;--card:#fff;--border:#c8d8e8;--soft:#eaf1f8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px;-webkit-tap-highlight-color:transparent}
+.app-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;width:min(600px,96vw)}
+.back-btn{padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;background:var(--card);color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;text-decoration:none;touch-action:manipulation}
+.back-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.app-title{font-size:1rem;color:var(--accent);font-weight:700}
+.hidden{display:none!important}
+
+/* Hub */
+#hub{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 0;width:100%}
+.hub-flag{font-size:4rem;line-height:1;margin-bottom:10px}
+.hub-h1{font-size:1.8rem;color:var(--accent);margin-bottom:4px}
+.hub-native{color:var(--muted);font-size:1rem;margin-bottom:28px}
+.mode-grid{display:grid;grid-template-columns:1fr;gap:14px;width:min(400px,92vw)}
+.mode-btn{display:flex;flex-direction:column;align-items:center;padding:20px 12px;border:2px solid var(--border);border-radius:14px;background:var(--card);cursor:pointer;transition:.2s;gap:6px;text-decoration:none;color:var(--ink);touch-action:manipulation}
+.mode-btn:hover,.mode-btn:active{border-color:var(--accent);box-shadow:0 4px 16px rgba(44,106,160,.15);transform:translateY(-2px)}
+.mode-icon{font-size:2.4rem;line-height:1}
+.mode-title{font-size:.95rem;font-weight:700}
+.mode-sub{font-size:.72rem;color:var(--muted)}
+
+/* Flashcards */
+#cards{display:flex;flex-direction:column;align-items:center;width:100%}
+#toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;width:min(480px,96vw)}
+.nav-btn{padding:7px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:.9rem;cursor:pointer;font-weight:600;touch-action:manipulation;min-height:44px;min-width:44px}
+.nav-btn:hover{background:var(--accent);color:#fff}
+#counter{font-size:.88rem;color:var(--muted);min-width:70px;text-align:center}
+#search-input{padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;width:150px;min-height:44px}
+#scene{width:min(480px,96vw);perspective:1000px;cursor:pointer;margin-bottom:14px;touch-action:pan-y}
+.inner{display:grid;transform-style:preserve-3d;transition:transform .55s ease}
+.inner.flipped{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;background:var(--card);border:1.5px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);padding:22px;display:flex;flex-direction:column;justify-content:center;min-height:280px;user-select:none;-webkit-user-select:none}
+.back{transform:rotateY(180deg)}
+.card-num{font-size:.75rem;color:var(--muted);margin-bottom:6px}
+.front-word{font-size:2.4rem;font-weight:700;color:var(--accent);line-height:1.15;margin-bottom:6px;word-break:break-word}
+.front-rom{font-size:1rem;color:var(--muted);font-style:italic;margin-bottom:8px}
+.front-en{font-size:1rem;color:var(--ink);line-height:1.5}
+.flip-hint{margin-top:14px;font-size:.72rem;color:#99a;text-align:center}
+.back-head{font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+.back-head .rom{font-weight:400;font-size:.9rem;color:var(--muted);font-style:italic;margin-left:6px}
+.tense{background:var(--soft);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.tense-name{font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.tense-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;font-size:.95rem}
+.tense-grid .p{color:var(--muted)}
+.tense-one{font-size:.98rem}
+.example{border-top:1px solid var(--border);margin-top:6px;padding-top:10px}
+.ex-tl{font-size:.98rem;font-weight:600;line-height:1.45}
+.ex-rom{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:2px}
+.ex-en{font-size:.85rem;color:var(--muted);margin-top:2px}
+.back-en{font-size:1.6rem;font-weight:700;color:var(--ink);text-align:center;margin-bottom:6px}
+.back-word{font-size:1rem;color:var(--muted);text-align:center}
+.speak{border:1.5px solid var(--border);background:var(--card);border-radius:50%;width:40px;height:40px;font-size:1.05rem;cursor:pointer;align-self:center;margin-top:12px;touch-action:manipulation}
+.speak:hover{border-color:var(--accent)}
+
+/* Stories */
+#stories{display:flex;flex-direction:column;align-items:center;width:100%}
+.story-nav{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;justify-content:center}
+#story-select{padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--card);max-width:62vw;min-height:44px}
+.hint-bar{font-size:.75rem;color:var(--muted);text-align:center;margin-bottom:10px;opacity:.85}
+.story-card{width:min(640px,96vw);background:var(--card);border:1.5px solid var(--border);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.07);padding:24px;margin-bottom:16px}
+.story-num{font-size:.72rem;color:var(--muted);margin-bottom:4px}
+.story-title{font-size:1.45rem;font-weight:700;color:var(--accent);margin-bottom:6px;line-height:1.3}
+.story-desc{font-size:.88rem;color:var(--muted);font-style:italic;margin-bottom:18px;line-height:1.5}
+.story-text{font-size:1.05rem;line-height:1.85;margin-bottom:12px}
+.story-text p{margin-bottom:1em}
+.cjk .story-text{font-size:1.15rem;line-height:2}
+.w{cursor:pointer;border-radius:3px;transition:background .15s}
+.w:hover,.w.active{background:rgba(44,106,160,.15)}
+.source-note{font-size:.68rem;color:var(--muted);opacity:.8;line-height:1.5;border-top:1px solid var(--border);padding-top:10px}
+
+/* Translation bottom sheet */
+#backdrop{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:998;display:none}
+#tooltip{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:2px solid var(--accent);border-radius:18px 18px 0 0;padding:20px 24px 30px;box-shadow:0 -4px 28px rgba(0,0,0,.15);z-index:999;transform:translateY(100%);transition:transform .28s ease;max-height:65vh;overflow:auto}
+#tooltip.show{transform:translateY(0)}
+.tt-top{display:flex;align-items:center;gap:10px;margin-bottom:4px;padding-right:36px}
+.tt-word{font-size:1.5rem;font-weight:700;color:var(--accent)}
+.tt-top .speak{margin-top:0;width:36px;height:36px;font-size:.95rem}
+.tt-rom{font-size:.95rem;color:var(--muted);font-style:italic;margin-bottom:10px}
+.tt-row{display:flex;align-items:baseline;gap:8px;font-size:1rem;margin-bottom:6px;line-height:1.4}
+.tt-loading{color:var(--muted);font-size:.9rem;margin-top:6px}
+.tt-sent-btn{margin-top:10px;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:.85rem;cursor:pointer;min-height:40px}
+.tt-sent{margin-top:10px;font-size:.92rem;line-height:1.5;background:var(--soft);border-radius:10px;padding:10px 12px}
+.tt-sent .orig{color:var(--muted);margin-bottom:4px}
+.tooltip-close{position:absolute;top:14px;right:18px;font-size:1.2rem;cursor:pointer;color:var(--muted);background:none;border:none;padding:4px 8px;border-radius:6px}
+.err{color:var(--muted);text-align:center;margin-top:40px}
+.byline{position:fixed;bottom:10px;right:14px;font-size:.65rem;color:var(--muted);opacity:.55;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <a class="back-btn" id="back-btn" href="index.html">← Home</a>
+  <span class="app-title" id="app-title"></span>
+</div>
+
+<!-- Language hub -->
+<div id="hub" class="hidden">
+  <div class="hub-flag" id="hub-flag"></div>
+  <h1 class="hub-h1" id="hub-name"></h1>
+  <p class="hub-native" id="hub-native"></p>
+  <div class="mode-grid">
+    <a class="mode-btn" id="go-verbs"><span class="mode-icon">🔤</span><span class="mode-title">Verbs</span><span class="mode-sub" id="verbs-sub"></span></a>
+    <a class="mode-btn" id="go-words"><span class="mode-icon">📖</span><span class="mode-title">Most-used words</span><span class="mode-sub" id="words-sub"></span></a>
+    <a class="mode-btn" id="go-stories"><span class="mode-icon">📜</span><span class="mode-title">Free stories</span><span class="mode-sub">Public domain classics · tap any word to translate</span></a>
+  </div>
+</div>
+
+<!-- Flashcards (verbs + words) -->
+<div id="cards" class="hidden">
+  <div id="toolbar">
+    <button class="nav-btn" id="prev-btn" aria-label="Previous">&#9664;</button>
+    <span id="counter"></span>
+    <button class="nav-btn" id="next-btn" aria-label="Next">&#9654;</button>
+    <button class="nav-btn" id="shuffle-btn" title="Shuffle">🔀</button>
+    <input id="search-input" list="card-list" placeholder="Search…" aria-label="Search">
+    <datalist id="card-list"></datalist>
+  </div>
+  <div id="scene">
+    <div class="inner" id="inner">
+      <div class="face front" id="front"></div>
+      <div class="face back" id="back"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Stories -->
+<div id="stories" class="hidden">
+  <div class="story-nav">
+    <button class="nav-btn" id="sprev-btn" aria-label="Previous story">&#9664;</button>
+    <select id="story-select" aria-label="Choose a story"></select>
+    <button class="nav-btn" id="snext-btn" aria-label="Next story">&#9654;</button>
+  </div>
+  <p class="hint-bar">Tap any word to translate · Tik op een woord voor de vertaling</p>
+  <div class="story-card" id="story-card">
+    <div class="story-num" id="story-num"></div>
+    <h2 class="story-title" id="story-title"></h2>
+    <p class="story-desc" id="story-desc"></p>
+    <div class="story-text" id="story-text"></div>
+    <p class="source-note" id="story-source"></p>
+  </div>
+</div>
+
+<p class="err hidden" id="err"></p>
+
+<div id="backdrop"></div>
+<div id="tooltip" role="dialog" aria-label="Translation">
+  <button class="tooltip-close" id="tt-close" aria-label="Close">✕</button>
+  <div class="tt-top"><span class="tt-word" id="tt-word"></span><button class="speak" id="tt-speak" aria-label="Listen">🔊</button></div>
+  <div class="tt-rom" id="tt-rom"></div>
+  <div id="tt-body"></div>
+  <button class="tt-sent-btn" id="tt-sent-btn">Translate the whole sentence</button>
+  <div id="tt-sent"></div>
+</div>
+
+<p class="byline">by Fatima Lokhandwala</p>
+
+<script>
+const LANGS = ['fr', 'es', 'it', 'ru', 'zh', 'ja', 'ko'];
+const params = new URLSearchParams(location.search);
+const code = params.get('l');
+const mode = params.get('m') || 'hub';
+const $ = id => document.getElementById(id);
+let D = null;
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+}
+
+function loadScript(src) {
+  return new Promise((ok, fail) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = ok; s.onerror = fail;
+    document.head.appendChild(s);
+  });
+}
+
+function fail(msg) {
+  $('err').textContent = msg;
+  $('err').classList.remove('hidden');
+}
+
+// ── Speech ────────────────────────────────────────────────────────────────
+const canSpeak = 'speechSynthesis' in window;
+function speak(text) {
+  if (!canSpeak || !text) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = D.tts;
+  speechSynthesis.speak(u);
+}
+function speakBtn(text) {
+  return canSpeak ? `<button class="speak" data-say="${esc(text)}" aria-label="Listen">🔊</button>` : '';
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-say]');
+  if (b) { e.stopPropagation(); speak(b.dataset.say); }
+}, true);
+
+// ── Hub ───────────────────────────────────────────────────────────────────
+function showHub() {
+  $('hub').classList.remove('hidden');
+  $('hub-flag').textContent = D.flag;
+  $('hub-name').textContent = `Learning Material for ${D.name}`;
+  $('hub-native').textContent = D.native;
+  $('app-title').textContent = `${D.flag} ${D.name}`;
+  $('verbs-sub').textContent = `${D.verbs.length} common verbs · conjugations · example sentences`;
+  $('words-sub').textContent = `${D.words.length} high-frequency words · flashcards`;
+  $('go-verbs').href = `lang.html?l=${code}&m=verbs`;
+  $('go-words').href = `lang.html?l=${code}&m=words`;
+  $('go-stories').href = `lang.html?l=${code}&m=stories`;
+}
+
+// ── Flashcards ────────────────────────────────────────────────────────────
+let items = [], cur = 0;
+
+function elide(pron, form) {
+  return D.elide && pron === 'je' && /^[aeiouéèêhâîôûœ]/i.test(form) ? `j'${form}` : `${pron} ${form}`;
+}
+
+function verbFaces(v, i) {
+  const [word, rom, en, forms, ex, exRom, exEn] = v;
+  const front = `
+    <div class="card-num">#${i + 1}</div>
+    <div class="front-word" lang="${D.code}">${esc(word)}</div>
+    ${rom ? `<div class="front-rom">${esc(rom)}</div>` : ''}
+    <div class="front-en">${esc(en)}</div>
+    ${speakBtn(word)}
+    <div class="flip-hint">Tap to see the conjugation</div>`;
+  let k = 0, tenses = '';
+  for (const t of D.table) {
+    const part = forms.slice(k, k + t.n); k += t.n;
+    if (t.pron) {
+      const rows = part.map((f, j) => `<span${f === '—' ? ' class="p"' : ''}>${f === '—' ? esc(D.pron[j]) + ' —' : esc(elide(D.pron[j], f))}</span>`);
+      // two columns: singular left, plural right
+      const grid = [0, 3, 1, 4, 2, 5].map(j => rows[j]).join('');
+      tenses += `<div class="tense"><div class="tense-name">${esc(t.t)}</div><div class="tense-grid" lang="${D.code}">${grid}</div></div>`;
+    } else {
+      tenses += `<div class="tense"><div class="tense-name">${esc(t.t)}</div><div class="tense-one" lang="${D.code}">${esc(part.join(' · '))}</div></div>`;
+    }
+  }
+  const back = `
+    <div class="back-head" lang="${D.code}">${esc(word)}${rom ? `<span class="rom">${esc(rom)}</span>` : ''}</div>
+    ${tenses}
+    <div class="example">
+      <div class="ex-tl" lang="${D.code}">${esc(ex)}</div>
+      ${exRom ? `<div class="ex-rom">${esc(exRom)}</div>` : ''}
+      <div class="ex-en">${esc(exEn)}</div>
+    </div>
+    ${speakBtn(ex)}`;
+  return [front, back];
+}
+
+function wordFaces(w, i) {
+  const [word, rom, en] = w;
+  const front = `
+    <div class="card-num">#${i + 1}</div>
+    <div class="front-word" lang="${D.code}">${esc(word)}</div>
+    ${rom ? `<div class="front-rom">${esc(rom)}</div>` : ''}
+    ${speakBtn(word.replace(/\s*\((m|f|m\/f)\)/g, ''))}
+    <div class="flip-hint">Tap to see the meaning</div>`;
+  const back = `
+    <div class="back-en">${esc(en)}</div>
+    <div class="back-word" lang="${D.code}">${esc(word)}${rom ? ' · ' + esc(rom) : ''}</div>`;
+  return [front, back];
+}
+
+function renderCard() {
+  const item = items[cur];
+  const [f, b] = mode === 'verbs' ? verbFaces(item.v, item.i) : wordFaces(item.v, item.i);
+  $('inner').classList.remove('flipped');
+  $('front').innerHTML = f;
+  $('back').innerHTML = b;
+  $('counter').textContent = `${cur + 1} / ${items.length}`;
+}
+
+function step(d) {
+  cur = (cur + d + items.length) % items.length;
+  renderCard();
+}
+
+function showCards() {
+  const list = mode === 'verbs' ? D.verbs : D.words;
+  items = list.map((v, i) => ({v, i}));
+  $('cards').classList.remove('hidden');
+  $('app-title').textContent = `${D.flag} ${D.name} · ${mode === 'verbs' ? 'Verbs' : 'Most-used words'}`;
+  $('back-btn').href = `lang.html?l=${code}`;
+  $('back-btn').textContent = `← ${D.name}`;
+  $('card-list').innerHTML = list.map(v => `<option value="${esc(v[0])}">${esc(v[2])}</option>`).join('');
+
+  $('prev-btn').onclick = () => step(-1);
+  $('next-btn').onclick = () => step(1);
+  $('shuffle-btn').onclick = () => {
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    cur = 0; renderCard();
+  };
+  $('scene').onclick = () => $('inner').classList.toggle('flipped');
+  $('search-input').addEventListener('change', e => {
+    const q = e.target.value.trim().toLowerCase();
+    if (!q) return;
+    const hit = items.findIndex(x => x.v[0].toLowerCase() === q);
+    const idx = hit >= 0 ? hit : items.findIndex(x => (x.v[0] + ' ' + x.v[1] + ' ' + x.v[2]).toLowerCase().includes(q));
+    if (idx >= 0) { cur = idx; renderCard(); }
+    e.target.value = '';
+    e.target.blur();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === ' ') { e.preventDefault(); $('inner').classList.toggle('flipped'); }
+  });
+  let tx = 0;
+  $('scene').addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive: true});
+  $('scene').addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 55) { e.preventDefault(); step(dx < 0 ? 1 : -1); }
+  }, {passive: false});
+  renderCard();
+}
+
+// ── Stories ───────────────────────────────────────────────────────────────
+let sCur = 0;
+const segmenter = window.Intl && Intl.Segmenter ? new Intl.Segmenter(code, {granularity: 'word'}) : null;
+
+function wrapWords(text) {
+  if (segmenter) {
+    let out = '';
+    for (const s of segmenter.segment(text)) {
+      out += s.isWordLike ? `<span class="w">${esc(s.segment)}</span>` : esc(s.segment);
+    }
+    return out;
+  }
+  return esc(text).replace(/[\p{L}\p{M}'’-]+/gu, m => `<span class="w">${m}</span>`);
+}
+
+function wrapPara(text) {
+  // sentence spans let the tooltip translate the whole sentence
+  const sentences = text.match(/[^.!?。！？]+(?:[.!?。！？]+[»”"」』)）]*\s*|$)/g) || [text];
+  return sentences.filter(Boolean).map(s => `<span class="s">${wrapWords(s)}</span>`).join('');
+}
+
+function renderStory() {
+  const s = LANG_STORIES[sCur];
+  $('story-num').textContent = `Story ${sCur + 1} of ${LANG_STORIES.length}`;
+  $('story-title').innerHTML = wrapPara(s.title);
+  $('story-desc').textContent = s.desc;
+  $('story-text').innerHTML = s.paras.map(p => `<p>${wrapPara(p)}</p>`).join('');
+  $('story-source').textContent = `Source: ${s.source}. Public domain.${D.storiesNote ? ' ' + D.storiesNote : ''}`;
+  $('story-select').value = String(sCur);
+  $('sprev-btn').disabled = sCur === 0;
+  $('snext-btn').disabled = sCur === LANG_STORIES.length - 1;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  closeTooltip();
+}
+
+function showStories() {
+  $('stories').classList.remove('hidden');
+  $('app-title').textContent = `${D.flag} ${D.name} · Stories`;
+  $('back-btn').href = `lang.html?l=${code}`;
+  $('back-btn').textContent = `← ${D.name}`;
+  if (['zh', 'ja', 'ko'].includes(code)) document.body.classList.add('cjk');
+  $('story-card').lang = code;
+  $('story-select').innerHTML = LANG_STORIES.map((s, i) => `<option value="${i}">${i + 1}. ${esc(s.title)}</option>`).join('');
+  $('story-select').onchange = e => { sCur = +e.target.value; renderStory(); };
+  $('sprev-btn').onclick = () => { if (sCur > 0) { sCur--; renderStory(); } };
+  $('snext-btn').onclick = () => { if (sCur < LANG_STORIES.length - 1) { sCur++; renderStory(); } };
+  $('story-card').addEventListener('click', e => {
+    const w = e.target.closest('.w');
+    if (w) showTranslation(w);
+  });
+  renderStory();
+}
+
+// ── Tap-to-translate ──────────────────────────────────────────────────────
+const cache = {};
+let ttSentence = '', activeWord = null;
+
+// Google's free endpoint first, MyMemory as backup.
+// (Google's endpoint is unofficial and often blocks or rate-limits requests.)
+let googleDown = false;
+async function fetchJSON(url, ms = 6000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try {
+    const res = await fetch(url, {signal: ctrl.signal, cache: 'no-store'});
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } finally { clearTimeout(timer); }
+}
+async function viaGoogle(text, tl) {
+  const d = await fetchJSON(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${D.gt}&tl=${tl}&dt=t&dt=rm&q=${encodeURIComponent(text)}`);
+  const segs = d[0] || [];
+  const t = segs.map(x => x[0] || '').join('').trim();
+  if (!t) throw new Error('empty');
+  return {t, rom: segs.map(x => x[3] || '').join(' ').trim()};
+}
+async function viaMyMemory(text, tl) {
+  const d = await fetchJSON(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${D.gt}|${tl}`);
+  const t = (d.responseData && d.responseData.translatedText || '').trim();
+  if (!t || d.responseStatus != 200 || /MYMEMORY WARNING|QUERY LENGTH/i.test(t)) throw new Error('mymemory ' + d.responseStatus);
+  return {t, rom: ''};
+}
+async function gtrans(text, tl) {
+  if (!googleDown) {
+    try { return await viaGoogle(text, tl); }
+    catch (err) { console.warn('Google translate failed, using backup:', err); googleDown = true; }
+  }
+  return viaMyMemory(text, tl);
+}
+
+function rows(r) {
+  return `<div class="tt-row"><span>🇬🇧</span><span>${esc(r.en)}</span></div>
+          <div class="tt-row"><span>🇳🇱</span><span>${esc(r.nl)}</span></div>`;
+}
+
+async function translateBoth(text) {
+  if (cache[text]) return cache[text];
+  const [en, nl] = await Promise.all([gtrans(text, 'en'), gtrans(text, 'nl')]);
+  return (cache[text] = {en: en.t, nl: nl.t, rom: en.rom});
+}
+
+async function showTranslation(el) {
+  const raw = el.textContent.trim();
+  const word = /[A-Za-zÀ-ɏЀ-ӿ]/.test(raw) ? raw.toLowerCase() : raw;
+  if (activeWord) activeWord.classList.remove('active');
+  activeWord = el; el.classList.add('active');
+  ttSentence = (el.closest('.s') || el).textContent.trim();
+  $('tt-word').textContent = word;
+  $('tt-rom').textContent = '';
+  $('tt-sent').innerHTML = '';
+  $('tt-sent-btn').classList.toggle('hidden', ttSentence === raw);
+  $('tt-speak').classList.toggle('hidden', !canSpeak);
+  $('tt-speak').onclick = () => speak(raw);
+  $('tt-body').innerHTML = `<p class="tt-loading">⏳ Translating…</p>`;
+  openTooltip();
+  try {
+    const r = await translateBoth(word);
+    if (activeWord !== el) return;
+    $('tt-rom').textContent = r.rom && r.rom.toLowerCase() !== word.toLowerCase() ? r.rom : '';
+    $('tt-body').innerHTML = rows(r);
+  } catch {
+    if (activeWord !== el) return;
+    $('tt-body').innerHTML = `<p class="tt-loading">⚠️ Translation unavailable right now — try again in a moment.</p>`;
+  }
+}
+
+$('tt-sent-btn').onclick = async () => {
+  const text = ttSentence;
+  $('tt-sent').innerHTML = `<p class="tt-loading">⏳ Translating sentence…</p>`;
+  try {
+    const r = await translateBoth(text);
+    if (text !== ttSentence) return;
+    $('tt-sent').innerHTML = `<div class="tt-sent"><div class="orig" lang="${code}">${esc(text)}</div>${rows(r)}</div>`;
+  } catch {
+    if (text !== ttSentence) return;
+    $('tt-sent').innerHTML = `<p class="tt-loading">⚠️ Translation unavailable right now — try again in a moment.</p>`;
+  }
+};
+
+function openTooltip() {
+  $('backdrop').style.display = 'block';
+  $('tooltip').classList.add('show');
+}
+function closeTooltip() {
+  $('backdrop').style.display = 'none';
+  $('tooltip').classList.remove('show');
+  if (activeWord) { activeWord.classList.remove('active'); activeWord = null; }
+}
+$('backdrop').onclick = closeTooltip;
+$('tt-close').onclick = closeTooltip;
+
+// ── Start ─────────────────────────────────────────────────────────────────
+(async () => {
+  if (!LANGS.includes(code)) {
+    fail('Language not found. Go back to the home page and pick one.');
+    return;
+  }
+  try {
+    await loadScript(`lang/${code}.js`);
+    D = window.LANG_DATA;
+    document.documentElement.lang = code;
+    document.title = `${D.name} — Learning Material`;
+    if (mode === 'stories') {
+      await loadScript(`lang/${code}_stories.js`);
+      showStories();
+    } else if (mode === 'verbs' || mode === 'words') {
+      showCards();
+    } else {
+      showHub();
+    }
+  } catch {
+    fail('Could not load the material. Check your internet connection and refresh.');
+  }
+})();
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+</script>
+</body>
+</html>
