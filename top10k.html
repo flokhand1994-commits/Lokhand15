@@ -30,6 +30,7 @@ input[type=search]{flex:1;min-width:150px}
 .rank{font-size:.75rem;color:var(--muted);padding-top:4px;grid-row:span 3}
 .word-line{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .word{font-size:1.2rem;font-weight:700;color:var(--accent)}
+.rom{font-size:.9rem;color:var(--muted);font-style:italic}
 .en{font-size:.95rem;color:var(--ink)}
 .ex{font-size:.88rem;line-height:1.45;margin-top:4px;background:var(--soft);border-radius:8px;padding:6px 10px}
 .ex .tl{font-weight:600}
@@ -86,6 +87,11 @@ input[type=search]{flex:1;min-width:150px}
 const LANGS = {
   nl: {name: 'Dutch', flag: '🇳🇱', tts: 'nl-BE', back: 'dutch.html', backLabel: 'Dutch'},
   fr: {name: 'French', flag: '🇫🇷', tts: 'fr-FR', back: 'lang.html?l=fr', backLabel: 'French'},
+  es: {name: 'Spanish', flag: '🇪🇸', tts: 'es-ES', back: 'lang.html?l=es', backLabel: 'Spanish'},
+  it: {name: 'Italian', flag: '🇮🇹', tts: 'it-IT', back: 'lang.html?l=it', backLabel: 'Italian'},
+  ru: {name: 'Russian', flag: '🇷🇺', tts: 'ru-RU', back: 'lang.html?l=ru', backLabel: 'Russian'},
+  zh: {name: 'Chinese (Mandarin)', flag: '🇨🇳', tts: 'zh-CN', back: 'lang.html?l=zh', backLabel: 'Chinese'},
+  ja: {name: 'Japanese', flag: '🇯🇵', tts: 'ja-JP', back: 'lang.html?l=ja', backLabel: 'Japanese'},
 };
 const PAGE = 100;
 const code = new URLSearchParams(location.search).get('l');
@@ -115,10 +121,10 @@ function render() {
   const pages = Math.max(1, Math.ceil(view.length / PAGE));
   page = Math.min(page, pages - 1);
   const slice = view.slice(page * PAGE, page * PAGE + PAGE);
-  $('list').innerHTML = slice.length ? slice.map(([i, [w, en, ex, exEn]]) => `
+  $('list').innerHTML = slice.length ? slice.map(([i, [w, en, ex, exEn, rom]]) => `
     <div class="row">
       <div class="rank">#${i + 1}</div>
-      <div class="word-line"><span class="word" lang="${code}">${esc(w)}</span>${speakBtn(w.replace(/'$/, ''))}</div>
+      <div class="word-line"><span class="word" lang="${code}">${esc(w)}</span>${rom ? `<span class="rom">${esc(rom)}</span>` : ''}${speakBtn(w.replace(/'$/, ''))}</div>
       <div class="en">${esc(en)}</div>
       ${ex ? `<div class="ex"><div class="tl" lang="${code}">${highlight(ex, w)} ${speakBtn(ex)}</div><div class="tr">${esc(exEn)}</div></div>` : ''}
     </div>`).join('') : `<p class="empty">No matches.</p>`;
@@ -159,11 +165,11 @@ function start() {
   $('quiz').onchange = e => document.body.classList.toggle('quiz', e.target.checked);
   document.querySelector('.controls').appendChild(ExportCards.button(() => ({
     name: `${L.name} 10000 most common words`,
-    header: ['Rank', L.name, 'English', 'Example', 'Example (English)'],
-    rows: all.map(([w, en, ex, exEn], i) => [i + 1, w, en, ex || '', exEn || '']),
-    printRows: view.map(([i, [w, en, ex, exEn]]) => [i + 1, w, en, ex || '', exEn || '']),   // print only the range on screen
-    front: r => r[1],
-    back: r => r[3] ? `${r[2]} | ${r[3]} = ${r[4]}` : r[2],
+    header: ['Rank', L.name, 'Pronunciation', 'English', 'Example', 'Example (English)'],
+    rows: all.map(([w, en, ex, exEn, rom], i) => [i + 1, w, rom || '', en, ex || '', exEn || '']),
+    printRows: view.map(([i, [w, en, ex, exEn, rom]]) => [i + 1, w, rom || '', en, ex || '', exEn || '']),   // print only the range on screen
+    front: r => r[2] ? `${r[1]} (${r[2]})` : r[1],
+    back: r => r[4] ? `${r[3]} | ${r[4]} = ${r[5]}` : r[3],
   })));
   $('prev').onclick = $('prev2').onclick = () => go(-1);
   $('next').onclick = $('next2').onclick = () => go(1);

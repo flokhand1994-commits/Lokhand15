@@ -21,7 +21,9 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 #hub{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 0;width:100%}
 .hub-flag{font-size:4rem;line-height:1;margin-bottom:10px}
 .hub-h1{font-size:1.8rem;color:var(--accent);margin-bottom:4px}
-.hub-native{color:var(--muted);font-size:1rem;margin-bottom:28px}
+.hub-native{color:var(--muted);font-size:1rem;margin-bottom:8px}
+.hub-about{color:var(--ink);font-size:.9rem;line-height:1.5;max-width:420px;margin:0 auto 24px}
+.hub-about:empty{margin-bottom:16px}
 .mode-grid{display:grid;grid-template-columns:1fr;gap:14px;width:min(400px,92vw)}
 .mode-btn{display:flex;flex-direction:column;align-items:center;padding:20px 12px;border:2px solid var(--border);border-radius:14px;background:var(--card);cursor:pointer;transition:.2s;gap:6px;text-decoration:none;color:var(--ink);touch-action:manipulation}
 .mode-btn:hover,.mode-btn:active{border-color:var(--accent);box-shadow:0 4px 16px rgba(44,106,160,.15);transform:translateY(-2px)}
@@ -112,6 +114,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
   <div class="hub-flag" id="hub-flag"></div>
   <h1 class="hub-h1" id="hub-name"></h1>
   <p class="hub-native" id="hub-native"></p>
+  <p class="hub-about" id="hub-about"></p>
   <div class="mode-grid">
     <a class="mode-btn" id="go-verbs"><span class="mode-icon">🔤</span><span class="mode-title">Verbs</span><span class="mode-sub" id="verbs-sub"></span></a>
     <a class="mode-btn" id="go-words"><span class="mode-icon">📖</span><span class="mode-title">Most-used words</span><span class="mode-sub" id="words-sub"></span></a>
@@ -173,7 +176,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 <script src="export.js"></script>
 <script>
 const LANGS = ['fr', 'es', 'it', 'ru', 'zh', 'ja', 'ko'];
-const TOP10K_LANGS = ['fr'];   // languages with a top10k/<code>.js list
+const TOP10K_LANGS = ['fr', 'es', 'it', 'ru', 'zh', 'ja'];   // Korean needs a better word list first   // languages with a top10k/<code>.js list
 const params = new URLSearchParams(location.search);
 const code = params.get('l');
 const mode = params.get('m') || 'hub';
@@ -216,6 +219,7 @@ function showHub() {
   $('hub-flag').textContent = D.flag;
   $('hub-name').textContent = `${D.name}`;
   $('hub-native').textContent = D.native;
+  if (D.about) $('hub-about').textContent = D.about;
   $('app-title').textContent = `${D.flag} ${D.name}`;
   $('verbs-sub').textContent = `${D.verbs.length} common verbs · conjugations · example sentences`;
   $('words-sub').textContent = `${D.words.length} high-frequency words · flashcards`;

@@ -6,6 +6,8 @@ and Wikisource (Russian, Korean — Gutenberg has almost nothing in those).
 
 Usage:  python3 scripts/build_lang_stories.py <cache_dir>
 Downloads are cached in <cache_dir> so re-running is fast.
+The Chinese stories are converted to Simplified characters with OpenCC
+(pip install opencc-python-reimplemented).
 """
 import html
 import json
@@ -94,14 +96,14 @@ def blank_line_paras(lines):
 
 
 def cjk_paras(lines, width):
-    """CJK text hard-wrapped at `width` chars: a short line ends a paragraph."""
+    """CJK text hard-wrapped at `width` chars: a short line that ends a sentence ends a paragraph."""
     paras, cur = [], ""
     for ln in lines:
         s = ln.strip().lstrip("　")
         if not s:
             continue
         cur += s
-        if len(ln.strip()) < width - 2:
+        if len(ln.strip()) < width - 2 and s[-1] in "。！？”」』…）":   # short line that ends a sentence
             paras.append(cur)
             cur = ""
     if cur:
@@ -239,7 +241,9 @@ def build_it(cache):
 
 def build_zh(cache):
     t = gutenberg(27166, cache)
-    src = "吶喊 (Call to Arms) — 魯迅 Lu Xun (1923)"
+    from opencc import OpenCC                  # the Gutenberg text is Traditional; learners mostly read Simplified
+    simple = OpenCC("t2s").convert
+    src = "呐喊 (Call to Arms) — 鲁迅 Lu Xun (1923), converted to Simplified characters"
     picks = [
         ("一件小事", "A small incident with a rickshaw puller changes how the narrator sees himself."),
         ("孔乙己", "A poor scholar who drinks at a village tavern and is laughed at by everyone."),
@@ -252,7 +256,7 @@ def build_zh(cache):
         i = find_line(t, title, 200)
         body = lines_between(t, i, lambda ln: bool(title_line.match(ln)) or "注釋" in ln or "START OF" in ln or "End of" in ln)
         paras = [re.sub(r"[ぁ-ん]", "", p) for p in cjk_paras(body, 38)]   # footnote markers
-        out.append(story(title, desc, src, paras))
+        out.append(story(simple(title), desc, src, [simple(p) for p in paras]))
     return out
 
 

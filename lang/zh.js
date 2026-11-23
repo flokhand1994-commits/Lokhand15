@@ -3,10 +3,11 @@
 // words: [word, pinyin, English, present example, past example]
 // example: [sentence, pinyin, English]
 window.LANG_DATA = {
-  code: "zh", name: "Chinese", native: "中文", flag: "🇨🇳", tts: "zh-CN", gt: "zh-CN",
+  code: "zh", name: "Chinese (Mandarin)", native: "普通话 · 中文",
+  about: "Mandarin Chinese, the standard language of China — written in Simplified characters, with pinyin to show how each word sounds.", flag: "🇨🇳", tts: "zh-CN", gt: "zh-CN",
   table: [{ t: "Negative", n: 1 }, { t: "Question (A-not-A)", n: 1 }],
   exLabels: ["Present", "Past (了 / 过)"],
-  storiesNote: "The Lu Xun stories are written in traditional characters.",
+  storiesNote: "These are 1920s classics, so some words are old-fashioned.",
   verbs: [
     ["是", "shì", "to be", ["不是 bú shì", "是不是 shì bu shì"], ["我是学生。", "Wǒ shì xuésheng.", "I am a student."], ["他以前是老师。", "Tā yǐqián shì lǎoshī.", "He used to be a teacher."]],
     ["有", "yǒu", "to have; there is", ["没有 méi yǒu", "有没有 yǒu méi yǒu"], ["我有两个孩子。", "Wǒ yǒu liǎng ge háizi.", "I have two children."], ["小时候我有一只狗。", "Xiǎoshíhou wǒ yǒu yì zhī gǒu.", "When I was little I had a dog."]],
