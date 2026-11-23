@@ -730,7 +730,7 @@
         return row;
       }),
       front: function (r) { return r[0]; },
-      back: function (r) { return r[1] + " | perfectum: " + r[3] + " | imperfectum: " + r[4]; },
+      back: function (r) { return r[1] + " · " + r[2] + " | perfectum: " + r[3] + " | imperfectum: " + r[4] + (r[5] ? " | " + r[5] + " = " + r[6] : ""); },
     };
   }));
   const total = slides.length;

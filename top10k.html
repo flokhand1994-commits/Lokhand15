@@ -161,6 +161,7 @@ function start() {
     name: `${L.name} 10000 most common words`,
     header: ['Rank', L.name, 'English', 'Example', 'Example (English)'],
     rows: all.map(([w, en, ex, exEn], i) => [i + 1, w, en, ex || '', exEn || '']),
+    printRows: view.map(([i, [w, en, ex, exEn]]) => [i + 1, w, en, ex || '', exEn || '']),   // print only the range on screen
     front: r => r[1],
     back: r => r[3] ? `${r[2]} | ${r[3]} = ${r[4]}` : r[2],
   })));

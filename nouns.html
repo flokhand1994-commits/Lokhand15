@@ -755,7 +755,7 @@ document.getElementById('toolbar').appendChild(ExportCards.button(() => ({
   header: ['Article', 'Dutch', 'Plural', 'English', 'French', 'Example', 'Example (English)', 'Example (French)'],
   rows: DUTCH_NOUNS.map((n, i) => [n.article, n.nl, n.plural, n.en, n.fr, ...(SENTS[i] || ['', '', ''])]),
   front: r => `${r[0]} ${r[1]}`,
-  back: r => `${r[3]} · pl. ${r[2]}${r[5] ? ` | ${r[5]} = ${r[6]}` : ''}`,
+  back: r => `${r[3]} · ${r[4]} | plural: de ${r[2]}${r[5] ? ` | ${r[5]} = ${r[6]}` : ''}`,
 })));
 
 startNouns();
