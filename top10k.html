@@ -18,14 +18,35 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .app-title{font-size:1rem;color:var(--accent);font-weight:700}
 .intro{width:min(680px,96vw);font-size:.8rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
 .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;width:min(680px,96vw);margin-bottom:12px}
-select,input[type=search]{padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--card);min-height:44px}
-input[type=search]{flex:1;min-width:150px}
+select{padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--card);min-height:40px}
+/* pinned toolbar */
+.bar{position:sticky;top:0;z-index:20;width:min(680px,96vw);background:var(--bg);padding:8px 0 10px;margin-bottom:6px;box-shadow:0 8px 12px -12px rgba(0,0,0,.25)}
+.search{position:relative;display:flex;align-items:center}
+.search .ic{position:absolute;left:12px;font-size:.95rem;opacity:.55;pointer-events:none}
+#search{width:100%;padding:11px 40px 11px 36px;border:1.5px solid var(--border);border-radius:12px;font-size:1rem;background:var(--card);min-height:46px;-webkit-appearance:none}
+#search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(44,106,160,.15)}
+#search::-webkit-search-cancel-button{display:none}
+#clear{position:absolute;right:6px;border:none;background:none;font-size:1.05rem;color:var(--muted);cursor:pointer;width:34px;height:34px;border-radius:8px}
+#clear:hover{background:var(--soft)}
+.levels{display:flex;gap:6px;overflow-x:auto;padding:10px 2px 2px;scrollbar-width:none}
+.levels::-webkit-scrollbar{display:none}
+.lv{flex:none;padding:7px 12px;border:1.5px solid var(--border);border-radius:999px;background:var(--card);color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.lv:hover{border-color:var(--accent);color:var(--accent)}
+.lv.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;flex-wrap:wrap}
+.pager .mid{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted)}
+.jump{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted)}
+.jump input{width:78px;padding:7px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:.88rem;min-height:40px}
+.status{font-size:.82rem;color:var(--muted);margin-top:8px;min-height:1.2em}
+.status b{color:var(--ink)}
+.row.target{border-color:var(--accent);box-shadow:0 0 0 3px rgba(44,106,160,.15)}
+.row mark{background:rgba(44,106,160,.18);color:inherit;border-radius:3px;padding:0 1px}
 .toggle{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);cursor:pointer;min-height:44px;user-select:none}
 .toggle input{width:18px;height:18px}
 .nav-btn{padding:7px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:.9rem;cursor:pointer;font-weight:600;min-height:44px;min-width:44px}
 .nav-btn:hover:not(:disabled){background:var(--accent);color:#fff}
 .nav-btn:disabled{opacity:.35;cursor:default}
-#page-label{font-size:.85rem;color:var(--muted);min-width:110px;text-align:center}
+
 #list{width:min(680px,96vw);display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
 .row{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:52px 1fr;gap:2px 10px}
 .rank{font-size:.75rem;color:var(--muted);padding-top:4px;grid-row:span 3}
@@ -56,16 +77,24 @@ input[type=search]{flex:1;min-width:150px}
 
 <p class="intro" id="intro"></p>
 
-<div class="controls">
-  <select id="range" aria-label="Choose a range"></select>
-  <input type="search" id="search" placeholder="Search a word or its meaning…" aria-label="Search">
-  <label class="toggle"><input type="checkbox" id="quiz"> Hide English (test yourself)</label>
+<div class="bar">
+  <div class="search">
+    <span class="ic" aria-hidden="true">🔍</span>
+    <input type="search" id="search" placeholder="Search words or meanings…" aria-label="Search" autocomplete="off" enterkeyhint="search">
+    <button id="clear" class="hidden" aria-label="Clear search">✕</button>
+  </div>
+  <div class="levels" id="levels" role="tablist" aria-label="Choose a range"></div>
+  <div class="pager">
+    <button class="nav-btn" id="prev" aria-label="Previous page">&#9664;</button>
+    <span class="mid">Page <select id="page-select" aria-label="Page"></select> of <span id="pages"></span></span>
+    <button class="nav-btn" id="next" aria-label="Next page">&#9654;</button>
+  </div>
+  <div class="status" id="status"></div>
 </div>
 
-<div class="controls">
-  <button class="nav-btn" id="prev" aria-label="Previous page">&#9664;</button>
-  <span id="page-label"></span>
-  <button class="nav-btn" id="next" aria-label="Next page">&#9654;</button>
+<div class="controls" id="tools">
+  <label class="jump">Go to word # <input type="number" id="jump" min="1" inputmode="numeric" aria-label="Go to word number"></label>
+  <label class="toggle"><input type="checkbox" id="quiz"> Hide English (test yourself)</label>
 </div>
 
 <div id="list"></div>
@@ -78,7 +107,7 @@ input[type=search]{flex:1;min-width:150px}
 <p class="credits">
   Word list: <a href="https://github.com/hermitdave/FrequencyWords">FrequencyWords</a> (from film &amp; TV subtitles, CC BY-SA 4.0).
   Example sentences and their English translations: <a href="https://tatoeba.org">Tatoeba</a> (CC BY 2.0 FR), written by volunteers.
-  Single-word meanings are machine-translated, with the most common words checked by hand — a word can have more meanings than the one shown.
+  Meanings: <a href="https://en.wiktionary.org">Wiktionary</a> (CC BY-SA 4.0), with the most common words checked by hand — a word can have more meanings than the one shown.
 </p>
 <p class="empty hidden" id="err"></p>
 
@@ -94,11 +123,11 @@ const LANGS = {
   zh: {name: 'Chinese (Mandarin)', flag: '🇨🇳', tts: 'zh-CN', back: 'lang.html?l=zh', backLabel: 'Chinese'},
   ja: {name: 'Japanese', flag: '🇯🇵', tts: 'ja-JP', back: 'lang.html?l=ja', backLabel: 'Japanese'},
 };
-const PAGE = 100;
+const PAGE = 50, LEVEL = 1000;
 const code = new URLSearchParams(location.search).get('l');
 const L = LANGS[code];
 const $ = id => document.getElementById(id);
-let all = [], view = [], page = 0;
+let all = [], view = [], page = 0, level = 0, query = '', target = -1;
 
 function esc(s) {
   return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
@@ -110,6 +139,9 @@ function speak(text) {
 }
 const speakBtn = text => canSpeak ? `<button class="speak" data-say="${esc(text)}" aria-label="Listen">🔊</button>` : '';
 
+// Lowercase and drop accents, so "eten" finds "éten" and "shi" finds "shì"
+const fold = t => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
 // Highlight the word inside its example sentence
 function highlight(sentence, word) {
   const safe = esc(sentence);
@@ -118,35 +150,114 @@ function highlight(sentence, word) {
   return safe.replace(re, '$1<mark>$2</mark>');
 }
 
-function render() {
-  const pages = Math.max(1, Math.ceil(view.length / PAGE));
-  page = Math.min(page, pages - 1);
-  const slice = view.slice(page * PAGE, page * PAGE + PAGE);
-  $('list').innerHTML = slice.length ? slice.map(([i, [w, en, ex, exEn, rom]]) => `
-    <div class="row">
-      <div class="rank">#${i + 1}</div>
-      <div class="word-line"><span class="word" lang="${code}">${esc(w)}</span>${rom ? `<span class="rom">${esc(rom)}</span>` : ''}${speakBtn(w.replace(/'$/, ''))}</div>
-      <div class="en">${esc(en)}</div>
-      ${ex ? `<div class="ex"><div class="tl" lang="${code}">${highlight(ex, w)} ${speakBtn(ex)}</div><div class="tr">${esc(exEn)}</div></div>` : ''}
-    </div>`).join('') : `<p class="empty">No matches.</p>`;
-  $('page-label').textContent = view.length ? `${page * PAGE + 1}–${Math.min(view.length, page * PAGE + PAGE)} of ${view.length.toLocaleString()}` : '';
-  for (const id of ['prev', 'prev2']) $(id).disabled = page === 0;
-  for (const id of ['next', 'next2']) $(id).disabled = page >= pages - 1;
+// Mark the search term inside a short text (word, meaning, pronunciation)
+function markQuery(text) {
+  if (!query) return esc(text);
+  const f = fold(text), i = f.indexOf(fold(query));
+  if (i < 0) return esc(text);
+  return esc(text.slice(0, i)) + '<mark>' + esc(text.slice(i, i + query.length)) + '</mark>' + esc(text.slice(i + query.length));
 }
 
+function render() {
+  const pages = Math.max(1, Math.ceil(view.length / PAGE));
+  page = Math.max(0, Math.min(page, pages - 1));
+  const slice = view.slice(page * PAGE, page * PAGE + PAGE);
+  $('list').innerHTML = slice.length ? slice.map(([i, [w, en, ex, exEn, rom]]) => `
+    <div class="row${i === target ? ' target' : ''}" id="w${i + 1}">
+      <div class="rank">#${(i + 1).toLocaleString()}</div>
+      <div class="word-line"><span class="word" lang="${code}">${markQuery(w)}</span>${rom ? `<span class="rom">${markQuery(rom)}</span>` : ''}${speakBtn(w.replace(/'$/, ''))}</div>
+      <div class="en">${markQuery(en)}</div>
+      ${ex ? `<div class="ex"><div class="tl" lang="${code}">${highlight(ex, w)} ${speakBtn(ex)}</div><div class="tr">${esc(exEn)}</div></div>` : ''}
+    </div>`).join('') : `<p class="empty">No words match “${esc(query)}”. Try fewer letters, or search in English.</p>`;
+
+  $('pages').textContent = pages;
+  $('page-select').innerHTML = Array.from({length: pages}, (_, k) => `<option value="${k}"${k === page ? ' selected' : ''}>${k + 1}</option>`).join('');
+  for (const id of ['prev', 'prev2']) $(id).disabled = page === 0;
+  for (const id of ['next', 'next2']) $(id).disabled = page >= pages - 1;
+  document.querySelectorAll('.lv').forEach((b, k) => b.classList.toggle('on', !query && k === level));
+  const first = page * PAGE + 1, last = Math.min(view.length, page * PAGE + PAGE);
+  $('status').innerHTML = query
+    ? `<b>${view.length.toLocaleString()}</b> ${view.length === 1 ? 'result' : 'results'} for “${esc(query)}”${view.length > PAGE ? ` · showing ${first}–${last}` : ''}`
+    : view.length ? `Words <b>${(view[0][0] + first).toLocaleString()}–${(view[0][0] + last).toLocaleString()}</b> of ${all.length.toLocaleString()}` : '';
+  saveState();
+}
+
+// Search ranks exact matches first, then words that start with it, then the rest
 function applyFilter() {
-  const q = $('search').value.trim().toLowerCase();
-  const [from, to] = $('range').value.split('-').map(Number);
-  view = all.map((x, i) => [i, x]).filter(([i, x]) =>
-    q ? (x[0].toLowerCase().includes(q) || x[1].toLowerCase().includes(q)) : (i >= from && i < to));
+  query = $('search').value.trim();
+  $('clear').classList.toggle('hidden', !query);
+  if (query) {
+    const q = fold(query);
+    const scored = [];
+    all.forEach((x, i) => {
+      const w = fold(x[0]), rom = fold(x[4] || ''), en = fold(x[1]);
+      let score = -1;
+      if (w === q || rom === q) score = 0;
+      else if (w.startsWith(q) || rom.startsWith(q)) score = 1;
+      else if (new RegExp(`(^|[^a-z])${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z]|$)`).test(en)) score = 2;
+      else if (w.includes(q) || rom.includes(q)) score = 3;
+      else if (en.includes(q)) score = 4;
+      if (score >= 0) scored.push([score, i, x]);
+    });
+    scored.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    view = scored.map(([, i, x]) => [i, x]);
+  } else {
+    view = all.map((x, i) => [i, x]).slice(level * LEVEL, level * LEVEL + LEVEL);
+  }
   page = 0;
   render();
 }
 
+function scrollToList() {
+  const top = $('list').getBoundingClientRect().top + window.scrollY - document.querySelector('.bar').offsetHeight - 8;
+  if (window.scrollY > top) window.scrollTo({top, behavior: 'smooth'});
+}
+
 function go(d) {
   page += d;
+  target = -1;
   render();
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  scrollToList();
+}
+
+function setLevel(k) {
+  level = k;
+  $('search').value = '';
+  target = -1;
+  applyFilter();
+  scrollToList();
+}
+
+// Jump to a word by its number: open its level and page, then highlight it
+function jumpTo(n) {
+  if (!(n >= 1 && n <= all.length)) return;
+  const i = n - 1;
+  $('search').value = '';
+  level = Math.floor(i / LEVEL);
+  target = i;
+  applyFilter();
+  page = Math.floor((i % LEVEL) / PAGE);
+  render();
+  const el = document.getElementById(`w${n}`);
+  if (el) {
+    const top = el.getBoundingClientRect().top + window.scrollY - document.querySelector('.bar').offsetHeight - 12;
+    window.scrollTo({top, behavior: 'smooth'});
+  }
+}
+
+// Remember level, page and search in the address, so refresh and Back keep your place
+function saveState() {
+  const h = new URLSearchParams();
+  if (query) h.set('q', query); else { if (level) h.set('lv', level + 1); if (page) h.set('p', page + 1); }
+  const hash = h.toString();
+  history.replaceState(null, '', location.pathname + location.search + (hash ? '#' + hash : ''));
+}
+function loadState() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  level = Math.max(0, Math.min((+h.get('lv') || 1) - 1, Math.ceil(all.length / LEVEL) - 1));
+  $('search').value = h.get('q') || '';
+  applyFilter();
+  if (!query && h.get('p')) { page = +h.get('p') - 1; render(); }
 }
 
 function start() {
@@ -160,17 +271,32 @@ function start() {
   $('back-btn').textContent = `← ${L.backLabel}`;
   $('intro').textContent = `The ${all.length.toLocaleString()} most used ${L.name} words and short phrases, in order of how often people say them. ` +
     `Learn them from the top: the first 1,000 cover most everyday conversation. Tap 🔊 to listen, or tick "Hide English" and tap a row to check yourself.`;
-  const opts = [];
-  for (let s = 0; s < all.length; s += 1000) opts.push(`<option value="${s}-${s + 1000}">${(s + 1).toLocaleString()} – ${Math.min(all.length, s + 1000).toLocaleString()}</option>`);
-  $('range').innerHTML = opts.join('');
-  $('range').onchange = () => { $('search').value = ''; applyFilter(); };
-  $('search').oninput = applyFilter;
+  const levels = [];
+  for (let k = 0; k * LEVEL < all.length; k++) {
+    const a = k * LEVEL + 1, b = Math.min(all.length, (k + 1) * LEVEL);
+    levels.push(`<button class="lv" role="tab" data-k="${k}">${a.toLocaleString()}–${b.toLocaleString()}</button>`);
+  }
+  $('levels').innerHTML = levels.join('');
+  $('levels').onclick = e => { const b = e.target.closest('.lv'); if (b) setLevel(+b.dataset.k); };
+  let timer;
+  $('search').oninput = () => { clearTimeout(timer); timer = setTimeout(() => { target = -1; applyFilter(); }, 150); };
+  $('clear').onclick = () => { $('search').value = ''; applyFilter(); $('search').focus(); };
+  $('page-select').onchange = e => { page = +e.target.value; target = -1; render(); scrollToList(); };
+  $('jump').onkeydown = e => { if (e.key === 'Enter') { jumpTo(+e.target.value); e.target.blur(); } };
+  $('jump').onchange = e => jumpTo(+e.target.value);
+  document.addEventListener('keydown', e => {
+    const typing = /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName);
+    if (e.key === '/' && !typing) { e.preventDefault(); $('search').focus(); }
+    else if (e.key === 'Escape' && document.activeElement === $('search')) { $('search').value = ''; applyFilter(); }
+    else if (!typing && e.key === 'ArrowRight' && !$('next').disabled) go(1);
+    else if (!typing && e.key === 'ArrowLeft' && !$('prev').disabled) go(-1);
+  });
   $('quiz').onchange = e => document.body.classList.toggle('quiz', e.target.checked);
-  document.querySelector('.controls').appendChild(ExportCards.button(() => ({
+  $('tools').appendChild(ExportCards.button(() => ({
     name: `${L.name} 10000 most common words`,
     header: ['Rank', L.name, 'Pronunciation', 'English', 'Example', 'Example (English)'],
     rows: all.map(([w, en, ex, exEn, rom], i) => [i + 1, w, rom || '', en, ex || '', exEn || '']),
-    printRows: view.map(([i, [w, en, ex, exEn, rom]]) => [i + 1, w, rom || '', en, ex || '', exEn || '']),   // print only the range on screen
+    printRows: view.map(([i, [w, en, ex, exEn, rom]]) => [i + 1, w, rom || '', en, ex || '', exEn || '']),   // print the level or search results on screen
     front: r => r[2] ? `${r[1]} (${r[2]})` : r[1],
     back: r => r[4] ? `${r[3]} | ${r[4]} = ${r[5]}` : r[3],
   })));
@@ -182,7 +308,7 @@ function start() {
     const row = e.target.closest('.row');
     if (row) row.classList.toggle('show');
   });
-  applyFilter();
+  loadState();
 }
 
 if (!L) {
