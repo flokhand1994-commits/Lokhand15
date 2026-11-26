@@ -60,6 +60,9 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
 .tooltip-loading{color:var(--muted);font-size:.9rem;margin-top:6px}
 .tooltip-close{position:absolute;top:14px;right:18px;font-size:1.2rem;cursor:pointer;color:var(--muted);background:none;border:none;padding:4px 8px;border-radius:6px;touch-action:manipulation}
 .tooltip-close:hover{background:var(--bg)}
+.tt-sent-btn{margin-top:10px;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--card);color:var(--accent);font-size:.85rem;cursor:pointer;min-height:40px}
+.tt-sent{margin-top:10px;font-size:.92rem;line-height:1.5;background:var(--bg);border-radius:10px;padding:10px 12px}
+.tt-sent .orig{color:var(--muted);margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -75,7 +78,7 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
   <button class="nav-btn" id="next-btn" onclick="go(1)">&#9654;</button>
 </div>
 
-<p class="hint-bar">Tik op een woord voor de vertaling · Tap any word to translate</p>
+<p class="hint-bar">Tik op een woord of zin voor de vertaling · Tap any word to translate it or its sentence</p>
 
 <div class="story-card" id="story-card">
   <div class="story-num" id="story-num"></div>
@@ -90,6 +93,8 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSys
   <button class="tooltip-close" onclick="closeTooltip()">✕</button>
   <div class="tooltip-word" id="tt-word"></div>
   <div id="tt-body"></div>
+  <button class="tt-sent-btn" id="tt-sent-btn">Vertaal de hele zin · Translate the whole sentence</button>
+  <div id="tt-sent"></div>
 </div>
 
 <script src="gutenberg_stories.js"></script>
@@ -130,6 +135,12 @@ function italics(html) {
   return html.replace(/<[^>]*>|_/g, m => m === '_' ? ((open = !open) ? '<em>' : '</em>') : m);
 }
 
+// Wrap each sentence in <span class="s"> so a tapped word knows its sentence
+function wrapPara(text) {
+  const sentences = text.match(/[^.!?]+(?:[.!?]+["'”’»)]*\s*|$)/g) || [text];
+  return sentences.filter(Boolean).map(x => `<span class="s">${wrapWords(x)}</span>`).join('');
+}
+
 function isHeading(para) {
   const p = para.trim();
   // Roman numeral alone: I. II. III. etc.
@@ -142,8 +153,8 @@ function isHeading(para) {
 function render() {
   const s = GUTENBERG_STORIES[cur];
   document.getElementById('story-num').textContent = `Verhaal ${cur + 1} van ${GUTENBERG_STORIES.length}`;
-  document.getElementById('story-title').innerHTML  = wrapWords(s.title);
-  document.getElementById('story-desc').innerHTML   = wrapWords(s.desc);
+  document.getElementById('story-title').innerHTML  = wrapPara(s.title);
+  document.getElementById('story-desc').innerHTML   = wrapPara(s.desc);
   document.getElementById('story-source').textContent = s.source;
   document.getElementById('story-counter').textContent = `${cur + 1} / ${GUTENBERG_STORIES.length}`;
   document.getElementById('prev-btn').disabled = cur === 0;
@@ -155,7 +166,7 @@ function render() {
     if (isHeading(trimmed)) {
       return `<p class="section-heading">${trimmed}</p>`;
     }
-    return `<p>${italics(wrapWords(trimmed))}</p>`;
+    return `<p>${italics(wrapPara(trimmed))}</p>`;
   }).join('');
   document.getElementById('story-text').innerHTML = html;
 
@@ -221,9 +232,14 @@ async function gtrans(word, tl) {
   return (t.toLowerCase() !== word.toLowerCase()) ? t : '—';
 }
 
+let ttSentence = '';
+
 async function showTranslation(el) {
   const raw = el.dataset.w;
   if (!raw) return;
+  ttSentence = (el.closest('.s') || el).textContent.replace(/_/g, '').replace(/\s+/g, ' ').trim();   // the old texts break lines mid-sentence
+  document.getElementById('tt-sent').innerHTML = '';
+  document.getElementById('tt-sent-btn').style.display = ttSentence.toLowerCase() === raw ? 'none' : '';
   document.getElementById('tt-word').textContent = raw;
   document.getElementById('tt-body').innerHTML = `<p class="tooltip-loading">⏳ Vertaling laden…</p>`;
   openTooltip();
@@ -249,6 +265,26 @@ function renderTooltip({en, fr}) {
   cells[0].textContent = en;
   cells[1].textContent = fr;
 }
+
+// Whole-sentence translation (English and French, like single words)
+document.getElementById('tt-sent-btn').onclick = async () => {
+  const text = ttSentence, box = document.getElementById('tt-sent');
+  box.innerHTML = `<p class="tooltip-loading">⏳ Zin vertalen…</p>`;
+  try {
+    const r = cache[text] || (cache[text] = await Promise.all([gtrans(text, 'en'), gtrans(text, 'fr')]).then(([en, fr]) => ({en, fr})));
+    if (text !== ttSentence) return;
+    box.innerHTML = `<div class="tt-sent"><div class="orig" lang="nl"></div>
+      <div class="tooltip-row"><span class="tooltip-flag">🇬🇧</span><span class="tooltip-text"></span></div>
+      <div class="tooltip-row"><span class="tooltip-flag">🇫🇷</span><span class="tooltip-text"></span></div></div>`;
+    box.querySelector('.orig').textContent = text;
+    const cells = box.querySelectorAll('.tooltip-text');
+    cells[0].textContent = r.en;
+    cells[1].textContent = r.fr;
+  } catch {
+    if (text !== ttSentence) return;
+    box.innerHTML = `<p class="tooltip-loading">⚠️ ${navigator.onLine ? 'Vertaling mislukt, tik opnieuw' : 'Geen internet'}</p>`;
+  }
+};
 
 function openTooltip() {
   document.getElementById('backdrop').style.display = 'block';
